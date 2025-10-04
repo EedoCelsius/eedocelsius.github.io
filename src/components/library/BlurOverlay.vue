@@ -9,7 +9,7 @@ const props = withDefaults(
   }>(),
   {
     visible: true,
-    blur: 12,
+    blur: 7,
     overlayColor: 'rgba(15, 23, 42, 0.45)',
   }
 )
