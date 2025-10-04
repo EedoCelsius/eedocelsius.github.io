@@ -240,11 +240,6 @@ const isOverlay = computed(() => activeDefinition.value?.id.includes('overlay') 
   color: var(--primary-color);
 }
 
-.p-listbox-item.p-highlight .component-option h3,
-.p-listbox-item.p-highlight .component-option p {
-  color: var(--highlight-text-color);
-}
-
 .playground__content {
   display: flex;
   flex-direction: column;
