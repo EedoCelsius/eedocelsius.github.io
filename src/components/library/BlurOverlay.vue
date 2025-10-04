@@ -10,7 +10,7 @@ const props = withDefaults(
   {
     visible: true,
     blur: 7,
-    overlayColor: 'rgba(15, 23, 42, 0.45)',
+    overlayColor: 'color-mix(in srgb, var(--p-surface-900) 45%, transparent)',
   }
 )
 
@@ -29,7 +29,7 @@ const overlayStyle = computed(() => ({
     <transition name="fade-blur">
       <div
         v-if="props.visible"
-        class="absolute inset-0 flex items-center justify-center rounded-inherit border border-white/10 text-slate-100 backdrop-blur"
+        class="absolute inset-0 flex items-center justify-center rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur"
         :style="overlayStyle"
       >
         <div class="pointer-events-auto">

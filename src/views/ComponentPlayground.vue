@@ -71,11 +71,11 @@ watch(
     <div class="text-4xl text-primary-500">
       <i class="pi pi-compass"></i>
     </div>
-    <h1 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">{{ t('playground.notFoundTitle') }}</h1>
-    <p class="max-w-md text-sm text-slate-600 dark:text-slate-300">{{ t('playground.notFoundDescription') }}</p>
+    <h1 class="text-2xl font-semibold text-surface-900 dark:text-surface-0">{{ t('playground.notFoundTitle') }}</h1>
+    <p class="max-w-md text-sm text-surface-600 dark:text-surface-300">{{ t('playground.notFoundDescription') }}</p>
     <RouterLink
       to="/"
-      class="inline-flex items-center gap-2 rounded-full bg-primary-500 px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-primary-400"
+      class="inline-flex items-center gap-2 rounded-full bg-primary-500 px-4 py-2 text-sm font-medium text-primary-contrast shadow-soft transition hover:bg-primary-400"
     >
       {{ t('playground.backHome') }}
       <i class="pi pi-arrow-right text-xs"></i>
@@ -85,19 +85,19 @@ watch(
     <section class="card-surface flex flex-col gap-6 p-6">
       <header class="space-y-3">
         <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary-500">{{ t('playground.preview') }}</p>
-        <h1 class="text-3xl font-semibold text-slate-900 dark:text-slate-100">{{ localizedName }}</h1>
-        <p class="text-sm text-slate-600 dark:text-slate-300">{{ localizedDescription }}</p>
+        <h1 class="text-3xl font-semibold text-surface-900 dark:text-surface-0">{{ localizedName }}</h1>
+        <p class="text-sm text-surface-600 dark:text-surface-300">{{ localizedDescription }}</p>
       </header>
-      <div class="relative min-h-[360px] overflow-hidden rounded-3xl border border-slate-200/70 bg-white p-6 shadow-inner dark:border-slate-800/70 dark:bg-slate-900">
+      <div class="relative min-h-[360px] overflow-hidden rounded-3xl border border-surface-200/70 bg-surface-0 p-6 shadow-inner dark:border-surface-800/70 dark:bg-surface-900">
         <Suspense v-if="previewComponent">
           <component :is="previewComponent" v-bind="currentProps" />
           <template #fallback>
-            <div class="flex h-full items-center justify-center text-slate-400">
+            <div class="flex h-full items-center justify-center text-surface-400">
               <i class="pi pi-spinner animate-spin text-2xl"></i>
             </div>
           </template>
         </Suspense>
-        <div v-else class="flex h-full items-center justify-center text-slate-400">
+        <div v-else class="flex h-full items-center justify-center text-surface-400">
           <i class="pi pi-spinner animate-spin text-2xl"></i>
         </div>
       </div>
@@ -113,7 +113,7 @@ watch(
           {{ t('playground.reset') }}
         </button>
       </div>
-      <p class="text-sm text-slate-500 dark:text-slate-400">{{ t('playground.helper') }}</p>
+      <p class="text-sm text-surface-500 dark:text-surface-400">{{ t('playground.helper') }}</p>
       <form class="flex flex-col gap-5">
         <div
           v-for="control in definition.controls"
@@ -123,7 +123,7 @@ watch(
           <label
             v-if="control.type !== 'boolean'"
             :for="control.key"
-            class="font-medium text-slate-700 dark:text-slate-200"
+            class="font-medium text-surface-700 dark:text-surface-200"
           >
             {{ localize(control.label) }}
           </label>
@@ -132,7 +132,7 @@ watch(
               :id="control.key"
               v-model="(currentProps[control.key] as string | undefined)"
               type="text"
-              class="w-full rounded-xl border border-slate-200/70 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-slate-700/70 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-primary-300"
+              class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
             />
           </template>
           <template v-else-if="control.type === 'textarea'">
@@ -140,7 +140,7 @@ watch(
               :id="control.key"
               v-model="(currentProps[control.key] as string | undefined)"
               rows="4"
-              class="w-full rounded-xl border border-slate-200/70 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-slate-700/70 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-primary-300"
+              class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
             ></textarea>
           </template>
           <template v-else-if="control.type === 'color'">
@@ -148,7 +148,7 @@ watch(
               :id="control.key"
               v-model="(currentProps[control.key] as string | undefined)"
               type="color"
-              class="h-12 w-20 cursor-pointer rounded-xl border border-slate-200/70 bg-white p-1 shadow-sm dark:border-slate-700/70 dark:bg-slate-900"
+              class="h-12 w-20 cursor-pointer rounded-xl border border-surface-200/70 bg-surface-0 p-1 shadow-sm dark:border-surface-700/70 dark:bg-surface-900"
             />
           </template>
           <template v-else-if="control.type === 'slider'">
@@ -171,12 +171,12 @@ watch(
                 :id="control.key"
                 v-model="(currentProps[control.key] as boolean | undefined)"
                 type="checkbox"
-                class="h-5 w-5 rounded border border-slate-300 text-primary-500 focus:ring-primary-200 dark:border-slate-600"
+                class="h-5 w-5 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
               />
-              <span class="text-sm text-slate-600 dark:text-slate-300">{{ localize(control.label) }}</span>
+              <span class="text-sm text-surface-600 dark:text-surface-300">{{ localize(control.label) }}</span>
             </label>
           </template>
-          <p v-if="control.helperText" class="text-xs text-slate-500 dark:text-slate-400">
+          <p v-if="control.helperText" class="text-xs text-surface-500 dark:text-surface-400">
             {{ localize(control.helperText) }}
           </p>
         </div>
