@@ -76,11 +76,6 @@ const { t } = useI18n();
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.nav-link:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--primary-color) 55%, transparent);
-  outline-offset: 2px;
-}
-
 .nav-link:hover {
   color: var(--text-color);
   background-color: color-mix(in srgb, var(--primary-200) 15%, transparent);
@@ -95,12 +90,6 @@ const { t } = useI18n();
   display: flex;
   align-items: center;
   gap: 0.75rem;
-}
-
-.brand:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--primary-color) 55%, transparent);
-  outline-offset: 4px;
-  border-radius: 999px;
 }
 
 @media (max-width: 768px) {

@@ -157,12 +157,6 @@ const componentCards = computed(() =>
   text-decoration: none;
 }
 
-.component-card__link:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--primary-color) 55%, transparent);
-  outline-offset: 4px;
-  border-radius: 999px;
-}
-
 @media (max-width: 768px) {
   .hero__content {
     padding: 2.5rem 1.75rem;
