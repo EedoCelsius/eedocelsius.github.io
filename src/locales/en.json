@@ -1,0 +1,31 @@
+{
+  "app": {
+    "tagline": "PrimeVue-powered experiential component library",
+    "previewDeeplink": "Preview Deeplink",
+    "componentExplorer": "Component Explorer",
+    "openPlayground": "Open playground",
+    "props": "Props",
+    "actions": "Actions",
+    "trigger": "Trigger",
+    "reset": "Reset",
+    "preview": "Preview"
+  },
+  "home": {
+    "subtitle": "Reusable experiences for launching deep links and apps.",
+    "comingSoon": "More components will arrive soon."
+  },
+  "preview": {
+    "notFound": "Component is not registered.",
+    "back": "Back to list"
+  },
+  "deeplink": {
+    "desktopTitle": "Works on mobile only",
+    "desktopMessage": "{app} link opens on mobile devices. Scan the QR code with your phone.",
+    "desktopScan": "Scan to open the {app} app.",
+    "mobileLaunching": "Trying to launch the app...",
+    "mobileFallbackTitle": "App did not launch?",
+    "mobileFallbackMessage": "If the app does not open within {timeout} seconds we will ask the user to install it.",
+    "installCta": "Show install guide",
+    "close": "Close"
+  }
+}
