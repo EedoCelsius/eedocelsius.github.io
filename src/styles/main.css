@@ -26,14 +26,26 @@
   --text-color: #1f2933;
   --text-color-secondary: #5f6c7b;
   --surface-0: #ffffff;
-  --surface-100: #f4f5f7;
+  --surface-50: #f8fafc;
+  --surface-100: #f1f5f9;
+  --surface-200: #e6eaf3;
   --surface-300: #d9dde5;
   --surface-700: #3d4754;
+  --surface-card: var(--surface-0);
+  --surface-section: #ffffff;
+  --surface-overlay: #ffffff;
+  --surface-border: #d1d7e2;
+  --surface-hover: color-mix(in srgb, var(--primary-200) 18%, transparent);
   --primary-200: #d6e4ff;
   --primary-400: #7698ff;
   --primary-500: #5c7cfa;
   --primary-600: #4b6ddf;
   --primary-color: #4c6fff;
+  --primary-color-text: #ffffff;
+  --highlight-bg: color-mix(in srgb, var(--primary-color) 14%, #eef2ff);
+  --highlight-text-color: #1b2551;
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--primary-color) 35%, transparent);
+  --p-focus-ring-color: color-mix(in srgb, var(--primary-color) 55%, transparent);
 }
 
 html.dark-mode {
@@ -42,14 +54,26 @@ html.dark-mode {
   --text-color: #f9fafb;
   --text-color-secondary: #cbd5f5;
   --surface-0: #1f2937;
+  --surface-50: #161f2e;
   --surface-100: #1a2333;
+  --surface-200: #202c42;
   --surface-300: #273447;
   --surface-700: #e2e8f0;
+  --surface-card: color-mix(in srgb, var(--surface-0) 96%, transparent);
+  --surface-section: #192334;
+  --surface-overlay: #1c2739;
+  --surface-border: #2e3b4f;
+  --surface-hover: color-mix(in srgb, var(--primary-color) 22%, transparent);
   --primary-200: #334155;
   --primary-400: #7c9bff;
   --primary-500: #8ea5ff;
   --primary-600: #a3b4ff;
   --primary-color: #a5b8ff;
+  --primary-color-text: #0b1120;
+  --highlight-bg: color-mix(in srgb, var(--primary-color) 45%, #111b2b);
+  --highlight-text-color: #0b1120;
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--primary-color) 55%, transparent);
+  --p-focus-ring-color: color-mix(in srgb, var(--primary-color) 65%, transparent);
 }
 
 html.dark-mode body {
@@ -65,8 +89,9 @@ main {
 }
 
 .surface-card {
-  background: var(--surface-0);
-  transition: background 0.2s ease;
+  background: var(--surface-card);
+  color: var(--text-color);
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .text-secondary {
@@ -79,27 +104,54 @@ main {
   font-family: inherit;
 }
 
-html.dark-mode .p-component {
+.p-component {
+  color: var(--text-color);
+}
+
+.p-component .p-highlight {
+  background: var(--highlight-bg);
+  color: var(--highlight-text-color);
+}
+
+.p-inputtext,
+.p-inputtextarea,
+.p-inputnumber-input,
+.p-dropdown {
+  color: inherit;
+}
+
+.p-listbox {
+  background: var(--surface-card);
+  color: var(--text-color);
+  border-color: color-mix(in srgb, var(--surface-border) 80%, transparent);
+}
+
+.p-listbox .p-listbox-header {
+  background: var(--surface-card);
+  color: var(--text-color);
+}
+
+.p-listbox .p-listbox-item {
+  color: var(--text-color);
+}
+
+.p-listbox .p-listbox-item.p-highlight {
+  background: var(--highlight-bg);
+  color: var(--highlight-text-color);
+}
+
+.p-listbox .p-listbox-item:not(.p-highlight):not(.p-disabled):hover,
+.p-listbox .p-listbox-item:not(.p-highlight):not(.p-disabled).p-focus {
+  background: var(--surface-hover);
   color: var(--text-color);
 }
 
 html.dark-mode .p-inputtext,
 html.dark-mode .p-inputtextarea,
 html.dark-mode .p-inputnumber-input,
-html.dark-mode .p-listbox,
-html.dark-mode .p-dropdown,
-html.dark-mode .p-button {
-  background-color: color-mix(in srgb, var(--surface-0) 40%, transparent);
-  border-color: color-mix(in srgb, var(--surface-300) 50%, transparent);
-  color: var(--text-color);
-}
-
-html.dark-mode .p-listbox .p-listbox-option {
-  color: var(--text-color);
-}
-
-html.dark-mode .p-listbox .p-listbox-option.p-highlight {
-  background: color-mix(in srgb, var(--primary-color) 25%, transparent);
+html.dark-mode .p-dropdown {
+  background-color: color-mix(in srgb, var(--surface-card) 94%, transparent);
+  border-color: color-mix(in srgb, var(--surface-border) 70%, transparent);
   color: var(--text-color);
 }
 
