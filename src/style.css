@@ -1,0 +1,49 @@
+:root {
+  font-family: 'Pretendard', 'Noto Sans KR', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--surface-ground);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root.theme-dark {
+  --surface-ground: #0f172a;
+  --surface-card: #111827;
+  --surface-section: #111827;
+  --surface-border: rgba(148, 163, 184, 0.24);
+  --text-color: #e2e8f0;
+  --text-color-secondary: #94a3b8;
+  --primary-color-text: #0f172a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--surface-ground);
+}
+
+:root.theme-dark body {
+  background-color: var(--surface-ground);
+  color: var(--text-color);
+}
+
+a {
+  color: inherit;
+}
+
+p {
+  margin-top: 0;
+}
+
+#app {
+  min-height: 100vh;
+}
