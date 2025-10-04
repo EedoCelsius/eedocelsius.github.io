@@ -1,0 +1,37 @@
+{
+  "name": "component-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Component Lab – a calm PrimeVue playground with i18n and dark mode.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "vue",
+    "primevue",
+    "component-lab"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@primevue/themes": "^4.4.0",
+    "primeflex": "^4.0.0",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.4.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.22",
+    "vue-i18n": "^9.14.5",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.2",
+    "@types/qrcode": "^1.5.5",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "vue-tsc": "^3.1.0"
+  }
+}
