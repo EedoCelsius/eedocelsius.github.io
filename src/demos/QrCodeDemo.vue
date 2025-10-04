@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import QrCodeCard from '@/components/library/QrCodeCard.vue'
+import QrCode from '@/components/library/QrCode.vue'
 
 defineProps<{
   content: string
@@ -11,6 +11,6 @@ defineProps<{
 
 <template>
   <div class="flex justify-center">
-    <QrCodeCard v-bind="$props" />
+    <QrCode v-bind="$props" />
   </div>
 </template>
