@@ -45,12 +45,12 @@ export const componentCatalog: LabComponentDefinition[] = [
     component: () => import('@/components/library/Spinner.vue'),
     preview: () => import('@/demos/SpinnerDemo.vue'),
     defaultProps: {
-      text: '25s',
-      size: 112,
-      thickness: 10,
-      textSize: 24,
-      indicatorColor: '#6366f1',
-      trackColor: 'rgba(148, 163, 184, 0.35)',
+      text: '',
+      size: 96,
+      thickness: 8,
+      textSize: 22,
+      indicatorColor: 'var(--p-primary-color)',
+      trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
     },
     controls: [
       {
@@ -112,9 +112,9 @@ export const componentCatalog: LabComponentDefinition[] = [
     preview: () => import('@/demos/QrCodeDemo.vue'),
     defaultProps: {
       content: 'https://component-lab.dev/welcome',
-      lightColor: '#ffffff',
-      darkColor: '#0f172a',
-      icon: '/component-lab-mark.svg',
+      lightColor: 'var(--p-surface-0)',
+      darkColor: 'var(--p-surface-900)',
+      icon: '',
     },
     controls: [
       {
@@ -161,8 +161,8 @@ export const componentCatalog: LabComponentDefinition[] = [
     preview: () => import('@/demos/BlurOverlayDemo.vue'),
     defaultProps: {
       visible: true,
-      blur: 14,
-      overlayColor: 'rgba(15, 23, 42, 0.45)',
+      blur: 7,
+      overlayColor: 'color-mix(in srgb, var(--p-surface-900) 45%, transparent)',
     },
     controls: [
       {
@@ -202,15 +202,15 @@ export const componentCatalog: LabComponentDefinition[] = [
     component: () => import('@/components/library/LoadingOverlay.vue'),
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
     defaultProps: {
-      visible: true,
-      blur: 18,
-      description: 'Fetching your dashboard data...',
-      overlayColor: 'rgba(15, 23, 42, 0.55)',
-      spinnerSize: 72,
-      spinnerThickness: 6,
-      spinnerTrackColor: 'rgba(255, 255, 255, 0.2)',
-      spinnerIndicatorColor: '#facc15',
-      spinnerText: 'Syncing',
+      visible: false,
+      blur: 7,
+      description: '',
+      overlayColor: 'color-mix(in srgb, var(--p-surface-900) 55%, transparent)',
+      spinnerSize: 48,
+      spinnerThickness: 4,
+      spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
+      spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
+      spinnerText: '',
     },
     controls: [
       {
