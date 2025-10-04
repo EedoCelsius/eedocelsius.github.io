@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Component Lab",
+    "tagline": "Vue, PrimeVue, Tailwind로 만든 개인용 컴포넌트 실험실입니다."
+  },
+  "nav": {
+    "home": "소개",
+    "lab": "컴포넌트 랩"
+  },
+  "actions": {
+    "toggleTheme": "테마 전환",
+    "changeLanguage": "언어"
+  },
+  "home": {
+    "welcome": "Vue, PrimeVue, Tailwind CSS, Vue Router로 만든 재사용 UI 블록을 확인하세요.",
+    "cta": "랩으로 이동"
+  },
+  "lab": {
+    "sidebarTitle": "컴포넌트",
+    "propsTitle": "프롭스",
+    "previewTitle": "프리뷰",
+    "notFound": "해당 컴포넌트를 찾을 수 없습니다. 목록에서 다른 항목을 선택하세요.",
+    "components": {
+      "qrCard": {
+        "name": "QR 코드 카드",
+        "description": "아이콘과 색상을 설정할 수 있는 QR 코드 카드입니다.",
+        "props": {
+          "content": "내용",
+          "lightColor": "밝은 색상",
+          "darkColor": "어두운 색상",
+          "icon": "아이콘 URL"
+        }
+      },
+      "blurOverlay": {
+        "name": "블러 오버레이",
+        "description": "배경을 부드럽게 흐리게 처리하여 강조합니다.",
+        "props": {
+          "blur": "블러 정도 (px)"
+        }
+      },
+      "loadingOverlay": {
+        "name": "로딩 오버레이",
+        "description": "블러 처리된 배경 위에 스피너와 문구를 표시합니다.",
+        "props": {
+          "blur": "블러 정도 (px)",
+          "description": "설명"
+        }
+      }
+    }
+  }
+}

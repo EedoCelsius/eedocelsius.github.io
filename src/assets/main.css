@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply transition-colors duration-300 ease-in-out bg-slate-100 text-slate-900;
+}
+
+body.dark {
+  @apply bg-slate-950 text-slate-100;
+}
+
+#app {
+  @apply min-h-screen font-sans;
+}
+
+.surface-card {
+  @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur shadow-lg rounded-2xl border border-slate-200/50 dark:border-slate-700/50;
+}
+
+.surface-section {
+  @apply bg-white/60 dark:bg-slate-900/60 backdrop-blur rounded-xl border border-slate-200/40 dark:border-slate-700/40 shadow;
+}
+
+.text-muted {
+  @apply text-slate-500 dark:text-slate-400;
+}
+
+input[type='text'],
+input[type='color'],
+textarea,
+select {
+  @apply w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800/80 px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:focus:ring-primary-500;
+}
+
+label {
+  @apply text-sm font-medium text-slate-700 dark:text-slate-200;
+}
+
+button {
+  @apply focus:outline-none;
+}
+
+.component-grid {
+  @apply grid gap-6 lg:grid-cols-[280px,1fr] items-start;
+}
+
+.component-panel {
+  @apply surface-section p-6 space-y-6;
+}
+
+.component-preview {
+  @apply surface-card p-8 flex items-center justify-center min-h-[360px];
+}
+
+.component-preview > * {
+  @apply w-full;
+}
+
+.control-group {
+  @apply space-y-2;
+}
