@@ -1,0 +1,65 @@
+{
+  "app": {
+    "title": "Component Lab",
+    "tagline": "차분한 분위기에서 나만의 Vue 컴포넌트를 실험하세요"
+  },
+  "navigation": {
+    "home": "소개",
+    "components": "컴포넌트"
+  },
+  "home": {
+    "hero": {
+      "title": "개인 라이브러리를 만들고 미리 다듬으세요",
+      "subtitle": "직접 만든 컴포넌트를 실험하고, 프롭을 조정하고, 실제 프로젝트에 사용할 준비를 하세요."
+    },
+    "components": {
+      "title": "준비된 컴포넌트",
+      "subtitle": "현재 모음을 둘러보고 각 컴포넌트의 실험실을 열어 자세히 살펴보세요."
+    }
+  },
+  "component": {
+    "notFound": "컴포넌트를 찾을 수 없습니다",
+    "controls": "컨트롤",
+    "reset": "기본값으로 초기화",
+    "preview": "미리보기",
+    "description": "설명",
+    "back": "소개로 돌아가기"
+  },
+  "componentsList": {
+    "qrCodeCard": {
+      "name": "QR 코드 카드",
+      "description": "중앙 아이콘과 은은한 스타일의 QR 코드를 만들어 보세요."
+    },
+    "blurOverlay": {
+      "name": "블러 오버레이",
+      "description": "부드러운 블러 효과와 자연스러운 전환을 적용합니다."
+    },
+    "loadingOverlay": {
+      "name": "로딩 오버레이",
+      "description": "스피너와 설명을 함께 보여주는 블러 로딩 상태입니다."
+    },
+    "appLink": {
+      "name": "링크",
+      "description": "아이콘과 강조 옵션을 지원하는 안정적인 텍스트 링크입니다."
+    }
+  },
+  "controls": {
+    "content": "내용",
+    "lightColor": "밝은 색상",
+    "darkColor": "짙은 색상",
+    "icon": "아이콘 URL",
+    "overlay": "오버레이 색상",
+    "blurAmount": "블러 강도",
+    "rounded": "모서리 둥글게",
+    "description": "설명",
+    "href": "링크",
+    "label": "라벨",
+    "target": "새 탭에서 열기",
+    "tone": "톤"
+  },
+  "labels": {
+    "preview": "라이브 미리보기",
+    "props": "프롭",
+    "playground": "컴포넌트 플레이그라운드"
+  }
+}

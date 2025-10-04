@@ -1,0 +1,65 @@
+{
+  "app": {
+    "title": "Component Lab",
+    "tagline": "A calm playground for personal Vue components"
+  },
+  "navigation": {
+    "home": "Overview",
+    "components": "Components"
+  },
+  "home": {
+    "hero": {
+      "title": "Build, preview, and refine your personal library",
+      "subtitle": "Experiment with handcrafted components, tune their props, and prepare them for real projects."
+    },
+    "components": {
+      "title": "Featured components",
+      "subtitle": "Browse the current collection and open each component's lab to explore it in depth."
+    }
+  },
+  "component": {
+    "notFound": "Component not found",
+    "controls": "Controls",
+    "reset": "Reset to defaults",
+    "preview": "Preview",
+    "description": "Description",
+    "back": "Back to overview"
+  },
+  "componentsList": {
+    "qrCodeCard": {
+      "name": "QR Code Card",
+      "description": "Generate a branded QR code with a centered icon and calm styling."
+    },
+    "blurOverlay": {
+      "name": "Blur Overlay",
+      "description": "Apply a soft blur effect with smooth transitions and slot content."
+    },
+    "loadingOverlay": {
+      "name": "Loading Overlay",
+      "description": "Display a blurred loading state with a spinner and optional description."
+    },
+    "appLink": {
+      "name": "Link",
+      "description": "A balanced textual link with optional icon and emphasis state."
+    }
+  },
+  "controls": {
+    "content": "Content",
+    "lightColor": "Light color",
+    "darkColor": "Dark color",
+    "icon": "Icon URL",
+    "overlay": "Overlay color",
+    "blurAmount": "Blur amount",
+    "rounded": "Rounded corners",
+    "description": "Description",
+    "href": "Link",
+    "label": "Label",
+    "target": "Open in new tab",
+    "tone": "Tone"
+  },
+  "labels": {
+    "preview": "Live preview",
+    "props": "Props",
+    "playground": "Component playground"
+  }
+}
