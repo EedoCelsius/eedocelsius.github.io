@@ -6,11 +6,6 @@ defineProps<{
   blur: number
   description: string
   overlayColor?: string
-  spinnerSize?: number
-  spinnerThickness?: number
-  spinnerTrackColor?: string
-  spinnerIndicatorColor?: string
-  spinnerLabel?: string
 }>()
 </script>
 
