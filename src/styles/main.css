@@ -69,6 +69,11 @@ main {
   transition: background 0.2s ease;
 }
 
+html.dark-mode .surface-card {
+  background: color-mix(in srgb, var(--surface-0) 92%, black 8%);
+  color: var(--text-color);
+}
+
 .text-secondary {
   color: var(--text-color-secondary);
 }
@@ -99,8 +104,14 @@ html.dark-mode .p-listbox .p-listbox-option {
 }
 
 html.dark-mode .p-listbox .p-listbox-option.p-highlight {
-  background: color-mix(in srgb, var(--primary-color) 25%, transparent);
-  color: var(--text-color);
+  background: var(--primary-500);
+  color: #0b1120;
+  font-weight: 600;
+}
+
+.p-listbox .p-listbox-option:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
 }
 
 .container-narrow {
