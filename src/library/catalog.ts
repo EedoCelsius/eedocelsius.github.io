@@ -33,6 +33,72 @@ export interface LabComponentDefinition {
 
 export const componentCatalog: LabComponentDefinition[] = [
   {
+    id: 'spinner',
+    name: {
+      en: 'Spinner',
+      ko: '스피너',
+    },
+    description: {
+      en: 'Animated circular spinner with optional centered text sizing.',
+      ko: '중앙 텍스트 크기를 조절할 수 있는 회전형 스피너입니다.',
+    },
+    component: () => import('@/components/library/Spinner.vue'),
+    preview: () => import('@/demos/SpinnerDemo.vue'),
+    defaultProps: {
+      text: '25s',
+      size: 112,
+      thickness: 10,
+      textSize: 24,
+      indicatorColor: '#6366f1',
+      trackColor: 'rgba(148, 163, 184, 0.35)',
+    },
+    controls: [
+      {
+        key: 'text',
+        type: 'text',
+        label: { en: 'Text', ko: '텍스트' },
+        helperText: {
+          en: 'Content displayed at the center of the spinner.',
+          ko: '스피너 중앙에 표시할 텍스트입니다.',
+        },
+      },
+      {
+        key: 'size',
+        type: 'slider',
+        label: { en: 'Diameter', ko: '지름' },
+        min: 48,
+        max: 192,
+        step: 4,
+      },
+      {
+        key: 'thickness',
+        type: 'slider',
+        label: { en: 'Ring Thickness', ko: '테두리 두께' },
+        min: 2,
+        max: 20,
+        step: 1,
+      },
+      {
+        key: 'textSize',
+        type: 'slider',
+        label: { en: 'Text Size', ko: '텍스트 크기' },
+        min: 12,
+        max: 48,
+        step: 1,
+      },
+      {
+        key: 'indicatorColor',
+        type: 'color',
+        label: { en: 'Indicator Color', ko: '인디케이터 색상' },
+      },
+      {
+        key: 'trackColor',
+        type: 'color',
+        label: { en: 'Track Color', ko: '트랙 색상' },
+      },
+    ],
+  },
+  {
     id: 'qr-code',
     name: {
       en: 'QR Code',
@@ -130,8 +196,8 @@ export const componentCatalog: LabComponentDefinition[] = [
       ko: '로딩 오버레이',
     },
     description: {
-      en: 'Displays a PrimeVue spinner with optional description over blurred content.',
-      ko: '블러 처리된 콘텐츠 위에 설명이 포함된 PrimeVue 스피너를 표시합니다.',
+      en: 'Displays the shared spinner with optional text and description over blurred content.',
+      ko: '블러 처리된 콘텐츠 위에 공유 스피너와 선택적인 텍스트·설명을 표시합니다.',
     },
     component: () => import('@/components/library/LoadingOverlay.vue'),
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
