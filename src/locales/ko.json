@@ -1,0 +1,31 @@
+{
+  "app": {
+    "tagline": "PrimeVue 기반의 실험적인 익스피리언스 컴포넌트",
+    "previewDeeplink": "딥링크 체험하기",
+    "componentExplorer": "컴포넌트 탐색기",
+    "openPlayground": "플레이그라운드 열기",
+    "props": "프로퍼티",
+    "actions": "액션",
+    "trigger": "트리거 실행",
+    "reset": "초기화",
+    "preview": "미리보기"
+  },
+  "home": {
+    "subtitle": "자주 사용하는 딥링크/앱 경험을 컴포넌트로 재사용할 수 있도록 구성했습니다.",
+    "comingSoon": "곧 더 많은 컴포넌트를 추가할 예정입니다."
+  },
+  "preview": {
+    "notFound": "등록되지 않은 컴포넌트입니다.",
+    "back": "목록으로 돌아가기"
+  },
+  "deeplink": {
+    "desktopTitle": "모바일에서만 이용할 수 있어요",
+    "desktopMessage": "{app} 링크는 모바일에서 열려요. 휴대폰으로 QR 코드를 스캔해 주세요.",
+    "desktopScan": "스캔해서 {app} 앱으로 이동합니다.",
+    "mobileLaunching": "앱 실행을 시도하는 중...",
+    "mobileFallbackTitle": "앱이 실행되지 않았나요?",
+    "mobileFallbackMessage": "{timeout}초 내에 앱이 실행되지 않으면 설치를 안내합니다.",
+    "installCta": "앱 설치 안내",
+    "close": "확인"
+  }
+}
