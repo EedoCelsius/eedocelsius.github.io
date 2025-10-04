@@ -1,0 +1,68 @@
+{
+  "app": {
+    "title": "Component Lab",
+    "tagline": "A calm playground for handcrafted PrimeVue components.",
+    "footer": "Crafted with Vue 3, PrimeVue, and love."
+  },
+  "nav": {
+    "home": "Home",
+    "playground": "Playground"
+  },
+  "common": {
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "madeBy": "Component Lab"
+  },
+  "home": {
+    "heroTitle": "Experiment with thoughtful UI building blocks.",
+    "heroDescription": "Preview, localize, and theme reusable components that are ready to drop into your next interface.",
+    "cta": "Open the playground",
+    "featureShowcase": "Component showcase",
+    "featureLocalisation": "Bilingual ready",
+    "featureDesign": "Calm design system",
+    "featureShowcaseDesc": "Each block ships with documentation, live props, and layout previews.",
+    "featureLocalisationDesc": "Switch effortlessly between English and Korean copy.",
+    "featureDesignDesc": "Dark mode aware colors and gentle spacing keep things focused.",
+    "latestComponents": "Latest components"
+  },
+  "playground": {
+    "title": "Component playground",
+    "description": "Select a component and fine-tune its props to experience it in different contexts.",
+    "chooseComponent": "Choose a component",
+    "props": "Props",
+    "noComponent": "Pick a component from the list to start exploring.",
+    "reset": "Reset props"
+  },
+  "components": {
+    "qrCodeCard": {
+      "name": "QR code card",
+      "description": "Present scannable links alongside helpful context and brand styling.",
+      "content": "Content",
+      "lightColor": "Light color",
+      "darkColor": "Dark color",
+      "icon": "Icon URL"
+    },
+    "blurOverlay": {
+      "name": "Blur overlay",
+      "description": "Dim the background with a soft blur to keep focus on the foreground.",
+      "active": "Show overlay",
+      "blurStrength": "Blur strength"
+    },
+    "loadingOverlay": {
+      "name": "Loading overlay",
+      "description": "Use the blur overlay with a spinner and helpful status copy.",
+      "descriptionLabel": "Description",
+      "active": "Show loader"
+    },
+    "labLink": {
+      "name": "Lab link",
+      "description": "A calm link style with icon support for navigation and CTAs.",
+      "label": "Label",
+      "href": "URL",
+      "target": "Open in new tab",
+      "icon": "Icon class"
+    }
+  }
+}
