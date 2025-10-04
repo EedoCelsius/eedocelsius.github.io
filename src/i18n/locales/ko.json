@@ -1,0 +1,79 @@
+{
+  "app": {
+    "title": "Component Lab",
+    "tagline": "배포 전 컴포넌트 경험을 빠르게 실험하세요",
+    "language": "언어",
+    "theme": {
+      "light": "라이트",
+      "dark": "다크"
+    }
+  },
+  "nav": {
+    "home": "홈",
+    "components": "컴포넌트"
+  },
+  "home": {
+    "heroTitle": "한 번 만들고 어디서든 검증하세요",
+    "heroSubtitle": "각 인터랙션을 미리 보고, 실시간으로 props를 조정한 뒤 자신 있게 출시하세요.",
+    "getStarted": "플레이그라운드 열기",
+    "componentCount": "현재 {count}개의 컴포넌트 제공",
+    "comingSoon": "곧 더 많은 컴포넌트가 추가될 예정입니다."
+  },
+  "component": {
+    "overview": "개요",
+    "props": "Props",
+    "actions": {
+      "trigger": "트리거",
+      "reset": "초기화"
+    },
+    "empty": "컴포넌트 정보를 찾을 수 없습니다.",
+    "samples": "샘플 값"
+  },
+  "controls": {
+    "appName": "앱 이름",
+    "deeplinkUrl": "딥링크 URL",
+    "icon": "아이콘 URL",
+    "timeout": "대기 시간(초)"
+  },
+  "catalog": {
+    "deeplink": {
+      "name": "딥링크 경험",
+      "summary": "데스크톱과 모바일 사이에서 자연스럽게 이동하거나 모바일 앱을 즉시 실행합니다.",
+      "description": [
+        "버튼, 배너, 자동화 단계 등 다양한 컴포넌트에서 재사용할 수 있는 트리거형 경험입니다.",
+        "접속 기기를 판별해 데스크톱에서는 QR 코드 안내를, 모바일에서는 즉시 실행과 우아한 폴백을 제공합니다."
+      ],
+      "props": {
+        "appName": "다이얼로그와 오버레이 전반에서 제품명을 일관되게 노출할 때 사용합니다.",
+        "deeplinkUrl": "실제로 호출되거나 QR 코드로 인코딩되는 네이티브 딥링크입니다.",
+        "icon": "QR 코드 중앙에 표시되어 브랜드를 강조하는 정사각형 아이콘입니다.",
+        "timeout": "모바일에서 설치 안내 다이얼로그를 띄우기 전까지 대기하는 시간(초)입니다."
+      },
+      "notes": {
+        "desktop": "데스크톱 사용자는 휴대폰으로 이어서 진행할 수 있도록 브랜드가 반영된 QR 코드를 확인합니다.",
+        "mobile": "모바일 사용자는 딥링크 시도 동안 로딩 스피너를 보고, 제한 시간 내 응답이 없으면 설치 안내를 받습니다."
+      }
+    }
+  },
+  "deeplink": {
+    "labels": {
+      "desktopDialogTitle": "모바일에서만 이용 가능",
+      "desktopDialogMessage": "{appName}은(는) 모바일에서만 열립니다. 휴대폰으로 QR 코드를 스캔해 주세요.",
+      "desktopDialogHint": "{appName} 실행하기",
+      "mobileDialogTitle": "{appName} 설치 안내",
+      "mobileDialogMessage": "{seconds}초 안에 앱이 실행되지 않았어요. 설치 후 다시 시도해 주세요.",
+      "mobileOverlay": "{appName} 실행 중..."
+    },
+    "buttons": {
+      "close": "닫기",
+      "tryAgain": "다시 시도"
+    }
+  },
+  "playground": {
+    "title": "{component} 플레이그라운드",
+    "subtitle": "Props를 조정하고 동작을 직접 실행해 보세요.",
+    "technicalDetails": "기술 정보",
+    "mobilePreview": "모바일 시나리오",
+    "desktopPreview": "데스크톱 안내"
+  }
+}
