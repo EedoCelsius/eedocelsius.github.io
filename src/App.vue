@@ -91,17 +91,17 @@ watch(
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-surface-50 via-white to-primary-50/30 text-slate-800 transition-colors dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 dark:text-slate-100">
-    <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/70 backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/70">
+  <div class="min-h-screen bg-gradient-to-br from-surface-50 via-surface-0 to-primary-50/30 text-surface-800 transition-colors dark:from-surface-950 dark:via-surface-950 dark:to-surface-900 dark:text-surface-0">
+    <header class="sticky top-0 z-40 border-b border-surface-200/70 bg-surface-0/70 backdrop-blur dark:border-surface-800/70 dark:bg-surface-950/70">
       <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
         <RouterLink to="/" class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
-          <span class="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{{ t('app.title') }}</span>
-          <span class="text-sm text-slate-500 dark:text-slate-400">{{ t('app.tagline') }}</span>
+          <span class="text-xl font-semibold tracking-tight text-surface-900 dark:text-surface-0">{{ t('app.title') }}</span>
+          <span class="text-sm text-surface-500 dark:text-surface-300">{{ t('app.tagline') }}</span>
         </RouterLink>
         <div class="flex items-center gap-3">
           <nav
             aria-label="Language switcher"
-            class="flex rounded-full border border-slate-200/70 bg-white/80 p-1 shadow-sm backdrop-blur dark:border-slate-700/70 dark:bg-slate-800/80"
+            class="flex rounded-full border border-surface-200/70 bg-surface-0/80 p-1 shadow-sm backdrop-blur dark:border-surface-700/70 dark:bg-surface-800/80"
           >
             <button
               v-for="option in languageOptions"
@@ -110,8 +110,8 @@ watch(
               class="rounded-full px-3 py-1.5 text-sm font-medium transition-colors"
               :class="
                 locale === option.value
-                  ? 'bg-primary-500 text-white shadow-sm'
-                  : 'text-slate-600 dark:text-slate-300 hover:text-primary-500'
+                  ? 'bg-primary-500 text-primary-contrast shadow-sm'
+                  : 'text-surface-600 dark:text-surface-300 hover:text-primary-500'
               "
               @click="setLocale(option.value)"
             >
@@ -120,7 +120,7 @@ watch(
           </nav>
           <button
             type="button"
-            class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/70 bg-white/90 text-slate-600 shadow-sm transition-colors hover:text-primary-500 dark:border-slate-700/70 dark:bg-slate-800/80 dark:text-slate-300"
+            class="flex h-10 w-10 items-center justify-center rounded-full border border-surface-200/70 bg-surface-0/90 text-surface-600 shadow-sm transition-colors hover:text-primary-500 dark:border-surface-700/70 dark:bg-surface-800/80 dark:text-surface-300"
             :title="t('app.themeToggle')"
             @click="toggleTheme"
           >

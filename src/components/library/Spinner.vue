@@ -15,8 +15,8 @@ const props = withDefaults(
     size: 96,
     thickness: 8,
     textSize: 22,
-    trackColor: 'rgba(148, 163, 184, 0.35)',
-    indicatorColor: '#6366f1',
+    trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
+    indicatorColor: 'var(--p-primary-color)',
   }
 )
 
@@ -57,7 +57,7 @@ const liveRegionRole = computed(() => (accessibleLabel.value ? 'status' : undefi
   >
     <div
       v-if="hasText"
-      class="pointer-events-none absolute inset-0 flex items-center justify-center font-semibold text-slate-700 dark:text-slate-100"
+      class="pointer-events-none absolute inset-0 flex items-center justify-center font-semibold text-surface-700 dark:text-surface-0"
       :style="textStyle"
       aria-hidden="true"
     >

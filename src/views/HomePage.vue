@@ -24,8 +24,8 @@ const localizedComponents = computed(() =>
   <section class="space-y-4">
     <div class="space-y-3">
       <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary-500">Component Lab</p>
-      <h1 class="text-4xl font-semibold text-slate-900 dark:text-slate-100">{{ t('home.title') }}</h1>
-      <p class="max-w-2xl text-base text-slate-600 dark:text-slate-300">{{ t('home.description') }}</p>
+      <h1 class="text-4xl font-semibold text-surface-900 dark:text-surface-0">{{ t('home.title') }}</h1>
+      <p class="max-w-2xl text-base text-surface-600 dark:text-surface-300">{{ t('home.description') }}</p>
     </div>
     <div class="grid gap-6 md:grid-cols-2">
       <article
@@ -34,12 +34,12 @@ const localizedComponents = computed(() =>
         class="card-surface flex flex-col justify-between gap-6 p-6"
       >
         <div class="space-y-3">
-          <h2 class="text-2xl font-semibold text-slate-900 dark:text-slate-100">{{ component.localizedName }}</h2>
-          <p class="text-sm text-slate-600 dark:text-slate-300">{{ component.localizedDescription }}</p>
+          <h2 class="text-2xl font-semibold text-surface-900 dark:text-surface-0">{{ component.localizedName }}</h2>
+          <p class="text-sm text-surface-600 dark:text-surface-300">{{ component.localizedDescription }}</p>
         </div>
         <RouterLink
           :to="`/components/${component.id}`"
-          class="inline-flex items-center gap-2 self-start rounded-full bg-primary-500 px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-primary-400"
+          class="inline-flex items-center gap-2 self-start rounded-full bg-primary-500 px-4 py-2 text-sm font-medium text-primary-contrast shadow-soft transition hover:bg-primary-400"
         >
           {{ t('home.openPlayground') }}
           <i class="pi pi-arrow-right text-xs"></i>

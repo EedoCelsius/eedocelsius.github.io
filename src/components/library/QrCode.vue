@@ -10,8 +10,8 @@ const props = withDefaults(
     icon?: string
   }>(),
   {
-    lightColor: '#ffffff',
-    darkColor: '#0f172a',
+    lightColor: 'var(--p-surface-0)',
+    darkColor: 'var(--p-surface-900)',
     icon: '',
   }
 )
@@ -21,7 +21,7 @@ const hasIcon = computed(() => Boolean(props.icon?.trim()))
 
 <template>
   <section class="flex flex-col items-center text-center">
-    <div class="relative rounded-3xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="relative rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm dark:border-surface-700 dark:bg-surface-900">
       <QrcodeVue
         :value="props.content"
         :size="220"
@@ -36,7 +36,7 @@ const hasIcon = computed(() => Boolean(props.icon?.trim()))
         aria-hidden="true"
       >
         <span
-          class="flex h-16 w-16 items-center justify-center rounded-2xl border-4 border-white/80 bg-white/90 shadow-lg backdrop-blur dark:border-slate-900/70 dark:bg-slate-900/80"
+          class="flex h-16 w-16 items-center justify-center rounded-2xl border-4 border-surface-0/80 bg-surface-0/90 shadow-lg backdrop-blur dark:border-surface-900/70 dark:bg-surface-900/80"
         >
           <img :src="props.icon" alt="" class="h-10 w-10 object-contain" />
         </span>

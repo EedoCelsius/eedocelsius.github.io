@@ -19,11 +19,11 @@ const props = withDefaults(
     visible: false,
     blur: 7,
     description: '',
-    overlayColor: 'rgba(15, 23, 42, 0.55)',
+    overlayColor: 'color-mix(in srgb, var(--p-surface-900) 55%, transparent)',
     spinnerSize: 48,
     spinnerThickness: 4,
-    spinnerTrackColor: 'rgba(255, 255, 255, 0.25)',
-    spinnerIndicatorColor: '#ffffff',
+    spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
+    spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
     spinnerText: '',
   }
 )
@@ -37,7 +37,7 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
       <slot />
     </template>
     <template #overlay>
-      <div class="flex flex-col items-center gap-4 text-center text-white" aria-live="polite">
+      <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
         <Spinner
           :size="props.spinnerSize"
           :thickness="props.spinnerThickness"
@@ -46,7 +46,7 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
           :text="props.spinnerText"
           :text-size="18"
         />
-        <p v-if="hasDescription" class="max-w-xs text-sm text-white/80">{{ props.description }}</p>
+        <p v-if="hasDescription" class="max-w-xs text-sm text-surface-0/80">{{ props.description }}</p>
       </div>
     </template>
   </BlurOverlay>
