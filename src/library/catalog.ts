@@ -33,6 +33,82 @@ export interface LabComponentDefinition {
 
 export const componentCatalog: LabComponentDefinition[] = [
   {
+    id: 'spin-timer',
+    name: {
+      en: 'Spin Timer',
+      ko: '스핀 타이머',
+    },
+    description: {
+      en: 'Animated circular timer with a centered, size-adjustable value.',
+      ko: '중앙 값의 크기를 조절할 수 있는 회전형 원형 타이머입니다.',
+    },
+    component: () => import('@/components/library/SpinTimer.vue'),
+    preview: () => import('@/demos/SpinTimerDemo.vue'),
+    defaultProps: {
+      value: '25s',
+      size: 112,
+      thickness: 10,
+      textSize: 24,
+      indicatorColor: '#6366f1',
+      trackColor: 'rgba(148, 163, 184, 0.35)',
+      label: 'Remaining time 25 seconds',
+    },
+    controls: [
+      {
+        key: 'value',
+        type: 'text',
+        label: { en: 'Value', ko: '값' },
+        helperText: {
+          en: 'Text or number displayed at the center of the timer.',
+          ko: '타이머 중앙에 표시할 텍스트 또는 숫자입니다.',
+        },
+      },
+      {
+        key: 'size',
+        type: 'slider',
+        label: { en: 'Diameter', ko: '지름' },
+        min: 48,
+        max: 192,
+        step: 4,
+      },
+      {
+        key: 'thickness',
+        type: 'slider',
+        label: { en: 'Ring Thickness', ko: '테두리 두께' },
+        min: 2,
+        max: 20,
+        step: 1,
+      },
+      {
+        key: 'textSize',
+        type: 'slider',
+        label: { en: 'Text Size', ko: '텍스트 크기' },
+        min: 12,
+        max: 48,
+        step: 1,
+      },
+      {
+        key: 'indicatorColor',
+        type: 'color',
+        label: { en: 'Indicator Color', ko: '인디케이터 색상' },
+      },
+      {
+        key: 'trackColor',
+        type: 'color',
+        label: { en: 'Track Color', ko: '트랙 색상' },
+      },
+      {
+        key: 'label',
+        type: 'text',
+        label: { en: 'Accessible Label', ko: '접근성 레이블' },
+        helperText: {
+          en: 'Optional description read by screen readers.',
+          ko: '스크린 리더가 읽어 주는 선택적 설명입니다.',
+        },
+      },
+    ],
+  },
+  {
     id: 'qr-code',
     name: {
       en: 'QR Code',
@@ -130,8 +206,8 @@ export const componentCatalog: LabComponentDefinition[] = [
       ko: '로딩 오버레이',
     },
     description: {
-      en: 'Displays a PrimeVue spinner with optional description over blurred content.',
-      ko: '블러 처리된 콘텐츠 위에 설명이 포함된 PrimeVue 스피너를 표시합니다.',
+      en: 'Displays a reusable progress spinner with optional description over blurred content.',
+      ko: '블러 처리된 콘텐츠 위에 재사용 가능한 프로그레스 스피너와 설명을 표시합니다.',
     },
     component: () => import('@/components/library/LoadingOverlay.vue'),
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
