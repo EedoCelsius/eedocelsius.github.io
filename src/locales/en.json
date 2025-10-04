@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Component Lab",
+    "tagline": "A focused playground for personal Vue components."
+  },
+  "nav": {
+    "home": "Overview",
+    "lab": "Component Lab"
+  },
+  "actions": {
+    "toggleTheme": "Toggle theme",
+    "changeLanguage": "Language"
+  },
+  "home": {
+    "welcome": "Explore reusable UI blocks built with Vue, PrimeVue, Tailwind CSS, and Vue Router.",
+    "cta": "Jump into the lab"
+  },
+  "lab": {
+    "sidebarTitle": "Components",
+    "propsTitle": "Props",
+    "previewTitle": "Preview",
+    "notFound": "Component not found. Choose another from the list.",
+    "components": {
+      "qrCard": {
+        "name": "QR Code Card",
+        "description": "Generate a QR code card with a centered brand icon and custom colors.",
+        "props": {
+          "content": "Content",
+          "lightColor": "Light color",
+          "darkColor": "Dark color",
+          "icon": "Icon URL"
+        }
+      },
+      "blurOverlay": {
+        "name": "Blur Overlay",
+        "description": "Softly blur the content behind an overlay for emphasis.",
+        "props": {
+          "blur": "Blur level (px)"
+        }
+      },
+      "loadingOverlay": {
+        "name": "Loading Overlay",
+        "description": "Dim the background with blur and show a calm spinner with text.",
+        "props": {
+          "blur": "Blur level (px)",
+          "description": "Description"
+        }
+      }
+    }
+  }
+}
