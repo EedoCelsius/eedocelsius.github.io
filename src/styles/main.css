@@ -1,0 +1,110 @@
+@layer reset, app-styles;
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--app-background);
+    color: var(--text-color);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+:root {
+  color-scheme: light;
+  --app-background: #f6f7fb;
+  --text-color: #1f2933;
+  --text-color-secondary: #5f6c7b;
+  --surface-0: #ffffff;
+  --surface-100: #f4f5f7;
+  --surface-300: #d9dde5;
+  --surface-700: #3d4754;
+  --primary-200: #d6e4ff;
+  --primary-400: #7698ff;
+  --primary-500: #5c7cfa;
+  --primary-600: #4b6ddf;
+  --primary-color: #4c6fff;
+}
+
+html.dark-mode {
+  color-scheme: dark;
+  --app-background: #111827;
+  --text-color: #f9fafb;
+  --text-color-secondary: #cbd5f5;
+  --surface-0: #1f2937;
+  --surface-100: #1a2333;
+  --surface-300: #273447;
+  --surface-700: #e2e8f0;
+  --primary-200: #334155;
+  --primary-400: #7c9bff;
+  --primary-500: #8ea5ff;
+  --primary-600: #a3b4ff;
+  --primary-color: #a5b8ff;
+}
+
+html.dark-mode body {
+  background: var(--app-background);
+}
+
+body {
+  min-height: 100vh;
+}
+
+main {
+  background: transparent;
+}
+
+.surface-card {
+  background: var(--surface-0);
+  transition: background 0.2s ease;
+}
+
+.text-secondary {
+  color: var(--text-color-secondary);
+}
+
+.p-dropdown,
+.p-inputtext,
+.p-button {
+  font-family: inherit;
+}
+
+html.dark-mode .p-component {
+  color: var(--text-color);
+}
+
+html.dark-mode .p-inputtext,
+html.dark-mode .p-inputtextarea,
+html.dark-mode .p-inputnumber-input,
+html.dark-mode .p-listbox,
+html.dark-mode .p-dropdown,
+html.dark-mode .p-button {
+  background-color: color-mix(in srgb, var(--surface-0) 40%, transparent);
+  border-color: color-mix(in srgb, var(--surface-300) 50%, transparent);
+  color: var(--text-color);
+}
+
+html.dark-mode .p-listbox .p-listbox-option {
+  color: var(--text-color);
+}
+
+html.dark-mode .p-listbox .p-listbox-option.p-highlight {
+  background: color-mix(in srgb, var(--primary-color) 25%, transparent);
+  color: var(--text-color);
+}
+
+.container-narrow {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
