@@ -33,17 +33,17 @@ export interface LabComponentDefinition {
 
 export const componentCatalog: LabComponentDefinition[] = [
   {
-    id: 'qr-code-card',
+    id: 'qr-code',
     name: {
-      en: 'QR Code Card',
-      ko: 'QR 코드 카드',
+      en: 'QR Code',
+      ko: 'QR 코드',
     },
     description: {
-      en: 'Generate a branded QR card with custom colors and a centered logo.',
-      ko: '사용자 지정 색상과 중앙 로고를 포함한 QR 카드입니다.',
+      en: 'Display a clean QR code with optional brand colors and a center icon.',
+      ko: '브랜드 색상과 중앙 아이콘을 선택해 깔끔한 QR 코드를 보여줍니다.',
     },
-    component: () => import('@/components/library/QrCodeCard.vue'),
-    preview: () => import('@/demos/QrCodeCardDemo.vue'),
+    component: () => import('@/components/library/QrCode.vue'),
+    preview: () => import('@/demos/QrCodeDemo.vue'),
     defaultProps: {
       content: 'https://component-lab.dev/welcome',
       lightColor: '#ffffff',
