@@ -81,12 +81,6 @@ const { t } = useI18n();
   background-color: color-mix(in srgb, var(--primary-200) 15%, transparent);
 }
 
-.nav-link:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--primary-color) 55%, transparent);
-  outline-offset: 2px;
-  color: var(--text-color);
-}
-
 .nav-link.is-active {
   color: var(--primary-color);
   background-color: color-mix(in srgb, var(--primary-200) 30%, transparent);
