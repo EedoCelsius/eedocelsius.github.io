@@ -1,0 +1,59 @@
+{
+  "app": {
+    "title": "컴포넌트 실험실",
+    "tagline": "Component Lab",
+    "language": "언어",
+    "theme": {
+      "toggle": "테마 전환",
+      "light": "라이트",
+      "dark": "다크"
+    },
+    "github": "GitHub에서 보기",
+    "footer": "Vue 3와 PrimeVue, 그리고 열정으로 만든 실험실입니다."
+  },
+  "home": {
+    "hero": {
+      "title": "프로덕션 준비가 된 UI 패턴을 실험해 보세요",
+      "highlight": "컴포넌트 실험실",
+      "subtitle": "재사용 가능한 모바일 우선 컴포넌트들을 탐색하고, 프롭스를 조정하며, 실제 동작을 확인하면서 더 빠르게 제품을 완성해 보세요."
+    },
+    "componentList": {
+      "title": "사용 가능한 컴포넌트",
+      "comingSoon": "곧 더 많은 블록이 추가됩니다."
+    }
+  },
+  "playground": {
+    "controls": "프롭 제어",
+    "preview": "라이브 미리보기",
+    "trigger": "딥링크 실행",
+    "reset": "기본값으로 초기화",
+    "documentation": "컴포넌트 문서",
+    "notFound": "아직 등록되지 않은 컴포넌트입니다.",
+    "back": "컴포넌트 목록으로"
+  },
+  "deeplink": {
+    "overview": "디바이스 환경에 맞춰 자연스러운 딥링크 경험을 제공합니다.",
+    "desktop": {
+      "title": "모바일에서만 이용할 수 있어요",
+      "description": "{app}은(는) 모바일에서만 열 수 있습니다. 휴대폰 카메라로 QR 코드를 스캔해 주세요.",
+      "help": "QR 코드를 스캔하면 휴대폰에서 앱이 열려요.",
+      "confirm": "확인"
+    },
+    "mobile": {
+      "loading": "{app}을(를) 여는 중입니다...",
+      "fallbackTitle": "{app}이(가) 열리지 않나요?",
+      "fallbackDescription": "앱이 실행되지 않은 것 같아요. {app}을(를) 설치하거나 업데이트한 뒤 다시 시도해 주세요.",
+      "tryAgain": "다시 시도",
+      "timeoutLabel": "약 {seconds}초 뒤에 안내 창이 표시돼요"
+    },
+    "qr": {
+      "alt": "{app}용 QR 코드"
+    },
+    "props": {
+      "appName": "앱 이름",
+      "deeplinkUrl": "딥링크 URL",
+      "icon": "아이콘 URL",
+      "timeout": "타임아웃 (초)"
+    }
+  }
+}
