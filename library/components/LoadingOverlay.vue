@@ -2,17 +2,16 @@
 export const defaultProps = {
   visible: true,
   blur: 7,
-  description: '',
   overlayColor: 'rgba(0, 0, 0, 0.25)',
   spinnerSize: 48,
   spinnerThickness: 4,
   spinnerText: '',
+  description: '',
 } as const
 
 export type props = {
   visible?: boolean
   blur?: number
-  description?: string
   overlayColor?: string
   spinnerSize?: number
   spinnerThickness?: number
@@ -21,6 +20,7 @@ export type props = {
   spinnerText?: string | number
   spinnerTextSize?: number
   spinnerTextColor?: string
+  description?: string
 }
 </script>
 
