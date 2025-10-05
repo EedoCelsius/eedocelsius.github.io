@@ -22,10 +22,6 @@ const props = withDefaults(
 )
 
 const { resolver: colorResolver, resolveColorValue } = createColorResolver()
-
-const lightColor = computed(() => resolveColorValue(props.lightColor))
-const darkColor = computed(() => resolveColorValue(props.darkColor))
-const hasIcon = computed(() => Boolean(props.icon?.trim()))
 </script>
 
 <template>
@@ -34,13 +30,13 @@ const hasIcon = computed(() => Boolean(props.icon?.trim()))
       <QrcodeVue
         :value="props.content"
         :size="220"
-        :foreground="darkColor"
-        :background="lightColor"
+        :foreground="resolveColorValue(props.darkColor)"
+        :background="resolveColorValue(props.lightColor)"
         level="H"
         class="block"
       />
       <div
-        v-if="hasIcon"
+        v-if="props.icon?.trim()"
         class="absolute inset-0 flex items-center justify-center"
         aria-hidden="true"
       >
