@@ -1,3 +1,11 @@
+<script lang="ts">
+export const blurOverlayDefaultProps = {
+  visible: true,
+  blur: 7,
+  overlayColor: 'color-mix(in srgb, var(--p-surface-900) 45%, transparent)',
+} as const
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue'
 
@@ -7,11 +15,7 @@ const props = withDefaults(
     blur?: number
     overlayColor?: string
   }>(),
-  {
-    visible: true,
-    blur: 7,
-    overlayColor: 'color-mix(in srgb, var(--p-surface-900) 45%, transparent)',
-  }
+  blurOverlayDefaultProps
 )
 
 const overlayStyle = computed(() => ({

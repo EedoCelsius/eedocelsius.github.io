@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, reactive, watch } from 'vue'
-import type { AsyncComponentLoader } from 'vue'
+import { computed, defineAsyncComponent, nextTick, reactive, watch } from 'vue'
+import type { AsyncComponentLoader, ComponentPublicInstance } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElColorPicker } from 'element-plus'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
-import { getComponentDefinition } from '@/library/catalog'
+import { getComponentDefinition, loadComponentDefaultProps } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
@@ -16,26 +16,88 @@ const { t, locale } = useI18n()
 
 const definition = computed<LabComponentDefinition | undefined>(() => getComponentDefinition(props.componentId))
 
-const cloneProps = (value: Record<string, PlaygroundPropValue>) =>
-  JSON.parse(JSON.stringify(value)) as Record<string, PlaygroundPropValue>
-
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
+const colorPickerValues = reactive<Record<string, string>>({})
+const colorSampleRefs = new Map<string, HTMLElement>()
 
-const resetProps = () => {
+const syncColorPickerForKey = (key: string) => {
+  const sample = colorSampleRefs.get(key)
+  if (!sample) {
+    return
+  }
+
+  const rawValue = (currentProps[key] as string | undefined) ?? ''
+
+  if (!rawValue) {
+    sample.style.color = 'transparent'
+    colorPickerValues[key] = ''
+    return
+  }
+
+  sample.style.color = rawValue
+  const computedColor = getComputedStyle(sample).color
+  colorPickerValues[key] = computedColor
+}
+
+const syncAllColorPickers = () => {
   if (!definition.value) {
     return
   }
 
-  const defaults = cloneProps(definition.value.defaultProps)
+  for (const control of definition.value.controls) {
+    if (control.type === 'color') {
+      syncColorPickerForKey(control.key)
+    }
+  }
+}
+
+const setColorSampleRef = (key: string) => (el: Element | ComponentPublicInstance | null) => {
+  if (el instanceof HTMLElement) {
+    colorSampleRefs.set(key, el)
+    syncColorPickerForKey(key)
+  } else {
+    colorSampleRefs.delete(key)
+  }
+}
+
+const handleColorInput = (key: string, event: Event) => {
+  const target = event.target as HTMLInputElement | null
+  if (target) {
+    currentProps[key] = target.value
+  }
+  syncColorPickerForKey(key)
+}
+
+const handleColorPickerChange = (key: string, value: string | null) => {
+  const normalized = value ?? ''
+  colorPickerValues[key] = normalized
+  currentProps[key] = normalized
+  void nextTick(() => {
+    syncColorPickerForKey(key)
+  })
+}
+
+const resetProps = async () => {
+  if (!definition.value) {
+    return
+  }
+
+  const defaults = await loadComponentDefaultProps(definition.value.id)
   Object.keys(currentProps).forEach((key) => delete currentProps[key])
   Object.assign(currentProps, defaults)
+  Object.keys(colorPickerValues).forEach((key) => delete colorPickerValues[key])
+  await nextTick()
+  syncAllColorPickers()
 }
 
 watch(
   definition,
   (next) => {
     if (next) {
-      resetProps()
+      void resetProps()
+    } else {
+      Object.keys(currentProps).forEach((key) => delete currentProps[key])
+      Object.keys(colorPickerValues).forEach((key) => delete colorPickerValues[key])
     }
   },
   { immediate: true }
@@ -109,7 +171,7 @@ watch(
         <button
           type="button"
           class="text-xs font-semibold text-primary-500 transition hover:text-primary-400"
-          @click="resetProps"
+          @click="resetProps()"
         >
           {{ t('playground.reset') }}
         </button>
@@ -145,13 +207,25 @@ watch(
             ></textarea>
           </template>
           <template v-else-if="control.type === 'color'">
-            <ElColorPicker
-              :id="control.key"
-              v-model="(currentProps[control.key] as string | undefined)"
-              show-alpha
-              color-format="rgb"
-              class="w-full"
-            />
+            <div class="flex items-center gap-3">
+              <ElColorPicker
+                :id="`${control.key}-picker`"
+                :model-value="colorPickerValues[control.key] ?? ''"
+                show-alpha
+                color-format="rgb"
+                class="w-12 shrink-0"
+                :aria-label="localize(control.label)"
+                @update:model-value="(value: string | null) => handleColorPickerChange(control.key, value)"
+              />
+              <input
+                :id="control.key"
+                v-model="(currentProps[control.key] as string | undefined)"
+                type="text"
+                class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
+                @input="handleColorInput(control.key, $event)"
+              />
+            </div>
+            <span :ref="setColorSampleRef(control.key)" class="sr-only" aria-hidden="true"></span>
           </template>
           <template v-else-if="control.type === 'slider'">
             <div class="flex items-center gap-3">
