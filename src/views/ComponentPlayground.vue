@@ -70,7 +70,7 @@ watchEffect(() => {
 
   const activeKeys = new Set(keys)
   keys.forEach((key) => {
-    resolvedColors[key] = resolveColorValue(currentProps[key])
+    resolvedColors[key] = resolveColorValue(currentProps[key] ?? undefined)
   })
 
   Object.keys(resolvedColors).forEach((key) => {
