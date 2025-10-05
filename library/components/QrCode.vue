@@ -53,25 +53,21 @@ updateQR()
 </script>
 
 <template>
-  <section class="flex flex-col items-center text-center">
+  <section class="aspect-square w-full items-center justify-center rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm text-center">
+    <img v-if="!qrError" :src="qrSource" alt="QR code" class="h-full w-full object-contain" />
+    <div v-else class="flex h-full w-full items-center justify-center text-xs text-surface-300 dark:text-surface-600">
+      <span>{{ qrError }}</span>
+    </div>
     <div
-      class="relative flex aspect-square w-full max-w-[220px] items-center justify-center rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm dark:border-surface-700 dark:bg-surface-900"
+      v-if="props.icon?.trim()"
+      class="absolute inset-0 flex items-center justify-center"
+      aria-hidden="true"
     >
-      <img v-if="!qrError" :src="qrSource" alt="QR code" class="h-full w-full object-contain" />
-      <div v-else class="flex h-full w-full items-center justify-center text-xs text-surface-300 dark:text-surface-600">
-        <span>{{ qrError }}</span>
-      </div>
-      <div
-        v-if="props.icon?.trim()"
-        class="absolute inset-0 flex items-center justify-center"
-        aria-hidden="true"
+      <span
+        class="flex h-16 w-16 items-center justify-center rounded-2xl border-4 border-surface-0/80 bg-surface-0/90 shadow-lg backdrop-blur dark:border-surface-900/70 dark:bg-surface-900/80"
       >
-        <span
-          class="flex h-16 w-16 items-center justify-center rounded-2xl border-4 border-surface-0/80 bg-surface-0/90 shadow-lg backdrop-blur dark:border-surface-900/70 dark:bg-surface-900/80"
-        >
-          <img :src="props.icon" alt="" class="h-10 w-10 object-contain" />
-        </span>
-      </div>
+        <img :src="props.icon" alt="" class="h-10 w-10 object-contain" />
+      </span>
     </div>
   </section>
 </template>
