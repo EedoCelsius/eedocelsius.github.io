@@ -1,6 +1,5 @@
 <script lang="ts">
 export const defaultProps = {
-  text: '',
   diameter: 96,
   thickness: 8,
 } as const
