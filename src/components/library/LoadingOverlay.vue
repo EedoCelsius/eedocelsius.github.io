@@ -3,7 +3,7 @@ export const defaultProps = {
   visible: true,
   blur: 7,
   description: '',
-  overlayColor: 'rgba(0, 0, 0, 0)',
+  overlayColor: 'rgba(0, 0, 0, 0.25)',
   spinnerSize: 48,
   spinnerThickness: 4,
   spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
