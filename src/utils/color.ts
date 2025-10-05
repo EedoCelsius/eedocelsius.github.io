@@ -1,7 +1,5 @@
-import { ref } from 'vue'
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
-
 const toByte = (value: number) => Math.round(clamp(value, 0, 1) * 255)
 
 const toRgbString = (r: number, g: number, b: number, alpha?: number) => {
@@ -109,6 +107,6 @@ export const resolveColorValue = (value: string | undefined) => {
 
   colorResolver.style.color = ''
   colorResolver.style.color = value
-  return normalizeComputedColor(getComputedStyle(resolver).color)
+  return normalizeComputedColor(getComputedStyle(colorResolver).color)
 }
 
