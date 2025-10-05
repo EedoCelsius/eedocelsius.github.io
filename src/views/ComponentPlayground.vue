@@ -80,6 +80,7 @@ const resolveColorValue = (value: string | undefined) => {
 
   resolver.style.color = ''
   resolver.style.color = value
+  console.log(getComputedStyle(resolver).color)
   return getComputedStyle(resolver).color
 }
 
