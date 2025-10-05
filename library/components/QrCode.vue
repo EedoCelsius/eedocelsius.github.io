@@ -25,7 +25,7 @@ const props = withDefaults(
 const qrSource = ref('')
 const qrError = ref('')
   
-const updateQR = async () => {
+const updateQrCode = async () => {
   const darkHex = toHex(props.darkColor) || '#000000'
   const lightHex = toHex(props.lightColor) || '#ffffff'
 
@@ -52,7 +52,7 @@ watch(
   },
 )
 
-void updateQR()
+void updateQrCode()
 </script>
 
 <template>
