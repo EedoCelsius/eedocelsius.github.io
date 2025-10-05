@@ -7,7 +7,7 @@ import { ElColorPicker } from 'element-plus'
 import Spinner from '@/components/library/Spinner.vue'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
-import { createColorResolver } from '@/utils/color'
+import { resolveColorValue } from '@/utils/color'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
@@ -24,7 +24,6 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) =>
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
 const resolvedColors = reactive<Record<string, string>>({})
-const { resolver: colorResolver, resolveColorValue } = createColorResolver()
 
 const colorKeys = computed(() =>
   definition.value?.controls
@@ -71,8 +70,7 @@ watchEffect(() => {
 
   const activeKeys = new Set(keys)
   keys.forEach((key) => {
-    const value = currentProps[key]
-    resolvedColors[key] = resolveColorValue(typeof value === 'string' ? value : undefined)
+    resolvedColors[key] = resolveColorValue(currentProps[key])
   })
 
   Object.keys(resolvedColors).forEach((key) => {
