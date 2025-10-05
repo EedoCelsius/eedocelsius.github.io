@@ -19,7 +19,7 @@ import BlurOverlay from './BlurOverlay.vue'
 import Spinner from './Spinner.vue'
 
 const props = withDefaults(
-  defineProps<LoadingOverlayProps>(),
+  defineProps<props>(),
   defaultProps
 )
 
