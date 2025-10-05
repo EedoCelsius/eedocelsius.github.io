@@ -33,7 +33,7 @@ const messages = {
     },
     home: {
       title: '컴포넌트 라이브러리',
-      description: '컴포넌트를 선택하고 속성을 실시간으로 조정해 보세요.',
+      description: '컴포넌트를 선택하고 속성값을 실시간으로 조정해 보세요.',
       openPlayground: '플레이그라운드 열기',
     },
     playground: {
@@ -41,7 +41,7 @@ const messages = {
       preview: '미리보기',
       controls: '속성값',
       reset: '기본값으로 재설정',
-      helper: '속성을 조정하면 즉시 렌더링 결과를 확인할 수 있습니다.',
+      helper: '속성값을 조정하면 즉시 렌더링 결과를 확인할 수 있습니다.',
       notFoundTitle: '컴포넌트를 찾을 수 없습니다',
       notFoundDescription: '요청한 컴포넌트가 존재하지 않거나 아직 준비되지 않았습니다.',
       backHome: '홈으로 돌아가기',
