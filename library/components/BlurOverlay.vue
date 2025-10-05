@@ -28,22 +28,17 @@ const overlayStyle = computed(() => ({
 </script>
 
 <template>
-  <div class="relative isolate">
-    <div class="relative z-0">
-      <slot />
-    </div>
-    <transition name="fade-blur">
-      <div
-        v-if="props.visible"
-        class="absolute inset-0 flex items-center justify-center rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur"
-        :style="overlayStyle"
-      >
-        <div class="pointer-events-auto">
-          <slot name="overlay" />
-        </div>
+  <transition name="fade-blur">
+    <div
+      v-if="props.visible"
+      class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur"
+      :style="overlayStyle"
+    >
+      <div class="pointer-events-auto">
+        <slot name="overlay" />
       </div>
-    </transition>
-  </div>
+    </div>
+  </transition>
 </template>
 
 <style scoped>
