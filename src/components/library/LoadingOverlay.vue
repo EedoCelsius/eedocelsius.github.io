@@ -1,19 +1,3 @@
-<script lang="ts">
-export const loadingOverlayDefaultProps = {
-  visible: false,
-  blur: 7,
-  description: '',
-  overlayColor: 'color-mix(in srgb, var(--p-surface-900) 55%, transparent)',
-  spinnerSize: 48,
-  spinnerThickness: 4,
-  spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
-  spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
-  spinnerText: '',
-}
-
-export const defaultProps = loadingOverlayDefaultProps
-</script>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import BlurOverlay from './BlurOverlay.vue'
@@ -31,7 +15,17 @@ const props = withDefaults(
     spinnerIndicatorColor?: string
     spinnerText?: string | number
   }>(),
-  loadingOverlayDefaultProps
+  {
+    visible: false,
+    blur: 7,
+    description: '',
+    overlayColor: 'color-mix(in srgb, var(--p-surface-900) 55%, transparent)',
+    spinnerSize: 48,
+    spinnerThickness: 4,
+    spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
+    spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
+    spinnerText: '',
+  }
 )
 
 const hasDescription = computed(() => Boolean(props.description?.trim()))
