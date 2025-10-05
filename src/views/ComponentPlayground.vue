@@ -7,7 +7,6 @@ import { ElColorPicker } from 'element-plus'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
-import { normalizeCssColor } from '@/utils/cssColor'
 
 const props = defineProps<{
   componentId: string
@@ -76,11 +75,13 @@ const resolveColorValue = (value: string | undefined) => {
 
   const resolver = colorResolver.value
   if (!resolver) {
-    return normalizeCssColor(value)
+    return value
   }
 
+  resolver.style.color = ''
   resolver.style.color = value
-  return normalizeCssColor(getComputedStyle(resolver).color)
+  console.log(getComputedStyle(resolver).color)
+  return getComputedStyle(resolver).color
 }
 
 const updateResolvedColor = (key: string, value: string | undefined) => {
