@@ -9,6 +9,7 @@ export const defaultProps = {
 <script setup lang="ts">
 import { computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
+import { createColorResolver } from '@/utils/color'
 
 const props = withDefaults(
   defineProps<{
@@ -20,6 +21,10 @@ const props = withDefaults(
   defaultProps
 )
 
+const { resolver: colorResolver, resolveColorValue } = createColorResolver()
+
+const lightColor = computed(() => resolveColorValue(props.lightColor))
+const darkColor = computed(() => resolveColorValue(props.darkColor))
 const hasIcon = computed(() => Boolean(props.icon?.trim()))
 </script>
 
@@ -29,8 +34,8 @@ const hasIcon = computed(() => Boolean(props.icon?.trim()))
       <QrcodeVue
         :value="props.content"
         :size="220"
-        :foreground="props.darkColor"
-        :background="props.lightColor"
+        :foreground="darkColor"
+        :background="lightColor"
         level="H"
         class="block"
       />
@@ -46,5 +51,10 @@ const hasIcon = computed(() => Boolean(props.icon?.trim()))
         </span>
       </div>
     </div>
+    <span
+      ref="colorResolver"
+      aria-hidden="true"
+      style="position: fixed; width: 0; height: 0; opacity: 0; pointer-events: none"
+    ></span>
   </section>
 </template>

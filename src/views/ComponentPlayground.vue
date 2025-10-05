@@ -7,7 +7,7 @@ import { ElColorPicker } from 'element-plus'
 import Spinner from '@/components/library/Spinner.vue'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
-import { normalizeComputedColor } from '@/library/utils/color'
+import { createColorResolver } from '@/utils/color'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
@@ -24,7 +24,7 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) =>
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
 const resolvedColors = reactive<Record<string, string>>({})
-const colorResolver = ref<HTMLElement | null>(null)
+const { resolver: colorResolver, resolveColorValue } = createColorResolver()
 
 const colorKeys = computed(() =>
   definition.value?.controls
@@ -66,33 +66,13 @@ const resetProps = () => {
   applyDefaults(componentDefaults.value)
 }
 
-const resolveColorValue = (resolver: HTMLElement | null, value: string | undefined) => {
-  if (!value) {
-    return ''
-  }
-
-  if (!resolver) {
-    return value
-  }
-
-  resolver.style.color = ''
-  resolver.style.color = value
-  return normalizeComputedColor(getComputedStyle(resolver).color)
-}
-
 watchEffect(() => {
-  const resolver = colorResolver.value
   const keys = colorKeys.value
-
-  if (!resolver) {
-    Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
-    return
-  }
 
   const activeKeys = new Set(keys)
   keys.forEach((key) => {
     const value = currentProps[key]
-    resolvedColors[key] = resolveColorValue(resolver, typeof value === 'string' ? value : undefined)
+    resolvedColors[key] = resolveColorValue(typeof value === 'string' ? value : undefined)
   })
 
   Object.keys(resolvedColors).forEach((key) => {
