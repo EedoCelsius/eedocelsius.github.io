@@ -9,7 +9,7 @@ export const defaultProps = {
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { toDataURL } from 'qrcode'
+import QRCode from 'qrcode'
 import { toHex } from '@shared/color'
 
 const props = withDefaults(
@@ -25,24 +25,29 @@ const props = withDefaults(
 const qrSource = ref('')
 const qrError = ref('')
   
-const updateQrCode = async () => {
+const updateQrCode = () => {
   const darkHex = toHex(props.darkColor) || '#000000'
   const lightHex = toHex(props.lightColor) || '#ffffff'
 
-  try {
-    qrSource.value = await toDataURL(props.content, {
+  QRCode.toDataURL(
+    props.content,
+    {
       margin: 0,
-      quality: 1,
       color: {
         dark: darkHex,
         light: lightHex,
       },
-    })
-    qrError.value = ''
-  }
-  catch (error) {
-    qrError.value = String(error)
-  }
+    },
+    (error: Error | null | undefined, url: string) => {
+      if (error) {
+        qrError.value = String(error)
+        return
+      }
+
+      qrSource.value = url
+      qrError.value = ''
+    }
+  )
 }
 
 watch(
