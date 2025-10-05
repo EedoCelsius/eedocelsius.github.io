@@ -11,7 +11,7 @@ export const defaultProps = {
   spinnerText: '',
 } as const
 
-export type LoadingOverlayProps = {
+export type props = {
   visible?: boolean
   blur?: number
   description?: string
@@ -30,7 +30,7 @@ import BlurOverlay from './BlurOverlay.vue'
 import Spinner from './Spinner.vue'
 
 const props = withDefaults(
-  defineProps<LoadingOverlayProps>(),
+  defineProps<props>(),
   defaultProps
 )
 
