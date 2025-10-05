@@ -46,6 +46,27 @@ export const componentCatalog: LabComponentDefinition[] = [
     preview: () => import('@/demos/SpinnerDemo.vue'),
     controls: [
       {
+        key: 'textSize',
+        type: 'slider',
+        label: { en: 'Text Size', ko: '텍스트 크기' },
+        min: 12,
+        max: 48,
+        step: 1,
+        optional: true,
+      },
+      {
+        key: 'indicatorColor',
+        type: 'color',
+        label: { en: 'Indicator Color', ko: '인디케이터 색상' },
+        optional: true,
+      },
+      {
+        key: 'trackColor',
+        type: 'color',
+        label: { en: 'Track Color', ko: '트랙 색상' },
+        optional: true,
+      },
+      {
         key: 'text',
         type: 'text',
         label: { en: 'Text', ko: '텍스트' },
@@ -71,27 +92,6 @@ export const componentCatalog: LabComponentDefinition[] = [
         max: 20,
         step: 1,
       },
-      {
-        key: 'textSize',
-        type: 'slider',
-        label: { en: 'Text Size', ko: '텍스트 크기' },
-        min: 12,
-        max: 48,
-        step: 1,
-        optional: true,
-      },
-      {
-        key: 'indicatorColor',
-        type: 'color',
-        label: { en: 'Indicator Color', ko: '인디케이터 색상' },
-        optional: true,
-      },
-      {
-        key: 'trackColor',
-        type: 'color',
-        label: { en: 'Track Color', ko: '트랙 색상' },
-        optional: true,
-      },
     ],
   },
   {
@@ -107,15 +107,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     component: () => import('@library/components/QrCode.vue'),
     preview: () => import('@/demos/QrCodeDemo.vue'),
     controls: [
-      {
-        key: 'content',
-        type: 'textarea',
-        label: { en: 'Content', ko: '콘텐츠' },
-        helperText: {
-          en: 'Text or URL that will be encoded inside the QR code.',
-          ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
-        },
-      },
       {
         key: 'lightColor',
         type: 'color',
@@ -137,6 +128,15 @@ export const componentCatalog: LabComponentDefinition[] = [
           ko: '중앙에 표시할 이미지 주소입니다. 비워두면 아이콘이 숨겨집니다.',
         },
         optional: true,
+      },
+      {
+        key: 'content',
+        type: 'textarea',
+        label: { en: 'Content', ko: '콘텐츠' },
+        helperText: {
+          en: 'Text or URL that will be encoded inside the QR code.',
+          ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
+        },
       },
     ],
   },
@@ -187,55 +187,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
     controls: [
       {
-        key: 'visible',
-        type: 'boolean',
-        label: { en: 'Visible', ko: '표시' },
-      },
-      {
-        key: 'blur',
-        type: 'slider',
-        label: { en: 'Blur Strength', ko: '블러 강도' },
-        min: 0,
-        max: 30,
-        step: 1,
-      },
-      {
-        key: 'description',
-        type: 'text',
-        label: { en: 'Description', ko: '설명' },
-        helperText: {
-          en: 'Text shown under the spinner. Leave empty to hide.',
-          ko: '스피너 아래에 표시되는 문구입니다. 비워두면 숨겨집니다.',
-        },
-        optional: true,
-      },
-      {
-        key: 'spinnerText',
-        type: 'text',
-        label: { en: 'Spinner Text', ko: '스피너 텍스트' },
-        helperText: {
-          en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
-          ko: '스피너 중앙에 표시할 선택적 텍스트입니다. 숫자나 짧은 문구를 사용할 수 있습니다.',
-        },
-        optional: true,
-      },
-      {
-        key: 'spinnerDiameter',
-        type: 'slider',
-        label: { en: 'Spinner Diameter', ko: '스피너 지름' },
-        min: 32,
-        max: 160,
-        step: 4,
-      },
-      {
-        key: 'spinnerThickness',
-        type: 'slider',
-        label: { en: 'Spinner Thickness', ko: '스피너 두께' },
-        min: 2,
-        max: 16,
-        step: 1,
-      },
-      {
         key: 'spinnerTextSize',
         type: 'slider',
         label: { en: 'Spinner Text Size', ko: '스피너 텍스트 크기' },
@@ -261,6 +212,55 @@ export const componentCatalog: LabComponentDefinition[] = [
         type: 'color',
         label: { en: 'Spinner Text Color', ko: '스피너 텍스트 색상' },
         optional: true,
+      },
+      {
+        key: 'description',
+        type: 'text',
+        label: { en: 'Description', ko: '설명' },
+        helperText: {
+          en: 'Text shown under the spinner. Leave empty to hide.',
+          ko: '스피너 아래에 표시되는 문구입니다. 비워두면 숨겨집니다.',
+        },
+        optional: true,
+      },
+      {
+        key: 'spinnerText',
+        type: 'text',
+        label: { en: 'Spinner Text', ko: '스피너 텍스트' },
+        helperText: {
+          en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
+          ko: '스피너 중앙에 표시할 선택적 텍스트입니다. 숫자나 짧은 문구를 사용할 수 있습니다.',
+        },
+        optional: true,
+      },
+      {
+        key: 'visible',
+        type: 'boolean',
+        label: { en: 'Visible', ko: '표시' },
+      },
+      {
+        key: 'blur',
+        type: 'slider',
+        label: { en: 'Blur Strength', ko: '블러 강도' },
+        min: 0,
+        max: 30,
+        step: 1,
+      },
+      {
+        key: 'spinnerDiameter',
+        type: 'slider',
+        label: { en: 'Spinner Diameter', ko: '스피너 지름' },
+        min: 32,
+        max: 160,
+        step: 4,
+      },
+      {
+        key: 'spinnerThickness',
+        type: 'slider',
+        label: { en: 'Spinner Thickness', ko: '스피너 두께' },
+        min: 2,
+        max: 16,
+        step: 1,
       },
       {
         key: 'overlayColor',
