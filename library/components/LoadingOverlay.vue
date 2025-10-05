@@ -1,27 +1,16 @@
 <script lang="ts">
+import { defaultProps as blurOverlayDefaultProps } from './BlurOverlay.vue'
+import { defaultProps as spinnerDefaultProps } from './Spinner.vue'
+import type { props as blurOverlayProps } from './BlurOverlay.vue'
+import type { props as spinnerProps } from './Spinner.vue'
+  
 export const defaultProps = {
-  visible: true,
-  blur: 7,
+  ...blurOverlayDefaultProps,
+  ...spinnerDefaultProps,
   description: '',
-  overlayColor: 'rgba(0, 0, 0, 0.25)',
-  spinnerSize: 48,
-  spinnerThickness: 4,
-  spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
-  spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
-  spinnerText: '',
 } as const
 
-export type props = {
-  visible?: boolean
-  blur?: number
-  description?: string
-  overlayColor?: string
-  spinnerSize?: number
-  spinnerThickness?: number
-  spinnerTrackColor?: string
-  spinnerIndicatorColor?: string
-  spinnerText?: string | number
-}
+export type LoadingOverlayProps = blurOverlayProps & spinnerProps & { description?: string }
 </script>
 
 <script setup lang="ts">
