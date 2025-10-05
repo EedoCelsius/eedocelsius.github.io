@@ -1,13 +1,13 @@
 <script lang="ts">
 export const defaultProps = {
   text: '',
-  size: 96,
+  diameter: 96,
   thickness: 8,
 } as const
 
 export type props = {
   text?: string | number
-  size?: number
+  diameter?: number
   thickness?: number
   textSize?: number
   textColor?: string
@@ -45,8 +45,8 @@ const textStyle = computed(() => {
 })
 
 const dimensions = computed(() => ({
-  width: `${props.size}px`,
-  height: `${props.size}px`,
+  width: `${props.diameter}px`,
+  height: `${props.diameter}px`,
 }))
 
 const fallbackTrackColor = 'color-mix(in srgb, currentColor 35%, transparent)'

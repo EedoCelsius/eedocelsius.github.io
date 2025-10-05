@@ -56,7 +56,7 @@ export const componentCatalog: LabComponentDefinition[] = [
         optional: true,
       },
       {
-        key: 'size',
+        key: 'diameter',
         type: 'slider',
         label: { en: 'Diameter', ko: '지름' },
         min: 48,

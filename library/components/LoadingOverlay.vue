@@ -3,7 +3,7 @@ export const defaultProps = {
   visible: true,
   blur: 7,
   overlayColor: 'rgba(0, 0, 0, 0.25)',
-  spinnerSize: 48,
+  spinnerDiameter: 48,
   spinnerThickness: 4,
   spinnerText: '',
   description: '',
@@ -13,7 +13,7 @@ export type props = {
   visible?: boolean
   blur?: number
   overlayColor?: string
-  spinnerSize?: number
+  spinnerDiameter?: number
   spinnerThickness?: number
   spinnerTrackColor?: string
   spinnerIndicatorColor?: string
@@ -45,7 +45,7 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
     <template #overlay>
       <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
         <Spinner
-          :size="props.spinnerSize"
+          :diameter="props.spinnerDiameter"
           :thickness="props.spinnerThickness"
           :track-color="props.spinnerTrackColor"
           :indicator-color="props.spinnerIndicatorColor"
