@@ -27,7 +27,6 @@ export interface LabComponentDefinition {
   description: LocaleCopy
   component: ComponentLoader
   preview?: ComponentLoader
-  defaultProps: Record<string, PlaygroundPropValue>
   controls: ControlDefinition[]
 }
 
@@ -44,14 +43,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     component: () => import('@/components/library/Spinner.vue'),
     preview: () => import('@/demos/SpinnerDemo.vue'),
-    defaultProps: {
-      text: '',
-      size: 96,
-      thickness: 8,
-      textSize: 22,
-      indicatorColor: 'var(--p-primary-color)',
-      trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
-    },
     controls: [
       {
         key: 'text',
@@ -110,12 +101,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     component: () => import('@/components/library/QrCode.vue'),
     preview: () => import('@/demos/QrCodeDemo.vue'),
-    defaultProps: {
-      content: 'https://component-lab.dev/welcome',
-      lightColor: 'var(--p-surface-0)',
-      darkColor: 'var(--p-surface-900)',
-      icon: '',
-    },
     controls: [
       {
         key: 'content',
@@ -159,11 +144,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     component: () => import('@/components/library/BlurOverlay.vue'),
     preview: () => import('@/demos/BlurOverlayDemo.vue'),
-    defaultProps: {
-      visible: true,
-      blur: 7,
-      overlayColor: 'color-mix(in srgb, var(--p-surface-900) 45%, transparent)',
-    },
     controls: [
       {
         key: 'visible',
@@ -201,17 +181,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     component: () => import('@/components/library/LoadingOverlay.vue'),
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
-    defaultProps: {
-      visible: false,
-      blur: 7,
-      description: '',
-      overlayColor: 'color-mix(in srgb, var(--p-surface-900) 55%, transparent)',
-      spinnerSize: 48,
-      spinnerThickness: 4,
-      spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
-      spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
-      spinnerText: '',
-    },
     controls: [
       {
         key: 'visible',
