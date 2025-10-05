@@ -53,7 +53,7 @@ updateQR()
 </script>
 
 <template>
-  <section class="aspect-square w-full items-center justify-center rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm text-center">
+  <section class="relative aspect-square items-center justify-center rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm text-center">
     <img v-if="!qrError" :src="qrSource" alt="QR code" class="h-full w-full object-contain" />
     <div v-else class="flex h-full w-full items-center justify-center text-xs text-surface-300 dark:text-surface-600">
       <span>{{ qrError }}</span>
