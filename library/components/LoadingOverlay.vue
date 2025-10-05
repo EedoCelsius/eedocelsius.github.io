@@ -1,7 +1,7 @@
 <script lang="ts">
 export const defaultProps = {
   visible: true,
-  blur: 7,
+  blurStrength: 7,
   overlayColor: 'rgba(0, 0, 0, 0.25)',
   spinnerDiameter: 48,
   spinnerThickness: 4,
@@ -11,7 +11,7 @@ export const defaultProps = {
 
 export type props = {
   visible?: boolean
-  blur?: number
+  blurStrength?: number
   overlayColor?: string
   spinnerDiameter?: number
   spinnerThickness?: number
@@ -38,7 +38,7 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
 </script>
 
 <template>
-  <BlurOverlay :visible="props.visible" :blur="props.blur" :overlay-color="props.overlayColor">
+  <BlurOverlay :visible="props.visible" :blur-strength="props.blurStrength" :overlay-color="props.overlayColor">
     <template #default>
       <slot />
     </template>
