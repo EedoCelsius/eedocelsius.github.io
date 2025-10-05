@@ -1,8 +1,8 @@
 <script lang="ts">
 export const defaultProps = {
   content: window.location.href,
-  lightColor: 'var(--p-surface-0)',
-  darkColor: 'var(--p-surface-900)',
+  lightColor: 'white',
+  darkColor: 'black',
   icon: '',
 } as const
 
