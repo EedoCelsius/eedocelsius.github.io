@@ -4,6 +4,7 @@ export const defaultProps = {
   size: 96,
   thickness: 8,
   textSize: 22,
+  textColor: undefined as string | undefined,
   trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
   indicatorColor: 'var(--p-primary-color)',
 } as const
@@ -13,6 +14,7 @@ export type props = {
   size?: number
   thickness?: number
   textSize?: number
+  textColor?: string
   trackColor?: string
   indicatorColor?: string
 }
@@ -30,10 +32,18 @@ const displayText = computed(() => `${props.text ?? ''}`)
 const trimmedText = computed(() => displayText.value.trim())
 const hasText = computed(() => trimmedText.value.length > 0)
 
-const textStyle = computed(() => ({
-  fontSize: `${props.textSize}px`,
-  lineHeight: '1',
-}))
+const textStyle = computed(() => {
+  const style: Record<string, string> = {
+    fontSize: `${props.textSize}px`,
+    lineHeight: '1',
+  }
+
+  if (props.textColor) {
+    style.color = props.textColor
+  }
+
+  return style
+})
 
 const dimensions = computed(() => ({
   width: `${props.size}px`,
