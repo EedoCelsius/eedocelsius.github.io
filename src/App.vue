@@ -96,7 +96,6 @@ watch(
       <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
         <RouterLink to="/" class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
           <span class="text-xl font-semibold tracking-tight text-surface-900 dark:text-surface-0">{{ t('app.title') }}</span>
-          <span class="text-sm text-surface-500 dark:text-surface-300">{{ t('app.tagline') }}</span>
         </RouterLink>
         <div class="flex items-center gap-3">
           <nav
