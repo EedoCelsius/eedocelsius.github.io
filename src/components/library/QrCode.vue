@@ -1,3 +1,11 @@
+<script lang="ts">
+export const defaultProps = {
+  lightColor: 'var(--p-surface-0)',
+  darkColor: 'var(--p-surface-900)',
+  icon: '',
+} as const
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
@@ -9,11 +17,7 @@ const props = withDefaults(
     darkColor?: string
     icon?: string
   }>(),
-  {
-    lightColor: 'var(--p-surface-0)',
-    darkColor: 'var(--p-surface-900)',
-    icon: '',
-  }
+  defaultProps
 )
 
 const hasIcon = computed(() => Boolean(props.icon?.trim()))

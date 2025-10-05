@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, reactive, watch } from 'vue'
-import type { AsyncComponentLoader } from 'vue'
+import { computed, defineAsyncComponent, reactive, ref, watch } from 'vue'
+import type { AsyncComponentLoader, WatchStopHandle } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElColorPicker } from 'element-plus'
@@ -16,30 +16,116 @@ const { t, locale } = useI18n()
 
 const definition = computed<LabComponentDefinition | undefined>(() => getComponentDefinition(props.componentId))
 
-const cloneProps = (value: Record<string, PlaygroundPropValue>) =>
-  JSON.parse(JSON.stringify(value)) as Record<string, PlaygroundPropValue>
+const cloneProps = (value?: Record<string, PlaygroundPropValue>) =>
+  value ? (JSON.parse(JSON.stringify(value)) as Record<string, PlaygroundPropValue>) : {}
 
+const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
+const resolvedColors = reactive<Record<string, string>>({})
+const colorResolver = ref<HTMLElement | null>(null)
 
-const resetProps = () => {
+const colorKeys = computed(() =>
+  definition.value?.controls
+    .filter((control) => control.type === 'color')
+    .map((control) => control.key) ?? []
+)
+
+const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
+  const clonedDefaults = cloneProps(defaults)
+  Object.keys(currentProps).forEach((key) => delete currentProps[key])
+  Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
+  Object.assign(currentProps, clonedDefaults)
+}
+
+const loadComponentDefaults = async () => {
   if (!definition.value) {
+    componentDefaults.value = {}
+    Object.keys(currentProps).forEach((key) => delete currentProps[key])
+    Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
     return
   }
 
-  const defaults = cloneProps(definition.value.defaultProps)
-  Object.keys(currentProps).forEach((key) => delete currentProps[key])
-  Object.assign(currentProps, defaults)
+  const targetId = definition.value.id
+  const module = await definition.value.component()
+  if (definition.value?.id !== targetId) {
+    return
+  }
+
+  const defaults = cloneProps((module as { defaultProps?: Record<string, PlaygroundPropValue> }).defaultProps)
+  componentDefaults.value = defaults
+  applyDefaults(defaults)
 }
 
 watch(
   definition,
-  (next) => {
-    if (next) {
-      resetProps()
-    }
+  () => {
+    void loadComponentDefaults()
   },
   { immediate: true }
 )
+
+const resetProps = () => {
+  applyDefaults(componentDefaults.value)
+}
+
+const resolveColorValue = (value: string | undefined) => {
+  if (!value) {
+    return ''
+  }
+
+  const resolver = colorResolver.value
+  if (!resolver) {
+    return value
+  }
+
+  resolver.style.color = ''
+  resolver.style.color = value
+  return getComputedStyle(resolver).color
+}
+
+const updateResolvedColor = (key: string, value: string | undefined) => {
+  resolvedColors[key] = resolveColorValue(typeof value === 'string' ? value : undefined)
+}
+
+watch(colorResolver, (resolver) => {
+  if (!resolver) {
+    return
+  }
+
+  colorKeys.value.forEach((key) => {
+    updateResolvedColor(key, currentProps[key] as string | undefined)
+  })
+})
+
+watch(
+  colorKeys,
+  (keys, _prevKeys, onCleanup) => {
+    const trackedKeys = [...keys]
+    const stops: WatchStopHandle[] = trackedKeys.map((key) =>
+      watch(
+        () => currentProps[key] as string | undefined,
+        (value) => {
+          updateResolvedColor(key, value)
+        },
+        { immediate: true }
+      )
+    )
+
+    onCleanup(() => {
+      stops.forEach((stop) => stop())
+      trackedKeys.forEach((key) => {
+        if (!colorKeys.value.includes(key)) {
+          delete resolvedColors[key]
+        }
+      })
+    })
+  },
+  { immediate: true }
+)
+
+const handleColorPickerChange = (key: string, value: string | null) => {
+  currentProps[key] = (value ?? '') as PlaygroundPropValue
+}
 
 const activeLocale = computed(() => locale.value as SupportedLocale)
 
@@ -145,13 +231,21 @@ watch(
             ></textarea>
           </template>
           <template v-else-if="control.type === 'color'">
-            <ElColorPicker
-              :id="control.key"
-              v-model="(currentProps[control.key] as string | undefined)"
-              show-alpha
-              color-format="rgb"
-              class="w-full"
-            />
+            <div class="flex items-center gap-3">
+              <ElColorPicker
+                :model-value="resolvedColors[control.key] ?? ''"
+                show-alpha
+                color-format="rgb"
+                class="shrink-0"
+                @update:model-value="handleColorPickerChange(control.key, $event)"
+              />
+              <input
+                :id="control.key"
+                v-model="(currentProps[control.key] as string | undefined)"
+                type="text"
+                class="flex-1 rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
+              />
+            </div>
           </template>
           <template v-else-if="control.type === 'slider'">
             <div class="flex items-center gap-3">
@@ -183,6 +277,11 @@ watch(
           </p>
         </div>
       </form>
+      <span
+        ref="colorResolver"
+        aria-hidden="true"
+        style="position: fixed; width: 0; height: 0; opacity: 0; pointer-events: none"
+      ></span>
     </aside>
   </div>
 </template>

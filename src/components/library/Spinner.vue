@@ -1,3 +1,14 @@
+<script lang="ts">
+export const defaultProps = {
+  text: '',
+  size: 96,
+  thickness: 8,
+  textSize: 22,
+  trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
+  indicatorColor: 'var(--p-primary-color)',
+} as const
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue'
 
@@ -10,14 +21,7 @@ const props = withDefaults(
     trackColor?: string
     indicatorColor?: string
   }>(),
-  {
-    text: '',
-    size: 96,
-    thickness: 8,
-    textSize: 22,
-    trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
-    indicatorColor: 'var(--p-primary-color)',
-  }
+  defaultProps
 )
 
 const displayText = computed(() => `${props.text ?? ''}`)
