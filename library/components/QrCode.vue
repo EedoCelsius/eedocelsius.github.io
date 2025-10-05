@@ -7,7 +7,8 @@ export const defaultProps = {
 </script>
 
 <script setup lang="ts">
-import QrcodeVue from 'qrcode.vue'
+import QRCode from 'qrcode'
+import { ref, watch } from 'vue'
 import { resolveColorValue } from '@shared/color'
 
 const props = withDefaults(
@@ -20,19 +21,50 @@ const props = withDefaults(
   defaultProps
 )
 
+const qrCodeDataUrl = ref('')
+let requestId = 0
+
+const generateQrCode = async () => {
+  if (!props.content?.trim()) {
+    qrCodeDataUrl.value = ''
+    return
+  }
+
+  const currentRequest = ++requestId
+
+  try {
+    const dataUrl = await QRCode.toDataURL(props.content, {
+      margin: 0,
+      color: {
+        dark: resolveColorValue(props.darkColor) || '#000000',
+        light: resolveColorValue(props.lightColor) || '#ffffff',
+      },
+      width: 512,
+    })
+
+    if (requestId === currentRequest) {
+      qrCodeDataUrl.value = dataUrl
+    }
+  } catch (error) {
+    if (requestId === currentRequest) {
+      qrCodeDataUrl.value = ''
+    }
+    console.error('Failed to generate QR code', error)
+  }
+}
+
+watch(
+  () => [props.content, props.lightColor, props.darkColor],
+  generateQrCode,
+  { immediate: true }
+)
+
 </script>
 
 <template>
   <section class="flex flex-col items-center text-center">
     <div class="relative rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm dark:border-surface-700 dark:bg-surface-900">
-      <QrcodeVue
-        :value="props.content"
-        :size="220"
-        :foreground="resolveColorValue(props.darkColor)"
-        :background="resolveColorValue(props.lightColor)"
-        level="H"
-        class="block"
-      />
+      <img v-if="qrCodeDataUrl" :src="qrCodeDataUrl" alt="" class="block h-auto w-full" />
       <div
         v-if="props.icon?.trim()"
         class="absolute inset-0 flex items-center justify-center"
