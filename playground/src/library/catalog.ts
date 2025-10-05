@@ -192,14 +192,6 @@ export const componentCatalog: LabComponentDefinition[] = [
         label: { en: 'Visible', ko: '표시' },
       },
       {
-        key: 'blur',
-        type: 'slider',
-        label: { en: 'Blur Strength', ko: '블러 강도' },
-        min: 0,
-        max: 30,
-        step: 1,
-      },
-      {
         key: 'spinnerDiameter',
         type: 'slider',
         label: { en: 'Spinner Diameter', ko: '스피너 지름' },
@@ -213,6 +205,14 @@ export const componentCatalog: LabComponentDefinition[] = [
         label: { en: 'Spinner Thickness', ko: '스피너 두께' },
         min: 2,
         max: 16,
+        step: 1,
+      },
+      {
+        key: 'blur',
+        type: 'slider',
+        label: { en: 'Blur Strength', ko: '블러 강도' },
+        min: 0,
+        max: 30,
         step: 1,
       },
       {
@@ -248,22 +248,22 @@ export const componentCatalog: LabComponentDefinition[] = [
         optional: true,
       },
       {
-        key: 'description',
-        type: 'text',
-        label: { en: 'Description', ko: '설명' },
-        helperText: {
-          en: 'Text shown under the spinner. Leave empty to hide.',
-          ko: '스피너 아래에 표시되는 문구입니다. 비워두면 숨겨집니다.',
-        },
-        optional: true,
-      },
-      {
         key: 'spinnerText',
         type: 'text',
         label: { en: 'Spinner Text', ko: '스피너 텍스트' },
         helperText: {
           en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
           ko: '스피너 중앙에 표시할 선택적 텍스트입니다. 숫자나 짧은 문구를 사용할 수 있습니다.',
+        },
+        optional: true,
+      },
+      {
+        key: 'description',
+        type: 'text',
+        label: { en: 'Description', ko: '설명' },
+        helperText: {
+          en: 'Text shown under the spinner. Leave empty to hide.',
+          ko: '스피너 아래에 표시되는 문구입니다. 비워두면 숨겨집니다.',
         },
         optional: true,
       },
