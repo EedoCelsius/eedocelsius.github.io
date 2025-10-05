@@ -7,7 +7,7 @@ export type LocaleCopy = {
 
 export type PlaygroundPropValue = string | number | boolean | null | undefined
 
-export type ControlType = 'text' | 'textarea' | 'color' | 'slider' | 'boolean'
+export type ControlType = 'boolean' | 'slider' | 'color' | 'text' | 'textarea'
 
 export interface ControlDefinition {
   key: string
