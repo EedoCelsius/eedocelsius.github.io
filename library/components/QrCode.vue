@@ -64,9 +64,9 @@ updateQR()
       aria-hidden="true"
     >
       <span
-        class="flex h-16 w-16 items-center justify-center rounded-2xl border-4 border-surface-0/80 bg-surface-0/90 shadow-lg backdrop-blur dark:border-surface-900/70 dark:bg-surface-900/80"
+        class="flex h-16 w-16 items-center justify-center p-1 rounded-2xl bg-surface-0/90"
       >
-        <img :src="props.icon" alt="" class="h-10 w-10 object-contain" />
+        <img :src="props.icon" alt="" class="h-full w-full object-contain" />
       </span>
     </div>
   </section>
