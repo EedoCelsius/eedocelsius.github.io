@@ -160,12 +160,8 @@ export const componentCatalog: LabComponentDefinition[] = [
       },
       {
         key: 'overlayColor',
-        type: 'text',
+        type: 'color',
         label: { en: 'Overlay Color', ko: '오버레이 색상' },
-        helperText: {
-          en: 'Accepts hex or rgba values. Transparency is recommended.',
-          ko: 'HEX 또는 RGBA 값을 사용할 수 있습니다. 투명도를 권장합니다.',
-        },
       },
     ],
   },
@@ -241,12 +237,8 @@ export const componentCatalog: LabComponentDefinition[] = [
       },
       {
         key: 'overlayColor',
-        type: 'text',
+        type: 'color',
         label: { en: 'Overlay Color', ko: '오버레이 색상' },
-        helperText: {
-          en: 'Accepts hex or rgba values. Transparency is recommended.',
-          ko: 'HEX 또는 RGBA 값을 사용할 수 있습니다. 투명도를 권장합니다.',
-        },
       },
     ],
   },
