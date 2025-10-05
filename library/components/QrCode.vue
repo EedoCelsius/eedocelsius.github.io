@@ -47,12 +47,10 @@ const updateQrCode = async () => {
 
 watch(
   () => [props.content, props.darkColor, props.lightColor],
-  () => {
-    void updateQrCode()
-  },
+  updateQrCode
 )
 
-void updateQrCode()
+updateQrCode()
 </script>
 
 <template>
