@@ -14,7 +14,6 @@ export interface ControlDefinition {
   type: ControlType
   label: LocaleCopy
   helperText?: LocaleCopy
-  optional?: boolean
   min?: number
   max?: number
   step?: number
@@ -49,7 +48,6 @@ export const componentCatalog: LabComponentDefinition[] = [
         key: 'text',
         type: 'text',
         label: { en: 'Text', ko: '텍스트' },
-        optional: true,
         helperText: {
           en: 'Content displayed at the center of the spinner.',
           ko: '스피너 중앙에 표시할 텍스트입니다.',
@@ -83,13 +81,11 @@ export const componentCatalog: LabComponentDefinition[] = [
         key: 'indicatorColor',
         type: 'color',
         label: { en: 'Indicator Color', ko: '인디케이터 색상' },
-        optional: true,
       },
       {
         key: 'trackColor',
         type: 'color',
         label: { en: 'Track Color', ko: '트랙 색상' },
-        optional: true,
       },
     ],
   },
@@ -119,19 +115,16 @@ export const componentCatalog: LabComponentDefinition[] = [
         key: 'lightColor',
         type: 'color',
         label: { en: 'Light Color', ko: '밝은 색상' },
-        optional: true,
       },
       {
         key: 'darkColor',
         type: 'color',
         label: { en: 'Dark Color', ko: '어두운 색상' },
-        optional: true,
       },
       {
         key: 'icon',
         type: 'text',
         label: { en: 'Icon URL', ko: '아이콘 주소' },
-        optional: true,
         helperText: {
           en: 'Center image URL. Leave empty to hide the icon.',
           ko: '중앙에 표시할 이미지 주소입니다. 비워두면 아이콘이 숨겨집니다.',
