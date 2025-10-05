@@ -18,8 +18,16 @@ const { t, locale } = useI18n()
 
 const definition = computed<LabComponentDefinition | undefined>(() => getComponentDefinition(props.componentId))
 
-const cloneProps = (value?: Record<string, PlaygroundPropValue>) =>
-  value ? (JSON.parse(JSON.stringify(value)) as Record<string, PlaygroundPropValue>) : {}
+const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
+  if (!value) {
+    return {}
+  }
+
+  return Object.keys(value).reduce<Record<string, PlaygroundPropValue>>((accumulator, key) => {
+    accumulator[key] = value[key]
+    return accumulator
+  }, {})
+}
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
