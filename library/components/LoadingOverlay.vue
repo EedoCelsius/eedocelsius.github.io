@@ -1,10 +1,5 @@
 <script lang="ts">
 export const defaultProps = {
-  visible: true,
-  blurStrength: 7,
-  overlayColor: 'rgba(0, 0, 0, 0.25)',
-  spinnerDiameter: 48,
-  spinnerThickness: 4,
 } as const
 
 export type props = {
