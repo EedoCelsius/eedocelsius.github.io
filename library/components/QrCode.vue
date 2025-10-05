@@ -7,7 +7,8 @@ export const defaultProps = {
 </script>
 
 <script setup lang="ts">
-import QrcodeVue from 'qrcode.vue'
+import { ref, watch } from 'vue'
+import QRCode from 'qrcode'
 import { resolveColorValue } from '@shared/color'
 
 const props = withDefaults(
@@ -20,22 +21,58 @@ const props = withDefaults(
   defaultProps
 )
 
+const qrCodeSrc = ref('')
+
+const generateQrCode = async () => {
+  if (!props.content.trim()) {
+    qrCodeSrc.value = ''
+    return
+  }
+
+  try {
+    qrCodeSrc.value = await QRCode.toDataURL(props.content, {
+      errorCorrectionLevel: 'H',
+      margin: 1,
+      color: {
+        dark: resolveColorValue(props.darkColor) ?? '#000000',
+        light: resolveColorValue(props.lightColor) ?? '#ffffff',
+      },
+    })
+  } catch (error) {
+    console.error('Failed to generate QR code', error)
+    qrCodeSrc.value = ''
+  }
+}
+
+watch(
+  () => [props.content, props.lightColor, props.darkColor],
+  () => {
+    void generateQrCode()
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
   <section class="flex flex-col items-center text-center">
-    <div class="relative rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm dark:border-surface-700 dark:bg-surface-900">
-      <QrcodeVue
-        :value="props.content"
-        :size="220"
-        :foreground="resolveColorValue(props.darkColor)"
-        :background="resolveColorValue(props.lightColor)"
-        level="H"
-        class="block"
+    <div
+      class="relative flex aspect-square w-full max-w-xs items-center justify-center rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm dark:border-surface-700 dark:bg-surface-900"
+    >
+      <img
+        v-if="qrCodeSrc"
+        :src="qrCodeSrc"
+        alt="QR code"
+        class="h-full w-full object-contain"
       />
       <div
+        v-else
+        class="flex h-full w-full items-center justify-center text-sm text-surface-500"
+      >
+        QR 코드를 생성할 수 없습니다.
+      </div>
+      <div
         v-if="props.icon?.trim()"
-        class="absolute inset-0 flex items-center justify-center"
+        class="pointer-events-none absolute inset-0 flex items-center justify-center"
         aria-hidden="true"
       >
         <span
