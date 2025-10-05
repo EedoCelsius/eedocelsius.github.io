@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
 
 const toByte = (value: number) => Math.round(clamp(value, 0, 1) * 255)
@@ -96,3 +98,17 @@ export const normalizeComputedColor = (value: string) => {
 
   return parseSrgbColor(trimmed) ?? parseOklabColor(trimmed) ?? trimmed
 }
+
+const colorResolver = document.createElement("div")
+colorResolver.hidden = true;
+
+export const resolveColorValue = (value: string | undefined) => {
+  if (!value) {
+    return ''
+  }
+
+  colorResolver.style.color = ''
+  colorResolver.style.color = value
+  return normalizeComputedColor(getComputedStyle(resolver).color)
+}
+
