@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import Button from 'primevue/button'
 import { componentCatalog } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
 
@@ -37,12 +38,16 @@ const localizedComponents = computed(() =>
           <h2 class="text-2xl font-semibold text-surface-900 dark:text-surface-0">{{ component.localizedName }}</h2>
           <p class="text-sm text-surface-600 dark:text-surface-300">{{ component.localizedDescription }}</p>
         </div>
-        <RouterLink
-          :to="`/components/${component.id}`"
-          class="inline-flex items-center gap-2 self-start rounded-full bg-primary-500 px-4 py-2 text-sm font-medium text-primary-contrast shadow-soft transition hover:bg-primary-400"
-        >
-          {{ t('home.openPlayground') }}
-          <i class="pi pi-arrow-right text-xs"></i>
+        <RouterLink :to="`/components/${component.id}`" class="self-start">
+          <Button
+            :label="t('home.openPlayground')"
+            icon="pi pi-arrow-right"
+            icon-pos="right"
+            severity="primary"
+            rounded
+            size="small"
+            class="shadow-soft"
+          />
         </RouterLink>
       </article>
     </div>
