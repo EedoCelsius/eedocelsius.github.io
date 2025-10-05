@@ -7,7 +7,6 @@ export const defaultProps = {
 </script>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 import { resolveColorValue } from '@/utils/color'
 
