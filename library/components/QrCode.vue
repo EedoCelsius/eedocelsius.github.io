@@ -37,6 +37,7 @@ const generateQrCode = async () => {
 
   qrSource.value = await toDataURL(content, {
     errorCorrectionLevel: 'H',
+    margin: 0,
     color: {
       dark: darkHex,
       light: lightHex,
