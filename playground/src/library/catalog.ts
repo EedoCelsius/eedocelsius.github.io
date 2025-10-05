@@ -190,24 +190,19 @@ export const componentCatalog: LabComponentDefinition[] = [
         step: 1,
       },
       {
-        key: 'blurStrength',
-        type: 'slider',
-        label: { en: 'Blur Strength', ko: '블러 강도' },
-        min: 0,
-        max: 30,
-        step: 1,
-      },
-      {
-        key: 'overlayColor',
-        type: 'color',
-        label: { en: 'Overlay Color', ko: '오버레이 색상' },
-      },
-      {
         key: 'spinnerTextSize',
         type: 'slider',
         label: { en: 'Spinner Text Size', ko: '스피너 텍스트 크기' },
         min: 12,
         max: 64,
+        step: 1,
+      },
+      {
+        key: 'blurStrength',
+        type: 'slider',
+        label: { en: 'Blur Strength', ko: '블러 강도' },
+        min: 0,
+        max: 30,
         step: 1,
       },
       {
@@ -224,6 +219,11 @@ export const componentCatalog: LabComponentDefinition[] = [
         key: 'spinnerTextColor',
         type: 'color',
         label: { en: 'Spinner Text Color', ko: '스피너 텍스트 색상' },
+      },
+      {
+        key: 'overlayColor',
+        type: 'color',
+        label: { en: 'Overlay Color', ko: '오버레이 색상' },
       },
       {
         key: 'spinnerText',
