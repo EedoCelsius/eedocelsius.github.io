@@ -97,7 +97,8 @@ export const normalizeComputedColor = (value: string) => {
   return parseSrgbColor(trimmed) ?? parseOklabColor(trimmed) ?? trimmed
 }
 
-const colorResolver = document.createElement("div")
+const colorResolver = document.createElement("div");
+document.body.appendChild(colorResolver);
 colorResolver.hidden = true;
 
 export const resolveColorValue = (value: string | undefined) => {
