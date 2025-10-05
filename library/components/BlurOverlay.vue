@@ -4,17 +4,19 @@ export const defaultProps = {
   blur: 7,
   overlayColor: 'rgba(0, 0, 0, 0.25)',
 } as const
+
+export type BlurOverlayProps = {
+  visible?: boolean
+  blur?: number
+  overlayColor?: string
+}
 </script>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 
 const props = withDefaults(
-  defineProps<{
-    visible?: boolean
-    blur?: number
-    overlayColor?: string
-  }>(),
+  defineProps<BlurOverlayProps>(),
   defaultProps
 )
 

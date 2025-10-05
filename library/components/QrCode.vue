@@ -5,6 +5,13 @@ export const defaultProps = {
   darkColor: 'var(--p-surface-900)',
   icon: '',
 } as const
+
+export type QrCodeProps = {
+  content: string
+  lightColor?: string
+  darkColor?: string
+  icon?: string
+}
 </script>
 
 <script setup lang="ts">
@@ -13,12 +20,7 @@ import QRCode from 'qrcode'
 import { toHex } from '@shared/color'
 
 const props = withDefaults(
-  defineProps<{
-    content: string
-    lightColor?: string
-    darkColor?: string
-    icon?: string
-  }>(),
+  defineProps<QrCodeProps>(),
   defaultProps
 )
 
