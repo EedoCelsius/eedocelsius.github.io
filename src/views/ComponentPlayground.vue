@@ -7,8 +7,6 @@ import { ElColorPicker } from 'element-plus'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
-import Spinner from '@/components/library/Spinner.vue'
-import { normalizeComputedColor } from '@/utils/color'
 
 const props = defineProps<{
   componentId: string
@@ -75,18 +73,15 @@ const resolveColorValue = (value: string | undefined) => {
     return ''
   }
 
-  const normalizedInput = normalizeComputedColor(value)
   const resolver = colorResolver.value
-
   if (!resolver) {
-    return normalizedInput
+    return value
   }
 
   resolver.style.color = ''
   resolver.style.color = value
-  const computedColor = getComputedStyle(resolver).color
-
-  return normalizeComputedColor(computedColor || normalizedInput)
+  console.log(getComputedStyle(resolver).color)
+  return getComputedStyle(resolver).color
 }
 
 const updateResolvedColor = (key: string, value: string | undefined) => {
@@ -186,12 +181,12 @@ watch(
           <component :is="previewComponent" v-bind="currentProps" />
           <template #fallback>
             <div class="flex h-full items-center justify-center text-surface-400">
-              <Spinner :size="72" :thickness="6" />
+              <i class="pi pi-spinner animate-spin text-2xl"></i>
             </div>
           </template>
         </Suspense>
         <div v-else class="flex h-full items-center justify-center text-surface-400">
-          <Spinner :size="72" :thickness="6" />
+          <i class="pi pi-spinner animate-spin text-2xl"></i>
         </div>
       </div>
     </section>
