@@ -46,16 +46,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     preview: () => import('@/demos/SpinnerDemo.vue'),
     controls: [
       {
-        key: 'text',
-        type: 'text',
-        label: { en: 'Text', ko: '텍스트' },
-        helperText: {
-          en: 'Content displayed at the center of the spinner.',
-          ko: '스피너 중앙에 표시할 텍스트입니다.',
-        },
-        optional: true,
-      },
-      {
         key: 'diameter',
         type: 'slider',
         label: { en: 'Diameter', ko: '지름' },
@@ -90,6 +80,16 @@ export const componentCatalog: LabComponentDefinition[] = [
         key: 'trackColor',
         type: 'color',
         label: { en: 'Track Color', ko: '트랙 색상' },
+        optional: true,
+      },
+      {
+        key: 'text',
+        type: 'text',
+        label: { en: 'Text', ko: '텍스트' },
+        helperText: {
+          en: 'Content displayed at the center of the spinner.',
+          ko: '스피너 중앙에 표시할 텍스트입니다.',
+        },
         optional: true,
       },
     ],
@@ -200,26 +200,6 @@ export const componentCatalog: LabComponentDefinition[] = [
         step: 1,
       },
       {
-        key: 'description',
-        type: 'text',
-        label: { en: 'Description', ko: '설명' },
-        helperText: {
-          en: 'Text shown under the spinner. Leave empty to hide.',
-          ko: '스피너 아래에 표시되는 문구입니다. 비워두면 숨겨집니다.',
-        },
-        optional: true,
-      },
-      {
-        key: 'spinnerText',
-        type: 'text',
-        label: { en: 'Spinner Text', ko: '스피너 텍스트' },
-        helperText: {
-          en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
-          ko: '스피너 중앙에 표시할 선택적 텍스트입니다. 숫자나 짧은 문구를 사용할 수 있습니다.',
-        },
-        optional: true,
-      },
-      {
         key: 'spinnerDiameter',
         type: 'slider',
         label: { en: 'Spinner Diameter', ko: '스피너 지름' },
@@ -234,6 +214,11 @@ export const componentCatalog: LabComponentDefinition[] = [
         min: 2,
         max: 16,
         step: 1,
+      },
+      {
+        key: 'overlayColor',
+        type: 'color',
+        label: { en: 'Overlay Color', ko: '오버레이 색상' },
       },
       {
         key: 'spinnerTextSize',
@@ -263,9 +248,24 @@ export const componentCatalog: LabComponentDefinition[] = [
         optional: true,
       },
       {
-        key: 'overlayColor',
-        type: 'color',
-        label: { en: 'Overlay Color', ko: '오버레이 색상' },
+        key: 'description',
+        type: 'text',
+        label: { en: 'Description', ko: '설명' },
+        helperText: {
+          en: 'Text shown under the spinner. Leave empty to hide.',
+          ko: '스피너 아래에 표시되는 문구입니다. 비워두면 숨겨집니다.',
+        },
+        optional: true,
+      },
+      {
+        key: 'spinnerText',
+        type: 'text',
+        label: { en: 'Spinner Text', ko: '스피너 텍스트' },
+        helperText: {
+          en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
+          ko: '스피너 중앙에 표시할 선택적 텍스트입니다. 숫자나 짧은 문구를 사용할 수 있습니다.',
+        },
+        optional: true,
       },
     ],
   },
