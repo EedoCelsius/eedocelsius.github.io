@@ -3,10 +3,6 @@ export const defaultProps = {
   text: '',
   size: 96,
   thickness: 8,
-  textSize: 22,
-  textColor: undefined as string | undefined,
-  trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
-  indicatorColor: 'var(--p-primary-color)',
 } as const
 
 export type props = {
@@ -34,8 +30,11 @@ const hasText = computed(() => trimmedText.value.length > 0)
 
 const textStyle = computed(() => {
   const style: Record<string, string> = {
-    fontSize: `${props.textSize}px`,
     lineHeight: '1',
+  }
+
+  if (typeof props.textSize === 'number') {
+    style.fontSize = `${props.textSize}px`
   }
 
   if (props.textColor) {
@@ -50,10 +49,12 @@ const dimensions = computed(() => ({
   height: `${props.size}px`,
 }))
 
+const fallbackTrackColor = 'color-mix(in srgb, currentColor 35%, transparent)'
+
 const ringStyle = computed(() => ({
   borderWidth: `${props.thickness}px`,
-  borderColor: props.trackColor,
-  borderTopColor: props.indicatorColor,
+  borderColor: props.trackColor ?? fallbackTrackColor,
+  borderTopColor: props.indicatorColor ?? 'currentColor',
 }))
 
 const accessibleLabel = computed(() => (trimmedText.value ? trimmedText.value : undefined))
@@ -73,7 +74,7 @@ const liveRegionRole = computed(() => (accessibleLabel.value ? 'status' : undefi
   >
     <div
       v-if="hasText"
-      class="pointer-events-none absolute inset-0 flex items-center justify-center font-semibold text-surface-700 dark:text-surface-0"
+      class="pointer-events-none absolute inset-0 flex items-center justify-center font-semibold text-current"
       :style="textStyle"
       aria-hidden="true"
     >

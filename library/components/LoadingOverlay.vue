@@ -6,11 +6,7 @@ export const defaultProps = {
   overlayColor: 'rgba(0, 0, 0, 0.25)',
   spinnerSize: 48,
   spinnerThickness: 4,
-  spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
-  spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
   spinnerText: '',
-  spinnerTextSize: 18,
-  spinnerTextColor: undefined as string | undefined,
 } as const
 
 export type props = {
