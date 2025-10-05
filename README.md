@@ -7,7 +7,7 @@ Component Lab is a personal component playground powered by **Vue 3**, **PrimeVu
 - 🎨 PrimeVue theme with Tailwind utility styling and dark mode support.
 - 🌐 Built-in English and Korean translations.
 - 🧩 Component catalog with dynamic playground routes.
-- ⚙️ Live prop controls (text, textarea, color, slider, boolean) for quick experimentation.
+- ⚙️ Live prop controls (boolean, slider, color, text, textarea) for quick experimentation.
 - 🚀 Automated deployment to GitHub Pages via GitHub Actions.
 
 ## 🧱 Current Components
