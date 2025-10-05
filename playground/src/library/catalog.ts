@@ -151,7 +151,7 @@ export const componentCatalog: LabComponentDefinition[] = [
         label: { en: 'Visible', ko: '표시' },
       },
       {
-        key: 'blur',
+        key: 'blurStrength',
         type: 'slider',
         label: { en: 'Blur Strength', ko: '블러 강도' },
         min: 0,
@@ -200,7 +200,7 @@ export const componentCatalog: LabComponentDefinition[] = [
         step: 1,
       },
       {
-        key: 'blur',
+        key: 'blurStrength',
         type: 'slider',
         label: { en: 'Blur Strength', ko: '블러 강도' },
         min: 0,
