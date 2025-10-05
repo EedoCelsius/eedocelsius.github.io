@@ -1,5 +1,7 @@
 <script lang="ts">
 export const defaultProps = {
+  spinnerDiameter: 48,
+  spinnerThickness: 4,
 } as const
 
 export type props = {
