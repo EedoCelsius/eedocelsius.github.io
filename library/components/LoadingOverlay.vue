@@ -9,6 +9,8 @@ export const defaultProps = {
   spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
   spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
   spinnerText: '',
+  spinnerTextSize: 18,
+  spinnerTextColor: undefined as string | undefined,
 } as const
 
 export type props = {
@@ -21,6 +23,8 @@ export type props = {
   spinnerTrackColor?: string
   spinnerIndicatorColor?: string
   spinnerText?: string | number
+  spinnerTextSize?: number
+  spinnerTextColor?: string
 }
 </script>
 
@@ -50,7 +54,8 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
           :track-color="props.spinnerTrackColor"
           :indicator-color="props.spinnerIndicatorColor"
           :text="props.spinnerText"
-          :text-size="18"
+          :text-size="props.spinnerTextSize"
+          :text-color="props.spinnerTextColor"
         />
         <p v-if="hasDescription" class="max-w-xs text-sm text-surface-0/80">{{ props.description }}</p>
       </div>

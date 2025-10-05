@@ -218,6 +218,14 @@ export const componentCatalog: LabComponentDefinition[] = [
         step: 4,
       },
       {
+        key: 'spinnerTextSize',
+        type: 'slider',
+        label: { en: 'Text Size', ko: '텍스트 크기' },
+        min: 12,
+        max: 64,
+        step: 1,
+      },
+      {
         key: 'spinnerThickness',
         type: 'slider',
         label: { en: 'Spinner Thickness', ko: '스피너 두께' },
@@ -234,6 +242,11 @@ export const componentCatalog: LabComponentDefinition[] = [
         key: 'spinnerTrackColor',
         type: 'color',
         label: { en: 'Track Color', ko: '트랙 색상' },
+      },
+      {
+        key: 'spinnerTextColor',
+        type: 'color',
+        label: { en: 'Text Color', ko: '텍스트 색상' },
       },
       {
         key: 'overlayColor',

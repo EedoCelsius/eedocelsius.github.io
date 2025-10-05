@@ -11,6 +11,8 @@ defineProps<{
   spinnerTrackColor?: string
   spinnerIndicatorColor?: string
   spinnerText?: string | number
+  spinnerTextSize?: number
+  spinnerTextColor?: string
 }>()
 </script>
 
