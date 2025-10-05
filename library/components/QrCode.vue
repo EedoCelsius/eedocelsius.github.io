@@ -24,28 +24,32 @@ const props = withDefaults(
 
 const qrSource = ref('')
 const qrError = ref('')
+  
+const updateQR = async () => {
+  const darkHex = toHex(props.darkColor) || '#000000'
+  const lightHex = toHex(props.lightColor) || '#ffffff'
+
+  try {
+    qrSource.value = await toDataURL(props.content, {
+      margin: 0,
+      color: {
+        dark: darkHex,
+        light: lightHex,
+      },
+    })
+    qrError.value = ''
+  }
+  catch (error) {
+    qrError.value = String(error)
+  }
+}
 
 watch(
   () => [props.content, props.darkColor, props.lightColor],
-  async () => {
-    const darkHex = toHex(props.darkColor) || '#000000'
-    const lightHex = toHex(props.lightColor) || '#ffffff'
-
-    try {
-      qrSource.value = await toDataURL(props.content, {
-        margin: 0,
-        color: {
-          dark: darkHex,
-          light: lightHex,
-        },
-      })
-      qrError.value = ''
-    }
-    catch (error) {
-      qrError.value = String(error)
-    }
-  }
+  updateQR
 )
+
+updateQR()
 </script>
 
 <template>
