@@ -1,12 +1,10 @@
 <script lang="ts">
 export const defaultProps = {
-  visible: true,
   blurStrength: 7,
   overlayColor: 'rgba(0, 0, 0, 0.25)',
 } as const
 
 export type props = {
-  visible?: boolean
   blurStrength?: number
   overlayColor?: string
 }
@@ -30,7 +28,6 @@ const overlayStyle = computed(() => ({
 <template>
   <transition name="fade-blur">
     <div
-      v-if="props.visible"
       class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur"
       :style="overlayStyle"
     >

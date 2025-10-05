@@ -146,11 +146,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     preview: () => import('@/demos/BlurOverlayDemo.vue'),
     controls: [
       {
-        key: 'visible',
-        type: 'boolean',
-        label: { en: 'Visible', ko: '표시' },
-      },
-      {
         key: 'blurStrength',
         type: 'slider',
         label: { en: 'Blur Strength', ko: '블러 강도' },
@@ -178,11 +173,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     component: () => import('@library/components/LoadingOverlay.vue'),
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
     controls: [
-      {
-        key: 'visible',
-        type: 'boolean',
-        label: { en: 'Visible', ko: '표시' },
-      },
       {
         key: 'spinnerDiameter',
         type: 'slider',
