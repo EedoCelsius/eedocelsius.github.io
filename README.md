@@ -40,7 +40,7 @@ playground/
 ```
 
 To register a new component:
-1. Create the component under `library/components/` (and export it from `library/index.ts`).
+1. Create the component under `library/components/` (and export it from `library/components/index.ts`).
 2. (Optional) Create a demo wrapper under `playground/src/demos/` if the component needs slot scaffolding.
 3. Add an entry to `playground/src/library/catalog.ts` with localized metadata, default props, and control definitions.
 

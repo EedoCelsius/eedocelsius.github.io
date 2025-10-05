@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import BlurOverlay from '@library/components/BlurOverlay.vue'
+import { BlurOverlay, type BlurOverlayProps } from '@library/components'
 
-defineProps<{
-  visible: boolean
-  blur: number
-  overlayColor: string
-}>()
+defineProps<BlurOverlayProps>()
 </script>
 
 <template>

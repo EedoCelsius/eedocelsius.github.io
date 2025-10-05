@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import QrCode from '@library/components/QrCode.vue'
+import { QrCode, type QrCodeProps } from '@library/components'
 
-defineProps<{
-  content: string
-  lightColor: string
-  darkColor: string
-  icon?: string
-}>()
+defineProps<QrCodeProps>()
 </script>
 
 <template>
