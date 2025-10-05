@@ -1,6 +1,6 @@
 <script lang="ts">
 export const defaultProps = {
-  visible: false,
+  visible: true,
   blur: 7,
   description: '',
   overlayColor: 'color-mix(in srgb, var(--p-surface-900) 55%, transparent)',
