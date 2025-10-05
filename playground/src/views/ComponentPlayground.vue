@@ -41,7 +41,18 @@ const colorKeys = computed(() =>
     .map((control) => control.key) ?? []
 )
 
-const isControlActive = (control: ControlDefinition) => !control.optional || activeControls[control.key] === true
+const hasOwn = (object: Record<string, unknown>, key: string) =>
+  Object.prototype.hasOwnProperty.call(object, key)
+
+const hasDefaultForControl = (control: ControlDefinition) =>
+  hasOwn(componentDefaults.value, control.key)
+
+const isControlRequired = (control: ControlDefinition) => hasDefaultForControl(control)
+
+const isControlOptional = (control: ControlDefinition) => !isControlRequired(control)
+
+const isControlActive = (control: ControlDefinition) =>
+  isControlRequired(control) || activeControls[control.key] === true
 
 const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
   const clonedDefaults = cloneProps(defaults)
@@ -64,11 +75,9 @@ const resetActiveControls = () => {
   }
 
   definition.value.controls.forEach((control) => {
-    activeControls[control.key] = !control.optional
+    activeControls[control.key] = isControlRequired(control)
   })
 }
-
-const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototype.hasOwnProperty.call(object, key)
 
 const getControlInputId = (control: ControlDefinition) => `${control.key}-input`
 const getControlToggleId = (control: ControlDefinition) => `${control.key}-toggle`
@@ -96,7 +105,7 @@ const getInitialValueForControl = (control: ControlDefinition): PlaygroundPropVa
 }
 
 const setControlActive = (control: ControlDefinition, active: boolean) => {
-  if (!control.optional) {
+  if (!isControlOptional(control)) {
     activeControls[control.key] = true
     return
   }
@@ -256,7 +265,7 @@ watch(
           :key="control.key"
           class="flex flex-col gap-2 text-sm"
         >
-          <div v-if="control.optional" class="flex items-center gap-2">
+          <div v-if="isControlOptional(control)" class="flex items-center gap-2">
             <input
               :id="getControlToggleId(control)"
               type="checkbox"
