@@ -2,7 +2,7 @@
 export const defaultProps = {
   visible: true,
   blur: 7,
-  overlayColor: 'rgba(0, 0, 0, 0)',
+  overlayColor: 'rgba(0, 0, 0, 0.25)',
 } as const
 </script>
 
