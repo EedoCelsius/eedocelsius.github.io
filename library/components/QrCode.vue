@@ -1,6 +1,6 @@
 <script lang="ts">
 export const defaultProps = {
-  content: '',
+  content: window.location.href,
   lightColor: 'var(--p-surface-0)',
   darkColor: 'var(--p-surface-900)',
   icon: '',
@@ -23,27 +23,28 @@ const props = withDefaults(
 )
 
 const qrSource = ref('')
-
-const generateQrCode = async () => {
-  const darkHex = toHex(props.darkColor) || '#000000'
-  const lightHex = toHex(props.lightColor) || '#ffffff'
-
-  qrSource.value = await toDataURL(props.content, {
-    errorCorrectionLevel: 'H',
-    margin: 0,
-    color: {
-      dark: darkHex,
-      light: lightHex,
-    },
-  })
-}
+const qrError = ref('')
 
 watch(
   () => [props.content, props.darkColor, props.lightColor],
-  () => {
-    void generateQrCode()
-  },
-  { immediate: true }
+  async () => {
+    const darkHex = toHex(props.darkColor) || '#000000'
+    const lightHex = toHex(props.lightColor) || '#ffffff'
+
+    try {
+      qrSource.value = await toDataURL(props.content, {
+        margin: 0,
+        color: {
+          dark: darkHex,
+          light: lightHex,
+        },
+      })
+      qrError.value = ''
+    }
+    catch (error) {
+      qrError.value = String(error)
+    }
+  }
 )
 </script>
 
@@ -52,7 +53,10 @@ watch(
     <div
       class="relative flex aspect-square w-full max-w-[220px] items-center justify-center rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm dark:border-surface-700 dark:bg-surface-900"
     >
-      <img v-if="qrSource" :src="qrSource" alt="QR code" class="h-full w-full object-contain" />
+      <img v-if="!qrError" :src="qrSource" alt="QR code" class="h-full w-full object-contain" />
+      <div v-else class="flex h-full w-full items-center justify-center text-xs text-surface-300 dark:text-surface-600">
+        <span>{{ qrError }}</span>
+      </div>
       <div
         v-if="props.icon?.trim()"
         class="absolute inset-0 flex items-center justify-center"
