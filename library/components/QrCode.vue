@@ -33,6 +33,7 @@ const updateQrCode = () => {
     props.content,
     {
       margin: 0,
+      quality: 1,
       color: {
         dark: darkHex,
         light: lightHex,
