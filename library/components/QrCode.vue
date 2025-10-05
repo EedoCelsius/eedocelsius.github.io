@@ -3,7 +3,6 @@ export const defaultProps = {
   content: window.location.href,
   lightColor: 'white',
   darkColor: 'black',
-  icon: '',
 } as const
 
 export type props = {
