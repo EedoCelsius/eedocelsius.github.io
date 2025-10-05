@@ -45,15 +45,6 @@ export const componentCatalog: LabComponentDefinition[] = [
     preview: () => import('@/demos/QrCodeDemo.vue'),
     controls: [
       {
-        key: 'content',
-        type: 'textarea',
-        label: { en: 'Content', ko: '콘텐츠' },
-        helperText: {
-          en: 'Text or URL that will be encoded inside the QR code.',
-          ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
-        },
-      },
-      {
         key: 'lightColor',
         type: 'color',
         label: { en: 'Light Color', ko: '밝은 색상' },
@@ -62,6 +53,15 @@ export const componentCatalog: LabComponentDefinition[] = [
         key: 'darkColor',
         type: 'color',
         label: { en: 'Dark Color', ko: '어두운 색상' },
+      },
+      {
+        key: 'content',
+        type: 'textarea',
+        label: { en: 'Content', ko: '콘텐츠' },
+        helperText: {
+          en: 'Text or URL that will be encoded inside the QR code.',
+          ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
+        },
       },
       {
         key: 'icon',
