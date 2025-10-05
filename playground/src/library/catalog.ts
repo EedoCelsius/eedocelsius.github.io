@@ -13,6 +13,7 @@ export interface ControlDefinition {
   key: string
   type: ControlType
   label: LocaleCopy
+  optional?: boolean
   helperText?: LocaleCopy
   min?: number
   max?: number
