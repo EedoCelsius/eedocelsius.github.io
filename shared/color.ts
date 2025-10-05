@@ -1,7 +1,7 @@
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
 const toByte = (value: number) => Math.round(clamp(value, 0, 1) * 255)
 
-const srgbComponentsToCssColor = (r: number, g: number, b: number, alpha?: number) => {
+const srgbToRgba = (r: number, g: number, b: number, alpha?: number) => {
   const rByte = toByte(r)
   const gByte = toByte(g)
   const bByte = toByte(b)
@@ -18,15 +18,9 @@ const srgbComponentsToCssColor = (r: number, g: number, b: number, alpha?: numbe
   return `rgba(${rByte}, ${gByte}, ${bByte}, ${alphaString})`
 }
 
-const colorComponentStringToNumber = (value: string) => {
-  if (value.endsWith('%')) {
-    return parseFloat(value) / 100
-  }
+const parseColorString = (value: string) => value.endsWith('%') ? parseFloat(value) / 100 : parseFloat(value)
 
-  return parseFloat(value)
-}
-
-const cssColorStringToCssRgba = (value: string) => {
+const computedColorToRgba = (value: string) => {
   const trimmed = value.trim()
 
   if (/^rgb(a)?\(/i.test(trimmed) || /^#/.test(trimmed)) {
@@ -35,14 +29,14 @@ const cssColorStringToCssRgba = (value: string) => {
 
   const srgbMatch = trimmed.match(/^color\(srgb\s+([^\s/]+)\s+([^\s/]+)\s+([^\s/]+)(?:\s*\/\s*([^\s)]+))?\)$/i)
   if (srgbMatch) {
-    const rValue = colorComponentStringToNumber(srgbMatch[1]!)
-    const gValue = colorComponentStringToNumber(srgbMatch[2]!)
-    const bValue = colorComponentStringToNumber(srgbMatch[3]!)
+    const rValue = parseColorString(srgbMatch[1]!)
+    const gValue = parseColorString(srgbMatch[2]!)
+    const bValue = parseColorString(srgbMatch[3]!)
     const alphaValue = srgbMatch[4]
-      ? colorComponentStringToNumber(srgbMatch[4]!)
+      ? parseColorString(srgbMatch[4]!)
       : undefined
 
-    return srgbComponentsToCssColor(rValue, gValue, bValue, alphaValue)
+    return srgbToRgba(rValue, gValue, bValue, alphaValue)
   }
 
   const oklabMatch = trimmed.match(/^oklab\(\s*([^\s/]+)\s+([^\s/]+)\s+([^\s/]+)(?:\s*\/\s*([^\s)]+))?\s*\)$/i)
@@ -51,7 +45,7 @@ const cssColorStringToCssRgba = (value: string) => {
     const aValue = parseFloat(oklabMatch[2]!)
     const bValue = parseFloat(oklabMatch[3]!)
     const alphaValue = oklabMatch[4]
-      ? colorComponentStringToNumber(oklabMatch[4]!)
+      ? parseColorString(oklabMatch[4]!)
       : undefined
 
     const l_ = lValue + 0.3963377774 * aValue + 0.2158037573 * bValue
@@ -69,7 +63,7 @@ const cssColorStringToCssRgba = (value: string) => {
     const g = linearToSrgb(-1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3)
     const b = linearToSrgb(-0.0041960863 * l3 - 0.7034186147 * m3 + 1.707614701 * s3)
 
-    return srgbComponentsToCssColor(r, g, b, alphaValue)
+    return srgbToRgba(r, g, b, alphaValue)
   }
 
   return trimmed
@@ -101,13 +95,13 @@ export const rgbaToHex = (value: string) => {
   return `#${rHex}${gHex}${bHex}${alphaHex}`
 }
 
-const resolveColor = (value: string | undefined) => {
+export const toRgba = (value: string | undefined) => {
   if (!value) {
     return ''
   }
 
   const trimmed = value.trim()
-  const fallback = cssColorStringToCssRgba(trimmed)
+  const fallback = computedColorToRgba(trimmed)
   if (typeof document === 'undefined') {
     return fallback
   }
@@ -118,34 +112,26 @@ const resolveColor = (value: string | undefined) => {
     document.body.appendChild(colorResolver)
   }
 
-  const resolver = colorResolver
-
-  if (!resolver) {
+  if (!colorResolver) {
     return fallback
   }
 
-  resolver.style.color = ''
-  resolver.style.color = trimmed
-  const resolved = globalThis.getComputedStyle?.(resolver)?.color
+  colorResolver.style.color = ''
+  colorResolver.style.color = trimmed
+  const resolved = globalThis.getComputedStyle?.(colorResolver)?.color
 
   if (!resolved) {
     return fallback
   }
 
-  return cssColorStringToCssRgba(resolved)
+  return computedColorToRgba(resolved)
 }
 
-export const toRgba = (value: string | undefined) => resolveColor(value)
-
 export const toHex = (value: string | undefined) => {
-  const rgba = resolveColor(value)
+  const rgba = toRgba(value)
 
   if (!rgba) {
     return ''
-  }
-
-  if (rgba.startsWith('#')) {
-    return rgba
   }
 
   return rgbaToHex(rgba)
