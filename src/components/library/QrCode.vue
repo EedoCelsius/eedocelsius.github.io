@@ -9,7 +9,7 @@ export const defaultProps = {
 <script setup lang="ts">
 import { computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
-import { createColorResolver } from '@/utils/color'
+import { resolveColorValue } from '@/utils/color'
 
 const props = withDefaults(
   defineProps<{
@@ -21,7 +21,6 @@ const props = withDefaults(
   defaultProps
 )
 
-const { resolver: colorResolver, resolveColorValue } = createColorResolver()
 </script>
 
 <template>
@@ -47,10 +46,5 @@ const { resolver: colorResolver, resolveColorValue } = createColorResolver()
         </span>
       </div>
     </div>
-    <span
-      ref="colorResolver"
-      aria-hidden="true"
-      style="position: fixed; width: 0; height: 0; opacity: 0; pointer-events: none"
-    ></span>
   </section>
 </template>
