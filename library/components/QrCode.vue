@@ -30,7 +30,7 @@ const updateQR = async () => {
   const lightHex = toHex(props.lightColor) || '#ffffff'
 
   try {
-    const qrData = await toDataURL(props.content, {
+    qrSource.value = await toDataURL(props.content, {
       margin: 0,
       quality: 1,
       color: {
@@ -38,7 +38,6 @@ const updateQR = async () => {
         light: lightHex,
       },
     })
-    qrSource.value = qrData
     qrError.value = ''
   }
   catch (error) {
@@ -48,10 +47,12 @@ const updateQR = async () => {
 
 watch(
   () => [props.content, props.darkColor, props.lightColor],
-  updateQR
+  () => {
+    void updateQrCode()
+  },
 )
 
-updateQR()
+void updateQR()
 </script>
 
 <template>
