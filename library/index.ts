@@ -1,8 +1,0 @@
-export { default as BlurOverlay } from './components/BlurOverlay.vue'
-export { default as LoadingOverlay } from './components/LoadingOverlay.vue'
-export { default as QrCode } from './components/QrCode.vue'
-export { default as Spinner } from './components/Spinner.vue'
-export type { props as BlurOverlayProps } from './components/BlurOverlay.vue'
-export type { props as LoadingOverlayProps } from './components/LoadingOverlay.vue'
-export type { props as QrCodeProps } from './components/QrCode.vue'
-export type { props as SpinnerProps } from './components/Spinner.vue'

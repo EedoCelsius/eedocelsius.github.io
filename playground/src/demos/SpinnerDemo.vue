@@ -1,14 +1,7 @@
 <script setup lang="ts">
-import Spinner from '@library/components/Spinner.vue'
+import { Spinner, type SpinnerProps } from '@library/components'
 
-defineProps<{
-  text?: string | number
-  size: number
-  thickness: number
-  textSize: number
-  trackColor: string
-  indicatorColor: string
-}>()
+defineProps<SpinnerProps>()
 </script>
 
 <template>

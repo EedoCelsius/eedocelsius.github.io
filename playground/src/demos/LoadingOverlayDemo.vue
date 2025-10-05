@@ -1,19 +1,7 @@
 <script setup lang="ts">
-import LoadingOverlay from '@library/components/LoadingOverlay.vue'
+import { LoadingOverlay, type LoadingOverlayProps } from '@library/components'
 
-defineProps<{
-  visible: boolean
-  blur: number
-  description: string
-  overlayColor?: string
-  spinnerSize?: number
-  spinnerThickness?: number
-  spinnerTrackColor?: string
-  spinnerIndicatorColor?: string
-  spinnerText?: string | number
-  spinnerTextSize?: number
-  spinnerTextColor?: string
-}>()
+defineProps<LoadingOverlayProps>()
 </script>
 
 <template>
