@@ -60,7 +60,7 @@ updateQrCode()
 
 <template>
   <section class="relative aspect-square items-center justify-center rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm">
-    <img v-if="!qrError" :src="qrSource" alt="QR code" class="w-full object-contain" style="image-rendering: crisp-edges; image-rendering: pixelated;" />
+    <img v-if="!qrError" :src="qrSource" alt="QR code" class="w-full object-contain" style="image-rendering: pixelated; image-rendering: crisp-edges;" />
     <div v-else class="flex h-full w-full items-center justify-center text-xs text-center">
       <span>{{ qrError }}</span>
     </div>
