@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, reactive, ref, watch } from 'vue'
-import type { AsyncComponentLoader, WatchStopHandle } from 'vue'
+import { computed, defineAsyncComponent, reactive, ref, watch, watchEffect } from 'vue'
+import type { AsyncComponentLoader } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElColorPicker } from 'element-plus'
@@ -66,12 +66,11 @@ const resetProps = () => {
   applyDefaults(componentDefaults.value)
 }
 
-const resolveColorValue = (value: string | undefined) => {
+const resolveColorValue = (resolver: HTMLElement | null, value: string | undefined) => {
   if (!value) {
     return ''
   }
 
-  const resolver = colorResolver.value
   if (!resolver) {
     return value
   }
@@ -81,45 +80,27 @@ const resolveColorValue = (value: string | undefined) => {
   return normalizeComputedColor(getComputedStyle(resolver).color)
 }
 
-const updateResolvedColor = (key: string, value: string | undefined) => {
-  resolvedColors[key] = resolveColorValue(typeof value === 'string' ? value : undefined)
-}
+watchEffect(() => {
+  const resolver = colorResolver.value
+  const keys = colorKeys.value
 
-watch(colorResolver, (resolver) => {
   if (!resolver) {
+    Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
     return
   }
 
-  colorKeys.value.forEach((key) => {
-    updateResolvedColor(key, currentProps[key] as string | undefined)
+  const activeKeys = new Set(keys)
+  keys.forEach((key) => {
+    const value = currentProps[key]
+    resolvedColors[key] = resolveColorValue(resolver, typeof value === 'string' ? value : undefined)
+  })
+
+  Object.keys(resolvedColors).forEach((key) => {
+    if (!activeKeys.has(key)) {
+      delete resolvedColors[key]
+    }
   })
 })
-
-watch(
-  colorKeys,
-  (keys, _prevKeys, onCleanup) => {
-    const trackedKeys = [...keys]
-    const stops: WatchStopHandle[] = trackedKeys.map((key) =>
-      watch(
-        () => currentProps[key] as string | undefined,
-        (value) => {
-          updateResolvedColor(key, value)
-        },
-        { immediate: true }
-      )
-    )
-
-    onCleanup(() => {
-      stops.forEach((stop) => stop())
-      trackedKeys.forEach((key) => {
-        if (!colorKeys.value.includes(key)) {
-          delete resolvedColors[key]
-        }
-      })
-    })
-  },
-  { immediate: true }
-)
 
 const handleColorPickerChange = (key: string, value: string | null) => {
   currentProps[key] = (value ?? '') as PlaygroundPropValue
