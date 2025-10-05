@@ -1,7 +1,5 @@
 import type { AsyncComponentLoader } from 'vue'
 
-export type PlaygroundPropRecord = Record<string, PlaygroundPropValue>
-
 export type LocaleCopy = {
   en: string
   ko: string
@@ -29,6 +27,7 @@ export interface LabComponentDefinition {
   description: LocaleCopy
   component: ComponentLoader
   preview?: ComponentLoader
+  defaultProps: Record<string, PlaygroundPropValue>
   controls: ControlDefinition[]
 }
 
@@ -45,6 +44,14 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     component: () => import('@/components/library/Spinner.vue'),
     preview: () => import('@/demos/SpinnerDemo.vue'),
+    defaultProps: {
+      text: '',
+      size: 96,
+      thickness: 8,
+      textSize: 22,
+      indicatorColor: 'var(--p-primary-color)',
+      trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
+    },
     controls: [
       {
         key: 'text',
@@ -103,6 +110,12 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     component: () => import('@/components/library/QrCode.vue'),
     preview: () => import('@/demos/QrCodeDemo.vue'),
+    defaultProps: {
+      content: 'https://component-lab.dev/welcome',
+      lightColor: 'var(--p-surface-0)',
+      darkColor: 'var(--p-surface-900)',
+      icon: '',
+    },
     controls: [
       {
         key: 'content',
@@ -146,6 +159,11 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     component: () => import('@/components/library/BlurOverlay.vue'),
     preview: () => import('@/demos/BlurOverlayDemo.vue'),
+    defaultProps: {
+      visible: true,
+      blur: 7,
+      overlayColor: 'color-mix(in srgb, var(--p-surface-900) 45%, transparent)',
+    },
     controls: [
       {
         key: 'visible',
@@ -183,6 +201,17 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     component: () => import('@/components/library/LoadingOverlay.vue'),
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
+    defaultProps: {
+      visible: false,
+      blur: 7,
+      description: '',
+      overlayColor: 'color-mix(in srgb, var(--p-surface-900) 55%, transparent)',
+      spinnerSize: 48,
+      spinnerThickness: 4,
+      spinnerTrackColor: 'color-mix(in srgb, var(--p-surface-0) 25%, transparent)',
+      spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
+      spinnerText: '',
+    },
     controls: [
       {
         key: 'visible',
@@ -257,49 +286,3 @@ export const componentCatalog: LabComponentDefinition[] = [
 export const componentMap = new Map(componentCatalog.map((item) => [item.id, item]))
 
 export const getComponentDefinition = (id: string) => componentMap.get(id)
-
-type ComponentDefaultsLoader = () => Promise<PlaygroundPropRecord>
-
-const componentDefaultLoaders = new Map<string, ComponentDefaultsLoader>([
-  [
-    'spinner',
-    async () => {
-      const module = await import('@/components/library/Spinner.vue')
-      return module.spinnerDefaultProps as PlaygroundPropRecord
-    },
-  ],
-  [
-    'qr-code',
-    async () => {
-      const module = await import('@/components/library/QrCode.vue')
-      return module.qrCodeDefaultProps as PlaygroundPropRecord
-    },
-  ],
-  [
-    'blur-overlay',
-    async () => {
-      const module = await import('@/components/library/BlurOverlay.vue')
-      return module.blurOverlayDefaultProps as PlaygroundPropRecord
-    },
-  ],
-  [
-    'loading-overlay',
-    async () => {
-      const module = await import('@/components/library/LoadingOverlay.vue')
-      return module.loadingOverlayDefaultProps as PlaygroundPropRecord
-    },
-  ],
-])
-
-const cloneProps = (value: PlaygroundPropRecord | undefined) =>
-  value ? (JSON.parse(JSON.stringify(value)) as PlaygroundPropRecord) : {}
-
-export const loadComponentDefaultProps = async (id: string) => {
-  const loader = componentDefaultLoaders.get(id)
-  if (!loader) {
-    return {}
-  }
-
-  const defaults = await loader()
-  return cloneProps(defaults)
-}
