@@ -5,7 +5,12 @@ import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElColorPicker } from 'element-plus'
 import Spinner from '@library/components/Spinner.vue'
-import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
+import type {
+  ControlDefinition,
+  LabComponentDefinition,
+  LocaleCopy,
+  PlaygroundPropValue,
+} from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
 import { toRgba } from '@shared/color'
 import type { SupportedLocale } from '@/i18n'
@@ -24,6 +29,28 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) =>
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
 const resolvedColors = reactive<Record<string, string>>({})
+const controlActivation = reactive<Record<string, boolean>>({})
+
+const isControlOptional = (control: ControlDefinition) => control.optional !== false
+
+const initializeControlActivation = (controls?: ControlDefinition[]) => {
+  Object.keys(controlActivation).forEach((key) => delete controlActivation[key])
+
+  controls?.forEach((control) => {
+    controlActivation[control.key] = isControlOptional(control) ? false : true
+  })
+}
+
+const shouldRenderControl = (control: ControlDefinition) =>
+  !isControlOptional(control) || controlActivation[control.key] === true
+
+watch(
+  definition,
+  (value) => {
+    initializeControlActivation(value?.controls)
+  },
+  { immediate: true }
+)
 
 const colorKeys = computed(() =>
   definition.value?.controls
@@ -63,6 +90,7 @@ watch(
 
 const resetProps = () => {
   applyDefaults(componentDefaults.value)
+  initializeControlActivation(definition.value?.controls)
 }
 
 watchEffect(() => {
@@ -165,74 +193,109 @@ watch(
           :key="control.key"
           class="flex flex-col gap-2 text-sm"
         >
-          <label
-            v-if="control.type !== 'boolean'"
-            :for="control.key"
-            class="font-medium text-surface-700 dark:text-surface-200"
-          >
-            {{ localize(control.label) }}
-          </label>
-          <template v-if="control.type === 'text'">
-            <input
-              :id="control.key"
-              v-model="(currentProps[control.key] as string | undefined)"
-              type="text"
-              class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
-            />
-          </template>
-          <template v-else-if="control.type === 'textarea'">
-            <textarea
-              :id="control.key"
-              v-model="(currentProps[control.key] as string | undefined)"
-              rows="4"
-              class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
-            ></textarea>
-          </template>
-          <template v-else-if="control.type === 'color'">
-            <div class="flex items-center gap-3">
-              <ElColorPicker
-                :model-value="resolvedColors[control.key] ?? ''"
-                show-alpha
-                color-format="rgb"
-                class="shrink-0"
-                @update:model-value="handleColorPickerChange(control.key, $event)"
-              />
-              <input
-                :id="control.key"
-                v-model="(currentProps[control.key] as string | undefined)"
-                type="text"
-                class="flex-1 rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
-              />
-            </div>
-          </template>
-          <template v-else-if="control.type === 'slider'">
+          <template v-if="control.type !== 'boolean'">
             <div class="flex items-center gap-3">
               <input
-                :id="control.key"
-                v-model.number="(currentProps[control.key] as number | undefined)"
-                type="range"
-                :min="control.min ?? 0"
-                :max="control.max ?? 100"
-                :step="control.step ?? 1"
-                class="flex-1 accent-primary-500"
-              />
-              <span class="w-12 text-right text-xs font-semibold text-primary-500">{{ currentProps[control.key] }}</span>
-            </div>
-          </template>
-          <template v-else-if="control.type === 'boolean'">
-            <label class="inline-flex items-center gap-3">
-              <input
-                :id="control.key"
-                v-model="(currentProps[control.key] as boolean | undefined)"
+                v-if="isControlOptional(control)"
+                :id="`${control.key}-toggle`"
+                v-model="controlActivation[control.key]"
                 type="checkbox"
-                class="h-5 w-5 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
+                class="h-4 w-4 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
+                :aria-controls="control.key"
               />
-              <span class="text-sm text-surface-600 dark:text-surface-300">{{ localize(control.label) }}</span>
-            </label>
+              <label :for="control.key" class="font-medium text-surface-700 dark:text-surface-200">
+                {{ localize(control.label) }}
+              </label>
+            </div>
+            <template v-if="shouldRenderControl(control)">
+              <template v-if="control.type === 'text'">
+                <input
+                  :id="control.key"
+                  v-model="(currentProps[control.key] as string | undefined)"
+                  type="text"
+                  class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
+                />
+              </template>
+              <template v-else-if="control.type === 'textarea'">
+                <textarea
+                  :id="control.key"
+                  v-model="(currentProps[control.key] as string | undefined)"
+                  rows="4"
+                  class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
+                ></textarea>
+              </template>
+              <template v-else-if="control.type === 'color'">
+                <div class="flex items-center gap-3">
+                  <ElColorPicker
+                    :model-value="resolvedColors[control.key] ?? ''"
+                    show-alpha
+                    color-format="rgb"
+                    class="shrink-0"
+                    @update:model-value="handleColorPickerChange(control.key, $event)"
+                  />
+                  <input
+                    :id="control.key"
+                    v-model="(currentProps[control.key] as string | undefined)"
+                    type="text"
+                    class="flex-1 rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
+                  />
+                </div>
+              </template>
+              <template v-else-if="control.type === 'slider'">
+                <div class="flex items-center gap-3">
+                  <input
+                    :id="control.key"
+                    v-model.number="(currentProps[control.key] as number | undefined)"
+                    type="range"
+                    :min="control.min ?? 0"
+                    :max="control.max ?? 100"
+                    :step="control.step ?? 1"
+                    class="flex-1 accent-primary-500"
+                  />
+                  <span class="w-12 text-right text-xs font-semibold text-primary-500">{{ currentProps[control.key] }}</span>
+                </div>
+              </template>
+              <p v-if="control.helperText" class="text-xs text-surface-500 dark:text-surface-400">
+                {{ localize(control.helperText) }}
+              </p>
+            </template>
           </template>
-          <p v-if="control.helperText" class="text-xs text-surface-500 dark:text-surface-400">
-            {{ localize(control.helperText) }}
-          </p>
+          <template v-else>
+            <div class="flex items-center gap-3">
+              <input
+                v-if="isControlOptional(control)"
+                :id="`${control.key}-toggle`"
+                v-model="controlActivation[control.key]"
+                type="checkbox"
+                class="h-4 w-4 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
+                :aria-controls="control.key"
+              />
+              <label
+                v-if="shouldRenderControl(control)"
+                class="inline-flex items-center gap-3"
+              >
+                <input
+                  :id="control.key"
+                  v-model="(currentProps[control.key] as boolean | undefined)"
+                  type="checkbox"
+                  class="h-5 w-5 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
+                />
+                <span class="text-sm text-surface-600 dark:text-surface-300">{{ localize(control.label) }}</span>
+              </label>
+              <span
+                v-else
+                class="font-medium text-surface-700 dark:text-surface-200"
+              >
+                {{ localize(control.label) }}
+              </span>
+            </div>
+            <p
+              v-if="control.helperText && shouldRenderControl(control)"
+              class="text-xs text-surface-500 dark:text-surface-400"
+            >
+              {{ localize(control.helperText) }}
+            </p>
+          </template>
         </div>
       </form>
       <span
