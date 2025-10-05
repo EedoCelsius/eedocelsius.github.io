@@ -172,9 +172,9 @@ const resolveColor = (value: string | undefined) => {
   return cssColorStringToCssRgba(resolved)
 }
 
-export const colorValueToRgba = (value: string | undefined) => resolveColor(value)
+export const toRgba = (value: string | undefined) => resolveColor(value)
 
-export const colorValueToHex = (value: string | undefined) => {
+export const toHex = (value: string | undefined) => {
   const rgba = resolveColor(value)
 
   if (!rgba) {
