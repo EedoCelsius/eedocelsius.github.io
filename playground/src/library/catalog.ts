@@ -33,6 +33,52 @@ export interface LabComponentDefinition {
 
 export const componentCatalog: LabComponentDefinition[] = [
   {
+    id: 'qr-code',
+    name: {
+      en: 'QR Code',
+      ko: 'QR 코드',
+    },
+    description: {
+      en: 'Display a clean QR code with optional brand colors and a center icon.',
+      ko: '브랜드 색상과 중앙 아이콘을 선택해 깔끔한 QR 코드를 보여줍니다.',
+    },
+    component: () => import('@library/components/QrCode.vue'),
+    preview: () => import('@/demos/QrCodeDemo.vue'),
+    controls: [
+      {
+        key: 'content',
+        type: 'textarea',
+        label: { en: 'Content', ko: '콘텐츠' },
+        helperText: {
+          en: 'Text or URL that will be encoded inside the QR code.',
+          ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
+        },
+      },
+      {
+        key: 'lightColor',
+        type: 'color',
+        label: { en: 'Light Color', ko: '밝은 색상' },
+        optional: true,
+      },
+      {
+        key: 'darkColor',
+        type: 'color',
+        label: { en: 'Dark Color', ko: '어두운 색상' },
+        optional: true,
+      },
+      {
+        key: 'icon',
+        type: 'text',
+        label: { en: 'Icon URL', ko: '아이콘 주소' },
+        helperText: {
+          en: 'Center image URL. Leave empty to hide the icon.',
+          ko: '중앙에 표시할 이미지 주소입니다. 비워두면 아이콘이 숨겨집니다.',
+        },
+        optional: true,
+      },
+    ],
+  },
+  {
     id: 'spinner',
     name: {
       en: 'Spinner',
@@ -89,52 +135,6 @@ export const componentCatalog: LabComponentDefinition[] = [
         helperText: {
           en: 'Content displayed at the center of the spinner.',
           ko: '스피너 중앙에 표시할 텍스트입니다.',
-        },
-        optional: true,
-      },
-    ],
-  },
-  {
-    id: 'qr-code',
-    name: {
-      en: 'QR Code',
-      ko: 'QR 코드',
-    },
-    description: {
-      en: 'Display a clean QR code with optional brand colors and a center icon.',
-      ko: '브랜드 색상과 중앙 아이콘을 선택해 깔끔한 QR 코드를 보여줍니다.',
-    },
-    component: () => import('@library/components/QrCode.vue'),
-    preview: () => import('@/demos/QrCodeDemo.vue'),
-    controls: [
-      {
-        key: 'content',
-        type: 'textarea',
-        label: { en: 'Content', ko: '콘텐츠' },
-        helperText: {
-          en: 'Text or URL that will be encoded inside the QR code.',
-          ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
-        },
-      },
-      {
-        key: 'lightColor',
-        type: 'color',
-        label: { en: 'Light Color', ko: '밝은 색상' },
-        optional: true,
-      },
-      {
-        key: 'darkColor',
-        type: 'color',
-        label: { en: 'Dark Color', ko: '어두운 색상' },
-        optional: true,
-      },
-      {
-        key: 'icon',
-        type: 'text',
-        label: { en: 'Icon URL', ko: '아이콘 주소' },
-        helperText: {
-          en: 'Center image URL. Leave empty to hide the icon.',
-          ko: '중앙에 표시할 이미지 주소입니다. 비워두면 아이콘이 숨겨집니다.',
         },
         optional: true,
       },
