@@ -7,20 +7,22 @@ export const defaultProps = {
   trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
   indicatorColor: 'var(--p-primary-color)',
 } as const
+
+export type SpinnerProps = {
+  text?: string | number
+  size?: number
+  thickness?: number
+  textSize?: number
+  trackColor?: string
+  indicatorColor?: string
+}
 </script>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 
 const props = withDefaults(
-  defineProps<{
-    text?: string | number
-    size?: number
-    thickness?: number
-    textSize?: number
-    trackColor?: string
-    indicatorColor?: string
-  }>(),
+  defineProps<SpinnerProps>(),
   defaultProps
 )
 

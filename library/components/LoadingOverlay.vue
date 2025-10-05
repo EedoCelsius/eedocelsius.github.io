@@ -10,6 +10,18 @@ export const defaultProps = {
   spinnerIndicatorColor: 'var(--p-primary-contrast-color)',
   spinnerText: '',
 } as const
+
+export type LoadingOverlayProps = {
+  visible?: boolean
+  blur?: number
+  description?: string
+  overlayColor?: string
+  spinnerSize?: number
+  spinnerThickness?: number
+  spinnerTrackColor?: string
+  spinnerIndicatorColor?: string
+  spinnerText?: string | number
+}
 </script>
 
 <script setup lang="ts">
@@ -18,17 +30,7 @@ import BlurOverlay from './BlurOverlay.vue'
 import Spinner from './Spinner.vue'
 
 const props = withDefaults(
-  defineProps<{
-    visible?: boolean
-    blur?: number
-    description?: string
-    overlayColor?: string
-    spinnerSize?: number
-    spinnerThickness?: number
-    spinnerTrackColor?: string
-    spinnerIndicatorColor?: string
-    spinnerText?: string | number
-  }>(),
+  defineProps<LoadingOverlayProps>(),
   defaultProps
 )
 
