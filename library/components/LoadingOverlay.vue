@@ -1,7 +1,7 @@
 <script lang="ts">
 export const defaultProps = {
   visible: true,
-  blurStrength: 7,
+  blur: 7,
   overlayColor: 'rgba(0, 0, 0, 0.25)',
   spinnerDiameter: 48,
   spinnerThickness: 4,
@@ -11,7 +11,7 @@ export const defaultProps = {
 
 export type props = {
   visible?: boolean
-  blurStrength?: number
+  blur?: number
   overlayColor?: string
   spinnerDiameter?: number
   spinnerThickness?: number
@@ -38,23 +38,23 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
 </script>
 
 <template>
-  <div class="relative isolate">
-    <slot />
-    <BlurOverlay :visible="props.visible" :blur-strength="props.blurStrength" :overlay-color="props.overlayColor">
-      <template #overlay>
-        <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
-          <Spinner
-            :diameter="props.spinnerDiameter"
-            :thickness="props.spinnerThickness"
-            :track-color="props.spinnerTrackColor"
-            :indicator-color="props.spinnerIndicatorColor"
-            :text="props.spinnerText"
-            :text-size="props.spinnerTextSize"
-            :text-color="props.spinnerTextColor"
-          />
-          <p v-if="hasDescription" class="max-w-xs text-sm text-surface-0/80">{{ props.description }}</p>
-        </div>
-      </template>
-    </BlurOverlay>
-  </div>
+  <BlurOverlay :visible="props.visible" :blur="props.blur" :overlay-color="props.overlayColor">
+    <template #default>
+      <slot />
+    </template>
+    <template #overlay>
+      <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
+        <Spinner
+          :diameter="props.spinnerDiameter"
+          :thickness="props.spinnerThickness"
+          :track-color="props.spinnerTrackColor"
+          :indicator-color="props.spinnerIndicatorColor"
+          :text="props.spinnerText"
+          :text-size="props.spinnerTextSize"
+          :text-color="props.spinnerTextColor"
+        />
+        <p v-if="hasDescription" class="max-w-xs text-sm text-surface-0/80">{{ props.description }}</p>
+      </div>
+    </template>
+  </BlurOverlay>
 </template>
