@@ -5,8 +5,6 @@ export const defaultProps = {
   overlayColor: 'rgba(0, 0, 0, 0.25)',
   spinnerDiameter: 48,
   spinnerThickness: 4,
-  spinnerText: '',
-  description: '',
 } as const
 
 export type props = {
