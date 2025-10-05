@@ -4,8 +4,10 @@ import type { AsyncComponentLoader, WatchStopHandle } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElColorPicker } from 'element-plus'
+import Spinner from '@/components/library/Spinner.vue'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
+import { normalizeComputedColor } from '@/library/utils/color'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
@@ -80,8 +82,7 @@ const resolveColorValue = (value: string | undefined) => {
 
   resolver.style.color = ''
   resolver.style.color = value
-  console.log(getComputedStyle(resolver).color)
-  return getComputedStyle(resolver).color
+  return normalizeComputedColor(getComputedStyle(resolver).color)
 }
 
 const updateResolvedColor = (key: string, value: string | undefined) => {
@@ -181,12 +182,12 @@ watch(
           <component :is="previewComponent" v-bind="currentProps" />
           <template #fallback>
             <div class="flex h-full items-center justify-center text-surface-400">
-              <i class="pi pi-spinner animate-spin text-2xl"></i>
+              <Spinner :size="72" :thickness="6" indicator-color="var(--p-primary-color)" />
             </div>
           </template>
         </Suspense>
         <div v-else class="flex h-full items-center justify-center text-surface-400">
-          <i class="pi pi-spinner animate-spin text-2xl"></i>
+          <Spinner :size="72" :thickness="6" indicator-color="var(--p-primary-color)" />
         </div>
       </div>
     </section>
