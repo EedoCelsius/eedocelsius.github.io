@@ -41,7 +41,7 @@ export const componentCatalog: LabComponentDefinition[] = [
       en: 'Animated circular spinner with optional centered text sizing.',
       ko: '중앙 텍스트 크기를 조절할 수 있는 회전형 스피너입니다.',
     },
-    component: () => import('@/components/library/Spinner.vue'),
+    component: () => import('@library/components/Spinner.vue'),
     preview: () => import('@/demos/SpinnerDemo.vue'),
     controls: [
       {
@@ -99,7 +99,7 @@ export const componentCatalog: LabComponentDefinition[] = [
       en: 'Display a clean QR code with optional brand colors and a center icon.',
       ko: '브랜드 색상과 중앙 아이콘을 선택해 깔끔한 QR 코드를 보여줍니다.',
     },
-    component: () => import('@/components/library/QrCode.vue'),
+    component: () => import('@library/components/QrCode.vue'),
     preview: () => import('@/demos/QrCodeDemo.vue'),
     controls: [
       {
@@ -142,7 +142,7 @@ export const componentCatalog: LabComponentDefinition[] = [
       en: 'Applies a configurable blur glass effect on top of any content.',
       ko: '어떤 콘텐츠든 부드러운 블러 글래스 효과로 감쌉니다.',
     },
-    component: () => import('@/components/library/BlurOverlay.vue'),
+    component: () => import('@library/components/BlurOverlay.vue'),
     preview: () => import('@/demos/BlurOverlayDemo.vue'),
     controls: [
       {
@@ -175,7 +175,7 @@ export const componentCatalog: LabComponentDefinition[] = [
       en: 'Displays the shared spinner with optional text and description over blurred content.',
       ko: '블러 처리된 콘텐츠 위에 공유 스피너와 선택적인 텍스트·설명을 표시합니다.',
     },
-    component: () => import('@/components/library/LoadingOverlay.vue'),
+    component: () => import('@library/components/LoadingOverlay.vue'),
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
     controls: [
       {

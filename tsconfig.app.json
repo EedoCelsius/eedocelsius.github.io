@@ -5,7 +5,9 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["playground/src/*"],
+      "@library/*": ["library/*"],
+      "@shared/*": ["shared/*"]
     },
     /* Linting */
     "strict": true,
@@ -15,5 +17,13 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "playground/src/**/*.ts",
+    "playground/src/**/*.tsx",
+    "playground/src/**/*.vue",
+    "library/**/*.ts",
+    "library/**/*.tsx",
+    "library/**/*.vue",
+    "shared/**/*.ts"
+  ]
 }

@@ -21,23 +21,28 @@ Component Lab is a personal component playground powered by **Vue 3**, **PrimeVu
 ## 🗂️ Project Structure
 
 ```
-src/
-  components/
-    library/          # Reusable component implementations
-  demos/              # Playground wrapper components per library component
-  library/
-    catalog.ts        # Component definitions and control metadata
-  views/
-    HomePage.vue      # Component list
-    ComponentPlayground.vue # Playground with dynamic controls
-  i18n/               # Locale messages
-  router/             # Vue Router configuration
+library/
+  components/              # Reusable component implementations and exports
+
+shared/
+  color.ts                 # Utilities shared across the library and playground
+
+playground/
+  src/
+    demos/                 # Playground wrapper components per library component
+    library/
+      catalog.ts           # Component definitions and control metadata
+    views/
+      HomePage.vue         # Component list
+      ComponentPlayground.vue # Playground with dynamic controls
+    i18n/                  # Locale messages
+    router/                # Vue Router configuration
 ```
 
 To register a new component:
-1. Create the component under `src/components/library/`.
-2. (Optional) Create a demo wrapper under `src/demos/` if the component needs slot scaffolding.
-3. Add an entry to `src/library/catalog.ts` with localized metadata, default props, and control definitions.
+1. Create the component under `library/components/` (and export it from `library/index.ts`).
+2. (Optional) Create a demo wrapper under `playground/src/demos/` if the component needs slot scaffolding.
+3. Add an entry to `playground/src/library/catalog.ts` with localized metadata, default props, and control definitions.
 
 ## 🚀 Development
 

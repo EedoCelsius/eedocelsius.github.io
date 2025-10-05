@@ -4,10 +4,10 @@ import type { AsyncComponentLoader } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElColorPicker } from 'element-plus'
-import Spinner from '@/components/library/Spinner.vue'
+import Spinner from '@library/components/Spinner.vue'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
-import { resolveColorValue } from '@/utils/color'
+import { resolveColorValue } from '@shared/color'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{

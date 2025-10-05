@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LoadingOverlay from '@/components/library/LoadingOverlay.vue'
+import LoadingOverlay from '@library/components/LoadingOverlay.vue'
 
 defineProps<{
   visible: boolean

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Spinner from '@/components/library/Spinner.vue'
+import Spinner from '@library/components/Spinner.vue'
 
 defineProps<{
   text?: string | number
