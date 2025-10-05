@@ -7,7 +7,7 @@ import { ElColorPicker } from 'element-plus'
 import Spinner from '@library/components/Spinner.vue'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
-import { colorValueToRgba } from '@shared/color'
+import { toRgba } from '@shared/color'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
@@ -71,7 +71,7 @@ watchEffect(() => {
   const activeKeys = new Set(keys)
   keys.forEach((key) => {
     const value = currentProps[key]
-    resolvedColors[key] = colorValueToRgba(typeof value === 'string' ? value : undefined)
+    resolvedColors[key] = toRgba(typeof value === 'string' ? value : undefined)
   })
 
   Object.keys(resolvedColors).forEach((key) => {
