@@ -7,7 +7,8 @@ import App from './App.vue'
 import router from './router'
 import i18n from './i18n'
 import 'primeicons/primeicons.css'
-import '@library/styles'
+import './style.css'
+import './styles/element-plus.css'
 
 const app = createApp(App)
 
