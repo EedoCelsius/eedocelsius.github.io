@@ -47,11 +47,7 @@ const loadComponentDefaults = async () => {
     return
   }
 
-  const targetId = definition.value.id
   const module = await definition.value.component()
-  if (definition.value?.id !== targetId) {
-    return
-  }
 
   const defaults = cloneProps((module as { defaultProps?: Record<string, PlaygroundPropValue> }).defaultProps)
   componentDefaults.value = defaults
