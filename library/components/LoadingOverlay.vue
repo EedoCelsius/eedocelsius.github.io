@@ -5,7 +5,6 @@ export const defaultProps = {
 } as const
 
 export type props = {
-  visible?: boolean
   blurStrength?: number
   overlayColor?: string
   spinnerDiameter?: number
@@ -35,7 +34,7 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
 <template>
   <div class="relative isolate">
     <slot />
-    <BlurOverlay :visible="props.visible" :blur-strength="props.blurStrength" :overlay-color="props.overlayColor">
+    <BlurOverlay :blur-strength="props.blurStrength" :overlay-color="props.overlayColor">
       <template #overlay>
         <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
           <Spinner
