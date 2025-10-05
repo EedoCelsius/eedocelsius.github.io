@@ -22,21 +22,21 @@ Component Lab is a personal component playground powered by **Vue 3**, **PrimeVu
 
 ```
 library/
-  components/              # Reusable component implementations and exports
+  components/                 # Reusable component implementations and exports
 
 shared/
-  color.ts                 # Utilities shared across the library and playground
+  color.ts                    # Utilities shared across the library and playground
 
 playground/
   src/
-    demos/                 # Playground wrapper components per library component
+    demos/                    # Playground wrapper components per library component
     library/
-      catalog.ts           # Component definitions and control metadata
+      catalog.ts              # Component definitions and control metadata
     views/
-      HomePage.vue         # Component list
+      HomePage.vue            # Component list
       ComponentPlayground.vue # Playground with dynamic controls
-    i18n/                  # Locale messages
-    router/                # Vue Router configuration
+    i18n/                     # Locale messages
+    router/                   # Vue Router configuration
 ```
 
 To register a new component:
