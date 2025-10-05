@@ -26,66 +26,6 @@ const colorComponentStringToNumber = (value: string) => {
   return parseFloat(value)
 }
 
-const srgbFunctionStringToCssColor = (value: string) => {
-  const match = value.match(/^color\(srgb\s+([^\s/]+)\s+([^\s/]+)\s+([^\s/]+)(?:\s*\/\s*([^\s)]+))?\)$/i)
-  if (!match) {
-    return null
-  }
-
-  const r = match[1]!
-  const g = match[2]!
-  const b = match[3]!
-  const alpha = match[4]
-  const rValue = colorComponentStringToNumber(r)
-  const gValue = colorComponentStringToNumber(g)
-  const bValue = colorComponentStringToNumber(b)
-  const alphaValue = alpha ? colorComponentStringToNumber(alpha) : undefined
-
-  return srgbComponentsToCssColor(rValue, gValue, bValue, alphaValue)
-}
-
-const oklabToSrgb = (l: number, a: number, b: number) => {
-  const l_ = l + 0.3963377774 * a + 0.2158037573 * b
-  const m_ = l - 0.1055613458 * a - 0.0638541728 * b
-  const s_ = l - 0.0894841775 * a - 1.291485548 * b
-
-  const l3 = l_ ** 3
-  const m3 = m_ ** 3
-  const s3 = s_ ** 3
-
-  const rLinear = 4.0767416621 * l3 - 3.3077115913 * m3 + 0.2309699292 * s3
-  const gLinear = -1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3
-  const bLinear = -0.0041960863 * l3 - 0.7034186147 * m3 + 1.707614701 * s3
-
-  const linearToSrgb = (component: number) =>
-    component <= 0.0031308 ? 12.92 * component : 1.055 * component ** (1 / 2.4) - 0.055
-
-  return {
-    r: linearToSrgb(rLinear),
-    g: linearToSrgb(gLinear),
-    b: linearToSrgb(bLinear),
-  }
-}
-
-const oklabFunctionStringToCssColor = (value: string) => {
-  const match = value.match(/^oklab\(\s*([^\s/]+)\s+([^\s/]+)\s+([^\s/]+)(?:\s*\/\s*([^\s)]+))?\s*\)$/i)
-  if (!match) {
-    return null
-  }
-
-  const l = match[1]!
-  const a = match[2]!
-  const b = match[3]!
-  const alpha = match[4]
-  const lValue = parseFloat(l)
-  const aValue = parseFloat(a)
-  const bValue = parseFloat(b)
-  const alphaValue = alpha ? colorComponentStringToNumber(alpha) : undefined
-
-  const { r, g, b: blue } = oklabToSrgb(lValue, aValue, bValue)
-  return srgbComponentsToCssColor(r, g, blue, alphaValue)
-}
-
 const cssColorStringToCssRgba = (value: string) => {
   const trimmed = value.trim()
 
@@ -93,49 +33,62 @@ const cssColorStringToCssRgba = (value: string) => {
     return trimmed
   }
 
-  return srgbFunctionStringToCssColor(trimmed) ?? oklabFunctionStringToCssColor(trimmed) ?? trimmed
+  const srgbMatch = trimmed.match(/^color\(srgb\s+([^\s/]+)\s+([^\s/]+)\s+([^\s/]+)(?:\s*\/\s*([^\s)]+))?\)$/i)
+  if (srgbMatch) {
+    const rValue = colorComponentStringToNumber(srgbMatch[1]!)
+    const gValue = colorComponentStringToNumber(srgbMatch[2]!)
+    const bValue = colorComponentStringToNumber(srgbMatch[3]!)
+    const alphaValue = srgbMatch[4]
+      ? colorComponentStringToNumber(srgbMatch[4]!)
+      : undefined
+
+    return srgbComponentsToCssColor(rValue, gValue, bValue, alphaValue)
+  }
+
+  const oklabMatch = trimmed.match(/^oklab\(\s*([^\s/]+)\s+([^\s/]+)\s+([^\s/]+)(?:\s*\/\s*([^\s)]+))?\s*\)$/i)
+  if (oklabMatch) {
+    const lValue = parseFloat(oklabMatch[1]!)
+    const aValue = parseFloat(oklabMatch[2]!)
+    const bValue = parseFloat(oklabMatch[3]!)
+    const alphaValue = oklabMatch[4]
+      ? colorComponentStringToNumber(oklabMatch[4]!)
+      : undefined
+
+    const l_ = lValue + 0.3963377774 * aValue + 0.2158037573 * bValue
+    const m_ = lValue - 0.1055613458 * aValue - 0.0638541728 * bValue
+    const s_ = lValue - 0.0894841775 * aValue - 1.291485548 * bValue
+
+    const l3 = l_ ** 3
+    const m3 = m_ ** 3
+    const s3 = s_ ** 3
+
+    const linearToSrgb = (component: number) =>
+      component <= 0.0031308 ? 12.92 * component : 1.055 * component ** (1 / 2.4) - 0.055
+
+    const r = linearToSrgb(4.0767416621 * l3 - 3.3077115913 * m3 + 0.2309699292 * s3)
+    const g = linearToSrgb(-1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3)
+    const b = linearToSrgb(-0.0041960863 * l3 - 0.7034186147 * m3 + 1.707614701 * s3)
+
+    return srgbComponentsToCssColor(r, g, b, alphaValue)
+  }
+
+  return trimmed
 }
 
 let colorResolver: HTMLDivElement | null = null
 
-const ensureColorResolver = () => {
-  if (typeof document === 'undefined') {
-    return null
-  }
+const toHexComponent = (value: number) => Math.round(clamp(value, 0, 255)).toString(16).padStart(2, '0')
 
-  if (!colorResolver || !colorResolver.isConnected) {
-    colorResolver = document.createElement('div')
-    colorResolver.hidden = true
-    document.body.appendChild(colorResolver)
-  }
-
-  return colorResolver
-}
-
-const rgbaStringToComponents = (value: string) => {
+export const rgbaToHex = (value: string) => {
   const match = value.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)$/i)
   if (!match) {
-    return null
+    return ''
   }
 
   const r = parseFloat(match[1]!)
   const g = parseFloat(match[2]!)
   const b = parseFloat(match[3]!)
   const alpha = match[4] !== undefined ? parseFloat(match[4]) : undefined
-
-  return { r, g, b, alpha }
-}
-
-const toHexComponent = (value: number) => Math.round(clamp(value, 0, 255)).toString(16).padStart(2, '0')
-
-export const rgbaToHex = (value: string) => {
-  const components = rgbaStringToComponents(value)
-
-  if (!components) {
-    return ''
-  }
-
-  const { r, g, b, alpha } = components
   const rHex = toHexComponent(r)
   const gHex = toHexComponent(g)
   const bHex = toHexComponent(b)
@@ -155,7 +108,17 @@ const resolveColor = (value: string | undefined) => {
 
   const trimmed = value.trim()
   const fallback = cssColorStringToCssRgba(trimmed)
-  const resolver = ensureColorResolver()
+  if (typeof document === 'undefined') {
+    return fallback
+  }
+
+  if (!colorResolver || !colorResolver.isConnected) {
+    colorResolver = document.createElement('div')
+    colorResolver.hidden = true
+    document.body.appendChild(colorResolver)
+  }
+
+  const resolver = colorResolver
 
   if (!resolver) {
     return fallback
