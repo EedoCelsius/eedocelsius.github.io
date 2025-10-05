@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import {
-  computed,
-  createVNode,
-  defineAsyncComponent,
-  nextTick,
-  reactive,
-  render,
-  toRaw,
-  watch,
-} from 'vue'
+import { computed, defineAsyncComponent, reactive, watch } from 'vue'
 import type { AsyncComponentLoader } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -24,114 +15,26 @@ const { t, locale } = useI18n()
 
 const definition = computed<LabComponentDefinition | undefined>(() => getComponentDefinition(props.componentId))
 
+const cloneProps = (value: Record<string, PlaygroundPropValue>) =>
+  JSON.parse(JSON.stringify(value)) as Record<string, PlaygroundPropValue>
+
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
-const defaultCache = new Map<string, Record<string, PlaygroundPropValue>>()
 
-const normalizeColorValue = (value: PlaygroundPropValue): PlaygroundPropValue => {
-  if (typeof value !== 'string') {
-    return value
-  }
-
-  const trimmed = value.trim()
-  if (trimmed === '' || /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(trimmed)) {
-    return trimmed
-  }
-
-  const probe = document.createElement('div')
-  probe.style.position = 'absolute'
-  probe.style.pointerEvents = 'none'
-  probe.style.opacity = '0'
-  probe.style.color = trimmed
-  document.body.appendChild(probe)
-
-  const computedColor = getComputedStyle(probe).color
-  probe.remove()
-
-  const match =
-    computedColor &&
-    computedColor.match(/rgba?\((?<r>\d+),\s*(?<g>\d+),\s*(?<b>\d+)(?:,\s*(?<a>[0-9.]+))?\)/)
-
-  if (!match || !match.groups) {
-    return trimmed
-  }
-
-  const toHex = (component: number) => component.toString(16).padStart(2, '0')
-
-  const { r, g, b } = match.groups as { r: string; g: string; b: string }
-  const red = Number.parseInt(r, 10)
-  const green = Number.parseInt(g, 10)
-  const blue = Number.parseInt(b, 10)
-
-  return `#${toHex(red)}${toHex(green)}${toHex(blue)}`
-}
-
-const resolveComponentDefaults = async (definition: LabComponentDefinition) => {
-  const cached = defaultCache.get(definition.id)
-  if (cached) {
-    return { ...cached }
-  }
-
-  const loader = definition.component
-  const loaded = await loader()
-  const component = (loaded as any).default ?? loaded
-
-  const container = document.createElement('div')
-  container.style.position = 'absolute'
-  container.style.pointerEvents = 'none'
-  container.style.opacity = '0'
-  container.style.visibility = 'hidden'
-  document.body.appendChild(container)
-
-  const vnode = createVNode(component as any)
-  render(vnode, container)
-  await nextTick()
-
-  const instanceProps: Record<string, PlaygroundPropValue> = vnode.component?.props
-    ? { ...(toRaw(vnode.component.props) as Record<string, PlaygroundPropValue>) }
-    : {}
-
-  render(null, container)
-  container.remove()
-
-  const defaults: Record<string, PlaygroundPropValue> = {}
-
-  definition.controls.forEach((control) => {
-    const value = instanceProps[control.key]
-    if (control.type === 'color') {
-      defaults[control.key] = normalizeColorValue(value)
-    } else {
-      defaults[control.key] = value as PlaygroundPropValue
-    }
-  })
-
-  defaultCache.set(definition.id, { ...defaults })
-
-  return { ...defaults }
-}
-
-const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
-  Object.keys(currentProps).forEach((key) => delete currentProps[key])
-  Object.assign(currentProps, defaults)
-}
-
-const resetProps = async () => {
-  const activeDefinition = definition.value
-  if (!activeDefinition) {
-    Object.keys(currentProps).forEach((key) => delete currentProps[key])
+const resetProps = () => {
+  if (!definition.value) {
     return
   }
 
-  const defaults = await resolveComponentDefaults(activeDefinition)
-  applyDefaults(defaults)
+  const defaults = cloneProps(definition.value.defaultProps)
+  Object.keys(currentProps).forEach((key) => delete currentProps[key])
+  Object.assign(currentProps, defaults)
 }
 
 watch(
   definition,
   (next) => {
     if (next) {
-      void resetProps()
-    } else {
-      Object.keys(currentProps).forEach((key) => delete currentProps[key])
+      resetProps()
     }
   },
   { immediate: true }
