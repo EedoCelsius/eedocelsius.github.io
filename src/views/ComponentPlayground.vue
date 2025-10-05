@@ -80,6 +80,7 @@ const resolveColorValue = (value: string | undefined) => {
   }
 
   resolver.style.color = value
+  console.log(normalizeCssColor(getComputedStyle(resolver).color))
   return normalizeCssColor(getComputedStyle(resolver).color)
 }
 
