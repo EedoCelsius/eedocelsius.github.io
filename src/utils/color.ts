@@ -99,27 +99,16 @@ export const normalizeComputedColor = (value: string) => {
   return parseSrgbColor(trimmed) ?? parseOklabColor(trimmed) ?? trimmed
 }
 
-export const resolveColorValue = (resolver: HTMLElement | null, value: string | undefined) => {
+const colorResolver = document.createElement("div")
+colorResolver.hidden = true;
+
+export const resolveColorValue = (value: string | undefined) => {
   if (!value) {
     return ''
   }
 
-  if (!resolver) {
-    return value
-  }
-
-  resolver.style.color = ''
-  resolver.style.color = value
+  colorResolver.style.color = ''
+  colorResolver.style.color = value
   return normalizeComputedColor(getComputedStyle(resolver).color)
 }
 
-export const createColorResolver = () => {
-  const resolver = ref<HTMLElement | null>(null)
-
-  const resolveColorValueWithRef = (value: string | undefined) => resolveColorValue(resolver.value, value)
-
-  return {
-    resolver,
-    resolveColorValue: resolveColorValueWithRef,
-  }
-}
