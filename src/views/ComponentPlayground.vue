@@ -3,6 +3,7 @@ import { computed, defineAsyncComponent, reactive, watch } from 'vue'
 import type { AsyncComponentLoader } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { ElColorPicker } from 'element-plus'
 import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
@@ -144,11 +145,12 @@ watch(
             ></textarea>
           </template>
           <template v-else-if="control.type === 'color'">
-            <input
+            <ElColorPicker
               :id="control.key"
               v-model="(currentProps[control.key] as string | undefined)"
-              type="color"
-              class="h-12 w-20 cursor-pointer rounded-xl border border-surface-200/70 bg-surface-0 p-1 shadow-sm dark:border-surface-700/70 dark:bg-surface-900"
+              show-alpha
+              color-format="rgb"
+              class="w-full"
             />
           </template>
           <template v-else-if="control.type === 'slider'">

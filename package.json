@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "@primevue/themes": "^4.4.0",
+    "element-plus": "^2.11.4",
     "primeicons": "^7.0.0",
     "primevue": "^4.4.0",
     "qrcode.vue": "^3.6.0",
