@@ -56,7 +56,7 @@ export const componentCatalog: LabComponentDefinition[] = [
         optional: true,
       },
       {
-        key: 'size',
+        key: 'diameter',
         type: 'slider',
         label: { en: 'Diameter', ko: '지름' },
         min: 48,
@@ -220,12 +220,20 @@ export const componentCatalog: LabComponentDefinition[] = [
         optional: true,
       },
       {
-        key: 'spinnerSize',
+        key: 'spinnerDiameter',
         type: 'slider',
-        label: { en: 'Spinner Size', ko: '스피너 크기' },
+        label: { en: 'Spinner Diameter', ko: '스피너 지름' },
         min: 32,
         max: 160,
         step: 4,
+      },
+      {
+        key: 'spinnerThickness',
+        type: 'slider',
+        label: { en: 'Spinner Thickness', ko: '스피너 두께' },
+        min: 2,
+        max: 16,
+        step: 1,
       },
       {
         key: 'spinnerTextSize',
@@ -235,14 +243,6 @@ export const componentCatalog: LabComponentDefinition[] = [
         max: 64,
         step: 1,
         optional: true,
-      },
-      {
-        key: 'spinnerThickness',
-        type: 'slider',
-        label: { en: 'Spinner Thickness', ko: '스피너 두께' },
-        min: 2,
-        max: 16,
-        step: 1,
       },
       {
         key: 'spinnerIndicatorColor',

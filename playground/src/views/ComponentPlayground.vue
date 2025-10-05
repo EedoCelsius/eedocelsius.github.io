@@ -229,12 +229,12 @@ watch(
           <component :is="previewComponent" v-bind="currentProps" />
           <template #fallback>
             <div class="flex h-full items-center justify-center text-surface-400">
-              <Spinner :size="72" :thickness="6" indicator-color="var(--p-primary-color)" />
+              <Spinner :diameter="72" :thickness="6" />
             </div>
           </template>
         </Suspense>
         <div v-else class="flex h-full items-center justify-center text-surface-400">
-          <Spinner :size="72" :thickness="6" indicator-color="var(--p-primary-color)" />
+          <Spinner :diameter="72" :thickness="6" />
         </div>
       </div>
     </section>
