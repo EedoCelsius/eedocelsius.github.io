@@ -10,14 +10,6 @@ Component Lab is a personal component playground powered by **Vue 3**, **PrimeVu
 - ⚙️ Live prop controls (boolean, slider, color, text, textarea) for quick experimentation.
 - 🚀 Automated deployment to GitHub Pages via GitHub Actions.
 
-## 🧱 Current Components
-
-| Component | Description |
-| --- | --- |
-| QR Code Card | Branded QR card with customizable colors and center icon. |
-| Blur Overlay | Glassmorphism overlay with adjustable blur strength. |
-| Loading Overlay | Blur overlay paired with a PrimeVue spinner and optional description. |
-
 ## 🗂️ Project Structure
 
 ```
