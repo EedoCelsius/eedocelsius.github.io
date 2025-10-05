@@ -44,15 +44,8 @@ const colorKeys = computed(() =>
 const hasOwn = (object: Record<string, unknown>, key: string) =>
   Object.prototype.hasOwnProperty.call(object, key)
 
-const hasDefaultForControl = (control: ControlDefinition) =>
-  hasOwn(componentDefaults.value, control.key)
-
-const isControlRequired = (control: ControlDefinition) => hasDefaultForControl(control)
-
-const isControlOptional = (control: ControlDefinition) => !isControlRequired(control)
-
-const isControlActive = (control: ControlDefinition) =>
-  isControlRequired(control) || activeControls[control.key] === true
+const isControlOptional = (control: ControlDefinition) => !hasOwn(componentDefaults.value, control.key)
+const isControlActive = (control: ControlDefinition) => !isControlOptional(control) || activeControls[control.key] === true
 
 const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
   const clonedDefaults = cloneProps(defaults)
@@ -75,7 +68,7 @@ const resetActiveControls = () => {
   }
 
   definition.value.controls.forEach((control) => {
-    activeControls[control.key] = isControlRequired(control)
+    activeControls[control.key] = !isControlOptional(control)
   })
 }
 
