@@ -86,7 +86,7 @@ const parseOklabColor = (value: string) => {
   return toRgbString(r, g, blue, alphaValue)
 }
 
-export const normalizeComputedColor = (value: string) => {
+const normalizeComputedColor = (value: string) => {
   const trimmed = value.trim()
 
   if (/^rgb(a)?\(/i.test(trimmed) || /^#/.test(trimmed)) {
