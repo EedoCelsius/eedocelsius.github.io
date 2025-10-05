@@ -148,7 +148,7 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     description: {
       en: 'Applies a configurable blur glass effect on top of any content.',
-      ko: '어떤 콘텐츠든 부드러운 블러 글래스 효과로 감쌉니다.',
+      ko: '어떤 콘텐츠든 부드러운 블러 글래스 효과로 가려줍니다다.',
     },
     component: () => import('@library/components/BlurOverlay.vue'),
     preview: () => import('@/demos/BlurOverlayDemo.vue'),
@@ -180,8 +180,8 @@ export const componentCatalog: LabComponentDefinition[] = [
       ko: '로딩 오버레이',
     },
     description: {
-      en: 'Displays the shared spinner with optional text and description over blurred content.',
-      ko: '블러 처리된 콘텐츠 위에 공유 스피너와 선택적인 텍스트·설명을 표시합니다.',
+      en: 'Displays the loading spinner with optional text and description over blurred content.',
+      ko: '블러 처리된 콘텐츠 위에 로딩 스피너와 선택적인 텍스트·설명을 표시합니다.',
     },
     component: () => import('@library/components/LoadingOverlay.vue'),
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
