@@ -1,4 +1,3 @@
-
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
 const toByte = (value: number) => Math.round(clamp(value, 0, 1) * 255)
 
@@ -97,17 +96,38 @@ export const normalizeComputedColor = (value: string) => {
   return parseSrgbColor(trimmed) ?? parseOklabColor(trimmed) ?? trimmed
 }
 
-const colorResolver = document.createElement("div");
-document.body.appendChild(colorResolver);
-colorResolver.hidden = true;
+let colorResolver: HTMLDivElement | null = null
+
+const ensureColorResolver = () => {
+  if (typeof document === 'undefined') {
+    return null
+  }
+
+  if (!colorResolver || !colorResolver.isConnected) {
+    colorResolver = document.createElement('div')
+    colorResolver.hidden = true
+    document.body.appendChild(colorResolver)
+  }
+
+  return colorResolver
+}
 
 export const resolveColorValue = (value: string | undefined) => {
   if (!value) {
     return ''
   }
 
-  colorResolver.style.color = ''
-  colorResolver.style.color = value
-  return normalizeComputedColor(getComputedStyle(colorResolver).color)
-}
+  const trimmed = value.trim()
+  const fallback = normalizeComputedColor(trimmed)
+  const resolver = ensureColorResolver()
 
+  if (!resolver || typeof window === 'undefined' || typeof window.getComputedStyle !== 'function') {
+    return fallback
+  }
+
+  resolver.style.color = ''
+  resolver.style.color = trimmed
+  const resolved = window.getComputedStyle(resolver).color
+
+  return normalizeComputedColor(resolved || fallback)
+}

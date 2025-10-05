@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BlurOverlay from '@/components/library/BlurOverlay.vue'
+import BlurOverlay from '@library/components/BlurOverlay.vue'
 
 defineProps<{
   visible: boolean

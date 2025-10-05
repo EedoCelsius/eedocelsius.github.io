@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import QrCode from '@/components/library/QrCode.vue'
+import QrCode from '@library/components/QrCode.vue'
 
 defineProps<{
   content: string
