@@ -1,3 +1,14 @@
+<script lang="ts">
+export const qrCodeDefaultProps = {
+  content: 'https://component-lab.dev/welcome',
+  lightColor: 'var(--p-surface-0)',
+  darkColor: 'var(--p-surface-900)',
+  icon: '',
+}
+
+export const defaultProps = qrCodeDefaultProps
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
@@ -9,11 +20,7 @@ const props = withDefaults(
     darkColor?: string
     icon?: string
   }>(),
-  {
-    lightColor: 'var(--p-surface-0)',
-    darkColor: 'var(--p-surface-900)',
-    icon: '',
-  }
+  qrCodeDefaultProps
 )
 
 const hasIcon = computed(() => Boolean(props.icon?.trim()))
