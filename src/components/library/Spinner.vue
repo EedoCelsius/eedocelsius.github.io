@@ -1,3 +1,16 @@
+<script lang="ts">
+export const spinnerDefaultProps = {
+  text: '',
+  size: 96,
+  thickness: 8,
+  textSize: 22,
+  trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
+  indicatorColor: 'var(--p-primary-color)',
+}
+
+export const defaultProps = spinnerDefaultProps
+</script>
+
 <script setup lang="ts">
 import { computed } from 'vue'
 
@@ -10,14 +23,7 @@ const props = withDefaults(
     trackColor?: string
     indicatorColor?: string
   }>(),
-  {
-    text: '',
-    size: 96,
-    thickness: 8,
-    textSize: 22,
-    trackColor: 'color-mix(in srgb, var(--p-surface-400) 35%, transparent)',
-    indicatorColor: 'var(--p-primary-color)',
-  }
+  spinnerDefaultProps
 )
 
 const displayText = computed(() => `${props.text ?? ''}`)
