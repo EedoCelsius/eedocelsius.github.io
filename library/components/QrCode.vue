@@ -6,7 +6,7 @@ export const defaultProps = {
   icon: '',
 } as const
 
-export type QrCodeProps = {
+export type prop = {
   content: string
   lightColor?: string
   darkColor?: string
@@ -20,7 +20,7 @@ import QRCode from 'qrcode'
 import { toHex } from '@shared/color'
 
 const props = withDefaults(
-  defineProps<QrCodeProps>(),
+  defineProps<prop>(),
   defaultProps
 )
 

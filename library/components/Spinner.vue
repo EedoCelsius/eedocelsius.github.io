@@ -8,7 +8,7 @@ export const defaultProps = {
   indicatorColor: 'var(--p-primary-color)',
 } as const
 
-export type SpinnerProps = {
+export type prop = {
   text?: string | number
   size?: number
   thickness?: number
@@ -22,7 +22,7 @@ export type SpinnerProps = {
 import { computed } from 'vue'
 
 const props = withDefaults(
-  defineProps<SpinnerProps>(),
+  defineProps<prop>(),
   defaultProps
 )
 
