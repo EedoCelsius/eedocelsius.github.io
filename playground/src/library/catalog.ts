@@ -17,7 +17,6 @@ export interface ControlDefinition {
   min?: number
   max?: number
   step?: number
-  optional?: boolean
 }
 
 export type ComponentLoader = AsyncComponentLoader<unknown>
@@ -58,13 +57,11 @@ export const componentCatalog: LabComponentDefinition[] = [
         key: 'lightColor',
         type: 'color',
         label: { en: 'Light Color', ko: '밝은 색상' },
-        optional: true,
       },
       {
         key: 'darkColor',
         type: 'color',
         label: { en: 'Dark Color', ko: '어두운 색상' },
-        optional: true,
       },
       {
         key: 'icon',
@@ -74,7 +71,6 @@ export const componentCatalog: LabComponentDefinition[] = [
           en: 'Center image URL. Leave empty to hide the icon.',
           ko: '중앙에 표시할 이미지 주소입니다. 비워두면 아이콘이 숨겨집니다.',
         },
-        optional: true,
       },
     ],
   },
@@ -114,19 +110,16 @@ export const componentCatalog: LabComponentDefinition[] = [
         min: 12,
         max: 48,
         step: 1,
-        optional: true,
       },
       {
         key: 'indicatorColor',
         type: 'color',
         label: { en: 'Indicator Color', ko: '인디케이터 색상' },
-        optional: true,
       },
       {
         key: 'trackColor',
         type: 'color',
         label: { en: 'Track Color', ko: '트랙 색상' },
-        optional: true,
       },
       {
         key: 'text',
@@ -136,7 +129,6 @@ export const componentCatalog: LabComponentDefinition[] = [
           en: 'Content displayed at the center of the spinner.',
           ko: '스피너 중앙에 표시할 텍스트입니다.',
         },
-        optional: true,
       },
     ],
   },
@@ -227,25 +219,21 @@ export const componentCatalog: LabComponentDefinition[] = [
         min: 12,
         max: 64,
         step: 1,
-        optional: true,
       },
       {
         key: 'spinnerIndicatorColor',
         type: 'color',
         label: { en: 'Indicator Color', ko: '인디케이터 색상' },
-        optional: true,
       },
       {
         key: 'spinnerTrackColor',
         type: 'color',
         label: { en: 'Track Color', ko: '트랙 색상' },
-        optional: true,
       },
       {
         key: 'spinnerTextColor',
         type: 'color',
         label: { en: 'Spinner Text Color', ko: '스피너 텍스트 색상' },
-        optional: true,
       },
       {
         key: 'spinnerText',
@@ -255,7 +243,6 @@ export const componentCatalog: LabComponentDefinition[] = [
           en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
           ko: '스피너 중앙에 표시할 선택적 텍스트입니다. 숫자나 짧은 문구를 사용할 수 있습니다.',
         },
-        optional: true,
       },
       {
         key: 'description',
@@ -265,7 +252,6 @@ export const componentCatalog: LabComponentDefinition[] = [
           en: 'Text shown under the spinner. Leave empty to hide.',
           ko: '스피너 아래에 표시되는 문구입니다. 비워두면 숨겨집니다.',
         },
-        optional: true,
       },
     ],
   },
