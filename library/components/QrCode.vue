@@ -1,5 +1,6 @@
 <script lang="ts">
 export const defaultProps = {
+  content: '',
   lightColor: 'var(--p-surface-0)',
   darkColor: 'var(--p-surface-900)',
   icon: '',
