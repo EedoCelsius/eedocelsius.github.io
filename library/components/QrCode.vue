@@ -30,7 +30,7 @@ const updateQR = async () => {
   const lightHex = toHex(props.lightColor) || '#ffffff'
 
   try {
-    qrSource.value = await toDataURL(props.content, {
+    const qrData = await toDataURL(props.content, {
       margin: 0,
       quality: 1,
       color: {
@@ -38,6 +38,7 @@ const updateQR = async () => {
         light: lightHex,
       },
     })
+    qrSource.value = qrData
     qrError.value = ''
   }
   catch (error) {
@@ -65,7 +66,7 @@ updateQR()
       aria-hidden="true"
     >
       <span
-        class="flex h-16 w-16 items-center justify-center p-1 bg-surface-0"
+        class="flex h-1/4 w-1/4 items-center justify-center p-1 bg-surface-0"
       >
         <img :src="props.icon" alt="" class="w-full object-contain" />
       </span>
