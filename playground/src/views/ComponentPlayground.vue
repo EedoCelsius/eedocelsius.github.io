@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElColorPicker } from 'element-plus'
 import Spinner from '@library/components/Spinner.vue'
-import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
+import type { ControlDefinition, LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
 import { toRgba } from '@shared/color'
 import type { SupportedLocale } from '@/i18n'
@@ -24,6 +24,8 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) =>
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
 const resolvedColors = reactive<Record<string, string>>({})
+const activeControls = reactive<Record<string, boolean>>({})
+const storedOptionalValues = reactive<Record<string, PlaygroundPropValue>>({})
 
 const colorKeys = computed(() =>
   definition.value?.controls
@@ -31,11 +33,89 @@ const colorKeys = computed(() =>
     .map((control) => control.key) ?? []
 )
 
+const isControlActive = (control: ControlDefinition) => !control.optional || activeControls[control.key] === true
+
 const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
   const clonedDefaults = cloneProps(defaults)
   Object.keys(currentProps).forEach((key) => delete currentProps[key])
   Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
-  Object.assign(currentProps, clonedDefaults)
+  Object.entries(clonedDefaults).forEach(([key, value]) => {
+    const control = definition.value?.controls.find((item) => item.key === key)
+    if (!control || isControlActive(control)) {
+      currentProps[key] = value
+    }
+  })
+}
+
+const resetActiveControls = () => {
+  Object.keys(activeControls).forEach((key) => delete activeControls[key])
+  Object.keys(storedOptionalValues).forEach((key) => delete storedOptionalValues[key])
+
+  if (!definition.value) {
+    return
+  }
+
+  definition.value.controls.forEach((control) => {
+    activeControls[control.key] = !control.optional
+  })
+}
+
+const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototype.hasOwnProperty.call(object, key)
+
+const getControlInputId = (control: ControlDefinition) => `${control.key}-input`
+const getControlToggleId = (control: ControlDefinition) => `${control.key}-toggle`
+
+const getInitialValueForControl = (control: ControlDefinition): PlaygroundPropValue => {
+  if (hasOwn(storedOptionalValues, control.key)) {
+    return storedOptionalValues[control.key]
+  }
+
+  if (hasOwn(componentDefaults.value, control.key)) {
+    return componentDefaults.value[control.key]
+  }
+
+  switch (control.type) {
+    case 'slider':
+      return control.min ?? 0
+    case 'boolean':
+      return false
+    case 'textarea':
+    case 'text':
+    case 'color':
+    default:
+      return ''
+  }
+}
+
+const setControlActive = (control: ControlDefinition, active: boolean) => {
+  if (!control.optional) {
+    activeControls[control.key] = true
+    return
+  }
+
+  if (active) {
+    const value = getInitialValueForControl(control)
+    currentProps[control.key] = value
+  } else {
+    if (hasOwn(currentProps, control.key)) {
+      storedOptionalValues[control.key] = currentProps[control.key]
+      delete currentProps[control.key]
+    }
+    if (control.type === 'color') {
+      delete resolvedColors[control.key]
+    }
+  }
+
+  activeControls[control.key] = active
+}
+
+const handleOptionalToggle = (control: ControlDefinition, event: Event) => {
+  const target = event.target as HTMLInputElement | null
+  if (!target) {
+    return
+  }
+
+  setControlActive(control, target.checked)
 }
 
 const loadComponentDefaults = async () => {
@@ -43,6 +123,7 @@ const loadComponentDefaults = async () => {
     componentDefaults.value = {}
     Object.keys(currentProps).forEach((key) => delete currentProps[key])
     Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
+    resetActiveControls()
     return
   }
 
@@ -50,6 +131,7 @@ const loadComponentDefaults = async () => {
 
   const defaults = cloneProps((module as { defaultProps?: Record<string, PlaygroundPropValue> }).defaultProps)
   componentDefaults.value = defaults
+  resetActiveControls()
   applyDefaults(defaults)
 }
 
@@ -62,6 +144,7 @@ watch(
 )
 
 const resetProps = () => {
+  resetActiveControls()
   applyDefaults(componentDefaults.value)
 }
 
@@ -165,16 +248,33 @@ watch(
           :key="control.key"
           class="flex flex-col gap-2 text-sm"
         >
+          <div v-if="control.optional" class="flex items-center gap-2">
+            <input
+              :id="getControlToggleId(control)"
+              type="checkbox"
+              class="h-4 w-4 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
+              :checked="isControlActive(control)"
+              :aria-controls="getControlInputId(control)"
+              :aria-expanded="isControlActive(control) ? 'true' : 'false'"
+              :aria-label="t('playground.toggleControl', { name: localize(control.label) })"
+              :title="t('playground.toggleControl', { name: localize(control.label) })"
+              @change="handleOptionalToggle(control, $event)"
+            />
+            <label :for="getControlInputId(control)" class="font-medium text-surface-700 dark:text-surface-200">
+              {{ localize(control.label) }}
+            </label>
+          </div>
           <label
-            v-if="control.type !== 'boolean'"
-            :for="control.key"
+            v-else-if="control.type !== 'boolean'"
+            :for="getControlInputId(control)"
             class="font-medium text-surface-700 dark:text-surface-200"
           >
             {{ localize(control.label) }}
           </label>
           <template v-if="control.type === 'text'">
             <input
-              :id="control.key"
+              v-if="isControlActive(control)"
+              :id="getControlInputId(control)"
               v-model="(currentProps[control.key] as string | undefined)"
               type="text"
               class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
@@ -182,14 +282,15 @@ watch(
           </template>
           <template v-else-if="control.type === 'textarea'">
             <textarea
-              :id="control.key"
+              v-if="isControlActive(control)"
+              :id="getControlInputId(control)"
               v-model="(currentProps[control.key] as string | undefined)"
               rows="4"
               class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
             ></textarea>
           </template>
           <template v-else-if="control.type === 'color'">
-            <div class="flex items-center gap-3">
+            <div v-if="isControlActive(control)" class="flex items-center gap-3">
               <ElColorPicker
                 :model-value="resolvedColors[control.key] ?? ''"
                 show-alpha
@@ -198,7 +299,7 @@ watch(
                 @update:model-value="handleColorPickerChange(control.key, $event)"
               />
               <input
-                :id="control.key"
+                :id="getControlInputId(control)"
                 v-model="(currentProps[control.key] as string | undefined)"
                 type="text"
                 class="flex-1 rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
@@ -206,9 +307,9 @@ watch(
             </div>
           </template>
           <template v-else-if="control.type === 'slider'">
-            <div class="flex items-center gap-3">
+            <div v-if="isControlActive(control)" class="flex items-center gap-3">
               <input
-                :id="control.key"
+                :id="getControlInputId(control)"
                 v-model.number="(currentProps[control.key] as number | undefined)"
                 type="range"
                 :min="control.min ?? 0"
@@ -220,9 +321,13 @@ watch(
             </div>
           </template>
           <template v-else-if="control.type === 'boolean'">
-            <label class="inline-flex items-center gap-3">
+            <label
+              v-if="isControlActive(control)"
+              :for="getControlInputId(control)"
+              class="inline-flex items-center gap-3"
+            >
               <input
-                :id="control.key"
+                :id="getControlInputId(control)"
                 v-model="(currentProps[control.key] as boolean | undefined)"
                 type="checkbox"
                 class="h-5 w-5 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
@@ -230,7 +335,10 @@ watch(
               <span class="text-sm text-surface-600 dark:text-surface-300">{{ localize(control.label) }}</span>
             </label>
           </template>
-          <p v-if="control.helperText" class="text-xs text-surface-500 dark:text-surface-400">
+          <p
+            v-if="control.helperText && isControlActive(control)"
+            class="text-xs text-surface-500 dark:text-surface-400"
+          >
             {{ localize(control.helperText) }}
           </p>
         </div>

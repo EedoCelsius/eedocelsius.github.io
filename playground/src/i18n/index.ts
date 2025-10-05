@@ -23,6 +23,7 @@ const messages = {
       notFoundTitle: 'Component not found',
       notFoundDescription: 'The component you are looking for does not exist or is not yet available.',
       backHome: 'Back to home',
+      toggleControl: 'Toggle editing for “{name}”',
     },
   },
   ko: {
@@ -45,6 +46,7 @@ const messages = {
       notFoundTitle: '컴포넌트를 찾을 수 없습니다',
       notFoundDescription: '요청한 컴포넌트가 존재하지 않거나 아직 준비되지 않았습니다.',
       backHome: '홈으로 돌아가기',
+      toggleControl: '“{name}” 수정 전환',
     },
   },
 }
