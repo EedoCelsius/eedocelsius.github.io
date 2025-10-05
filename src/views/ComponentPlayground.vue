@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, reactive, ref, watch } from 'vue'
-import { TinyColor } from '@ctrl/tinycolor'
 import type { AsyncComponentLoader, WatchStopHandle } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -69,15 +68,6 @@ const resetProps = () => {
   applyDefaults(componentDefaults.value)
 }
 
-const normalizeResolvedColor = (value: string) => {
-  if (!value) {
-    return ''
-  }
-
-  const color = new TinyColor(value)
-  return color.isValid ? color.toRgbString() : value
-}
-
 const resolveColorValue = (value: string | undefined) => {
   if (!value) {
     return ''
@@ -85,12 +75,12 @@ const resolveColorValue = (value: string | undefined) => {
 
   const resolver = colorResolver.value
   if (!resolver) {
-    return normalizeResolvedColor(value)
+    return value
   }
 
   resolver.style.color = ''
   resolver.style.color = value
-  return normalizeResolvedColor(getComputedStyle(resolver).color)
+  return getComputedStyle(resolver).color
 }
 
 const updateResolvedColor = (key: string, value: string | undefined) => {
