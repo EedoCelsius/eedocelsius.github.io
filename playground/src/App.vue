@@ -131,7 +131,7 @@ watch(
     </header>
 
     <main class="mx-auto w-full max-w-6xl px-6 pb-16 pt-10">
-      <RouterView />
+      <RouterView :key="route.fullPath" />
     </main>
   </div>
 </template>
