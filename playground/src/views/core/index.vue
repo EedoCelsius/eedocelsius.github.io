@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import type { LabComponentDefinition } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
-import PlaygroundControls from './controls.vue'
+import PlaygroundControls from './controls/index.vue'
 import PlaygroundNotFound from './notFound.vue'
 import PlaygroundPreview from './preview.vue'
 
