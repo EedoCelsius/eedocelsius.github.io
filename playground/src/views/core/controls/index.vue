@@ -11,17 +11,6 @@ const props = defineProps<{
 
 const { t } = useI18n()
 
-const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
-  if (!value) {
-    return {}
-  }
-
-  return Object.keys(value).reduce<Record<string, PlaygroundPropValue>>((accumulator, key) => {
-    accumulator[key] = value[key]
-    return accumulator
-  }, {})
-}
-
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const demoProps = defineModel<Record<string, PlaygroundPropValue>>('props', { default: () => ({}) })
 const controlSections = computed(() => {
@@ -52,11 +41,10 @@ const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototyp
 
 const isControlOptional = (control: ControlDefinition) => !hasOwn(componentDefaults.value, control.key)
 
-const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
-  const clonedDefaults = cloneProps(defaults)
-  Object.keys(demoProps.value).forEach((key) => delete demoProps.value[key])
-  Object.entries(clonedDefaults).forEach(([key, value]) => {
-    demoProps.value[key] = value
+const applyDefaults = () => {
+  Object.keys(demoProps.value).forEach((key) => {
+    if (componentDefaults.value[key]) demoProps.value[key] = componentDefaults.value[key]
+    else delete demoProps.value[key]
   })
 }
 
@@ -147,17 +135,13 @@ watch(
   { immediate: true }
 )
 
-const resetProps = () => {
-  applyDefaults(componentDefaults.value)
-}
-
 </script>
 
 <template>
   <aside class="card-surface flex h-fit flex-col gap-6 p-6">
     <div class="flex items-center justify-between">
       <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary-500">{{ t('playground.controls') }}</p>
-      <button type="button" class="text-xs font-semibold text-primary-500 transition hover:text-primary-400" @click="resetProps">
+      <button type="button" class="text-xs font-semibold text-primary-500 transition hover:text-primary-400" @click="applyDefaults">
         {{ t('playground.reset') }}
       </button>
     </div>
