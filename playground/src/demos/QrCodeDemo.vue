@@ -16,9 +16,9 @@ export const demoConfig: ComponentDemoConfig = {
       label: { en: 'Dark Color', ko: '어두운 색상' },
     },
     {
-      key: 'content',
+      key: 'data',
       type: 'textarea',
-      label: { en: 'Content', ko: '콘텐츠' },
+      label: { en: 'Data', ko: '데이터' },
       helperText: {
         en: 'Text or URL that will be encoded inside the QR code.',
         ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
@@ -40,11 +40,24 @@ export const demoConfig: ComponentDemoConfig = {
 <script setup lang="ts">
 import { QrCode, type QrCodeProps } from '@library/components'
 
-defineProps<QrCodeProps>()
+const props = defineProps<QrCodeProps & { icon?: string }>()
 </script>
 
 <template>
   <div class="flex justify-center">
-    <QrCode v-bind="$props" class="w-64 h-64">test</QrCode>
+    <QrCode
+      :data="props.data"
+      :light-color="props.lightColor"
+      :dark-color="props.darkColor"
+      class="h-64 w-64"
+    >
+      <img
+        v-if="props.icon"
+        :src="props.icon"
+        alt="QR code center icon"
+        class="h-full w-full rounded-xl object-cover"
+      />
+      <span v-else class="text-base font-medium text-surface-900">QR</span>
+    </QrCode>
   </div>
 </template>
