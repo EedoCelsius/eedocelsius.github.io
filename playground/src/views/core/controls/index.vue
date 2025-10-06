@@ -153,7 +153,7 @@ watch(
           />
         </Section>
         <hr
-          v-if="sectionIndex < controlSections.length - 1"
+          v-if="section.group && sectionIndex < controlSections.length - 1"
           class="border-0 border-t border-surface-200/70 dark:border-surface-700/70"
         />
       </div>
