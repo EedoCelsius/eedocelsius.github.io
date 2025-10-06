@@ -18,10 +18,7 @@ const localize = (copy: LocaleCopy) => copy[(locale.value as SupportedLocale)] ?
 const localizedName = computed(() => localize(props.definition.name))
 const localizedDescription = computed(() => localize(props.definition.description))
 
-const demoComponent = computed(() => {
-  const loader = props.definition.preview ?? props.definition.component
-  return defineAsyncComponent(loader as AsyncComponentLoader<any>)
-})
+const demoComponent = defineAsyncComponent((props.definition.preview ?? props.definition.component) as AsyncComponentLoader<any>)
 
 const resolvedDemoProps = computed(() => {
   const expanded: Record<string, unknown> = {}
