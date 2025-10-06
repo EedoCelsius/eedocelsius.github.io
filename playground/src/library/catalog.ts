@@ -170,9 +170,9 @@ export const componentCatalog: LabComponentDefinition[] = [
         step: 1,
       },
       {
-        key: 'overlayColor',
+        key: 'backgroundColor',
         type: 'color',
-        label: { en: 'Overlay Color', ko: '오버레이 색상' },
+        label: { en: 'Background Color', ko: '배경 색상' },
       },
     ],
   },
@@ -244,9 +244,9 @@ export const componentCatalog: LabComponentDefinition[] = [
         group: spinnerControlGroup,
       },
       {
-        key: 'overlay.overlayColor',
+        key: 'overlay.backgroundColor',
         type: 'color',
-        label: { en: 'Overlay Color', ko: '오버레이 색상' },
+        label: { en: 'Overlay Background', ko: '오버레이 배경' },
         group: overlayControlGroup,
       },
       {

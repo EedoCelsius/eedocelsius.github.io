@@ -10,7 +10,7 @@ export const defaultProps = {
 export type props = {
   overlay?: {
     blurStrength?: number
-    overlayColor?: string
+    backgroundColor?: string
   }
   spinner?: {
     text?: string | number
@@ -41,7 +41,7 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
 <template>
   <div class="relative isolate">
     <slot />
-    <BlurOverlay :blur-strength="props.overlay.blurStrength" :overlay-color="props.overlay.overlayColor">
+    <BlurOverlay :blur-strength="props.overlay.blurStrength" :background-color="props.overlay.backgroundColor">
       <template #overlay>
         <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
           <Spinner

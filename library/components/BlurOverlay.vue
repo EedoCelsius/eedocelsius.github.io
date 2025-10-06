@@ -1,12 +1,12 @@
 <script lang="ts">
 export const defaultProps = {
   blurStrength: 7,
-  overlayColor: 'rgba(0, 0, 0, 0.25)',
+  backgroundColor: 'rgba(0, 0, 0, 0.25)',
 } as const
 
 export type props = {
   blurStrength?: number
-  overlayColor?: string
+  backgroundColor?: string
 }
 </script>
 
@@ -21,7 +21,7 @@ const props = withDefaults(
 const overlayStyle = computed(() => ({
   backdropFilter: `blur(${props.blurStrength}px)`,
   WebkitBackdropFilter: `blur(${props.blurStrength}px)`,
-  background: props.overlayColor,
+  background: props.backgroundColor,
 }))
 </script>
 
