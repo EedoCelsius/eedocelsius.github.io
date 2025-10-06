@@ -97,13 +97,18 @@ const getInitialValueForControl = (control: ControlDefinition): PlaygroundPropVa
   }
 }
 
-const setControlActive = (control: ControlDefinition, active: boolean) => {
+const handleOptionalToggle = (control: ControlDefinition, event: Event) => {
+  const target = event.target as HTMLInputElement | null
+  if (!target) {
+    return
+  }
+
   if (!isControlOptional(control)) {
     activeControls[control.key] = true
     return
   }
 
-  if (active) {
+  if (target.checked) {
     const value = getInitialValueForControl(control)
     currentProps[control.key] = value
   } else {
@@ -117,15 +122,6 @@ const setControlActive = (control: ControlDefinition, active: boolean) => {
   }
 
   activeControls[control.key] = active
-}
-
-const handleOptionalToggle = (control: ControlDefinition, event: Event) => {
-  const target = event.target as HTMLInputElement | null
-  if (!target) {
-    return
-  }
-
-  setControlActive(control, target.checked)
 }
 
 const loadComponentDefaults = async () => {
@@ -145,13 +141,7 @@ const loadComponentDefaults = async () => {
   applyDefaults(defaults)
 }
 
-watch(
-  definition,
-  () => {
-    void loadComponentDefaults()
-  },
-  { immediate: true }
-)
+watch(definition, loadComponentDefaults)
 
 const resetProps = () => {
   resetActiveControls()
@@ -176,14 +166,6 @@ watchEffect(() => {
 
 const setColorPropValue = (key: string, value: string | null) => {
   currentProps[key] = (value ?? '') as PlaygroundPropValue
-}
-
-const handleColorPickerActiveChange = (key: string, value: string | null) => {
-  setColorPropValue(key, value)
-}
-
-const handleColorPickerChange = (key: string, value: string | null) => {
-  setColorPropValue(key, value)
 }
 
 const activeLocale = computed(() => locale.value as SupportedLocale)
@@ -314,8 +296,8 @@ watch(
                 show-alpha
                 color-format="rgb"
                 class="shrink-0"
-                @active-change="handleColorPickerActiveChange(control.key, $event)"
-                @update:model-value="handleColorPickerChange(control.key, $event)"
+                @active-change="setColorPropValue(control.key, $event)"
+                @update:model-value="setColorPropValue(control.key, $event)"
               />
               <input
                 :id="getControlInputId(control)"
