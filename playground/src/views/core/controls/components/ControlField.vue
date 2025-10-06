@@ -8,19 +8,18 @@ import Textarea from 'primevue/textarea'
 import { ElColorPicker } from 'element-plus'
 import type { ControlDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
+import { toRgba } from '@shared/color'
 
 const props = defineProps<{
   control: ControlDefinition
   value: PlaygroundPropValue | undefined
   isOptional: boolean
   isActive: boolean
-  resolvedColor?: string
 }>()
 
 const emit = defineEmits<{
   (event: 'update:value', value: PlaygroundPropValue | undefined): void
   (event: 'toggle-optional', value: boolean | undefined): void
-  (event: 'update-color', value: string | null): void
 }>()
 
 const { t, locale } = useI18n()
@@ -41,6 +40,11 @@ const toggleLabel = computed(() =>
 const stringModel = computed<string | undefined>({
   get: () => (typeof props.value === 'string' ? props.value : undefined),
   set: (value) => emit('update:value', value),
+})
+
+const colorModel = computed<string | null>({
+  get: () => toRgba(stringModel.value),
+  set: (value) => emit('update:value', value ?? ''),
 })
 
 const numberModel = computed<number | undefined>({
@@ -98,13 +102,11 @@ const booleanModel = computed<boolean | undefined>({
     <template v-else-if="control.type === 'color'">
       <div v-if="isActive" class="flex items-center gap-3">
         <ElColorPicker
-          :model-value="resolvedColor ?? ''"
+          v-model="colorModel"
           show-alpha
           color-format="rgb"
           class="shrink-0"
           :aria-labelledby="isOptional ? labelId : undefined"
-          @active-change="emit('update-color', $event)"
-          @update:model-value="emit('update-color', $event)"
         />
         <InputText
           :id="inputId"
