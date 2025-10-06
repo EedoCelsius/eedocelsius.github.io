@@ -7,7 +7,6 @@ const messages = {
     app: {
       title: 'Component Lab',
       themeToggle: 'Toggle theme',
-      language: 'Language',
     },
     home: {
       title: 'Component Library',
@@ -15,7 +14,6 @@ const messages = {
       openPlayground: 'Open playground',
     },
     playground: {
-      heading: 'Component Playground',
       preview: 'Preview',
       controls: 'Props',
       reset: 'Reset to defaults',
@@ -30,7 +28,6 @@ const messages = {
     app: {
       title: 'Component Lab',
       themeToggle: '테마 전환',
-      language: '언어',
     },
     home: {
       title: '컴포넌트 라이브러리',
@@ -38,7 +35,6 @@ const messages = {
       openPlayground: '플레이그라운드 열기',
     },
     playground: {
-      heading: '컴포넌트 플레이그라운드',
       preview: '미리보기',
       controls: '속성값',
       reset: '기본값으로 재설정',
