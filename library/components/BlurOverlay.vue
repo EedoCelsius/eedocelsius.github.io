@@ -32,7 +32,7 @@ const overlayStyle = computed(() => ({
       :style="overlayStyle"
     >
       <div class="pointer-events-auto">
-        <slot name="overlay" />
+        <slot />
       </div>
     </div>
   </transition>
