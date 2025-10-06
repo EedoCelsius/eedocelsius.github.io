@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type {
-  ControlDefinition,
-  GroupDefinition,
-  LabComponentDefinition,
-  PlaygroundPropValue,
-} from '@/library/catalog'
+import type { ControlDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
 import Field from './field.vue'
 import Section from './section.vue'
 
@@ -18,29 +13,25 @@ const { t } = useI18n()
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const demoProps = defineModel<Record<string, PlaygroundPropValue>>('props', { default: () => ({}) })
-type ControlSection = { id: string; group?: GroupDefinition; controls: ControlDefinition[] }
-
-const controlSections = computed<ControlSection[]>(() => {
+const controlSections = computed(() => {
   const UNGROUPED_ID = '__ungrouped__'
-  const sections: ControlSection[] = []
-  let ungroupedSection: ControlSection | undefined
+  const sections: { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }[] = []
+  const sectionMap = new Map<string, { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }>()
 
-  props.definition.properties.forEach((property) => {
-    if ('controls' in property) {
-      sections.push({
-        id: property.id,
-        group: property,
-        controls: property.controls,
-      })
-      return
+  props.definition.controls.forEach((control) => {
+    const identifier = control.group?.id ?? UNGROUPED_ID
+    let section = sectionMap.get(identifier)
+    if (!section) {
+      section = {
+        id: identifier,
+        group: control.group,
+        controls: [],
+      }
+      sectionMap.set(identifier, section)
+      sections.push(section)
     }
 
-    if (!ungroupedSection) {
-      ungroupedSection = { id: UNGROUPED_ID, group: undefined, controls: [] }
-      sections.push(ungroupedSection)
-    }
-
-    ungroupedSection.controls.push(property)
+    section.controls.push(control)
   })
 
   return sections
