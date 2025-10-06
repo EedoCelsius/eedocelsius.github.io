@@ -1,4 +1,3 @@
-export { default as ActionableCard, type props as ActionableCardProps } from './ActionableCard.vue'
 export { default as BlurOverlay, type props as BlurOverlayProps  } from './BlurOverlay.vue'
 export { default as LoadingOverlay, type props as LoadingOverlayProps } from './LoadingOverlay.vue'
 export { default as QrCode, type props as QrCodeProps } from './QrCode.vue'

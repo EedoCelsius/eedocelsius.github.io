@@ -8,17 +8,6 @@ export interface LabComponentSummary {
 
 export const componentCatalog: LabComponentSummary[] = [
   {
-    id: 'actionable-card',
-    name: {
-      en: 'Actionable Card',
-      ko: '액션 카드',
-    },
-    description: {
-      en: 'Combine rich content with a responsive action that adapts between stacked and compact layouts.',
-      ko: '리치 콘텐츠와 반응형 액션 버튼을 결합해 폭에 따라 세로와 컴팩트 레이아웃을 전환합니다.',
-    },
-  },
-  {
     id: 'qr-code',
     name: {
       en: 'QR Code',
