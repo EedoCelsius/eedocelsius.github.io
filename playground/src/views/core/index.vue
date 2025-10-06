@@ -12,18 +12,18 @@ const props = defineProps<{
 
 const definition = computed<LabComponentDefinition | undefined>(() => getComponentDefinition(props.componentId))
 
-const componentProps = ref<Record<string, PlaygroundPropValue>>({})
+const demoProps = ref<Record<string, PlaygroundPropValue>>({})
 </script>
 
 <template>
   <div v-if="definition" class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_22rem]">
     <Preview
       :definition="definition"
-      :component-props="componentProps"
+      :demo-props="demoProps"
     />
     <Controls
       :definition="definition"
-      v-model:props="componentProps"
+      v-model:props="demoProps"
     />
   </div>
   <NotFound v-else />
