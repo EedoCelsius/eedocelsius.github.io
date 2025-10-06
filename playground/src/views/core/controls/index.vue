@@ -10,10 +10,6 @@ const props = defineProps<{
   props?: Record<string, PlaygroundPropValue>
 }>()
 
-const emit = defineEmits<{
-  (event: 'update:props', value: Record<string, PlaygroundPropValue>): void
-}>()
-
 const { t } = useI18n()
 
 const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
@@ -190,14 +186,6 @@ const resetProps = () => {
   resetActiveControls()
   applyDefaults(componentDefaults.value)
 }
-
-watch(
-  currentProps,
-  (value) => {
-    emit('update:props', cloneProps(value))
-  },
-  { immediate: true, deep: true }
-)
 
 </script>
 
