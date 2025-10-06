@@ -39,7 +39,10 @@ const props = withDefaults(defineProps<props>(), {
         :thickness="props.spinner.thickness"
         :track-color="props.spinner.trackColor"
         :indicator-color="props.spinner.indicatorColor"
-      />
+      >
+        <slot name="spinner" />
+      </Spinner>
+      <slot />
     </div>
   </BlurOverlay>
 </template>
