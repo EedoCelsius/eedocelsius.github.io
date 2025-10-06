@@ -1,12 +1,12 @@
 <script lang="ts">
 export const defaultProps = {
-  content: window.location.href,
+  data: window.location.href,
   lightColor: 'white',
   darkColor: 'black',
 } as const
 
 export type props = {
-  content: string
+  data: string
   lightColor?: string
   darkColor?: string
 }
@@ -30,7 +30,7 @@ const updateQrCode = () => {
   const lightHex = toHex(props.lightColor) || '#ffffff'
 
   QRCode.toDataURL(
-    props.content,
+    props.data,
     {
       margin: 0,
       color: {
@@ -51,7 +51,7 @@ const updateQrCode = () => {
 }
 
 watch(
-  () => [props.content, props.darkColor, props.lightColor],
+  () => [props.data, props.darkColor, props.lightColor],
   updateQrCode
 )
 
@@ -64,7 +64,7 @@ updateQrCode()
     <div v-else class="flex h-full w-full items-center justify-center text-xs text-center">
       <span>{{ qrError }}</span>
     </div>
-    <div class="absolute flex h-1/4 w-1/4 items-center justify-center" aria-hidden="true">
+    <div class="absolute left-1/2 top-1/2 h-1/4 w-1/4 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" aria-hidden="true">
       <slot />
     </div>
   </section>

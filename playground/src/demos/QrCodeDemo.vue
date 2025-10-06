@@ -16,21 +16,12 @@ export const demoConfig: ComponentDemoConfig = {
       label: { en: 'Dark Color', ko: '어두운 색상' },
     },
     {
-      key: 'content',
+      key: 'data',
       type: 'textarea',
-      label: { en: 'Content', ko: '콘텐츠' },
+      label: { en: 'Data', ko: '데이터' },
       helperText: {
         en: 'Text or URL that will be encoded inside the QR code.',
         ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
-      },
-    },
-    {
-      key: 'icon',
-      type: 'text',
-      label: { en: 'Icon URL', ko: '아이콘 주소' },
-      helperText: {
-        en: 'Center image URL. Leave empty to hide the icon.',
-        ko: '중앙에 표시할 이미지 주소입니다. 비워두면 아이콘이 숨겨집니다.',
       },
     },
   ],
