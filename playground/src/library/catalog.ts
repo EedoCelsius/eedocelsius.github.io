@@ -9,14 +9,30 @@ export type PlaygroundPropValue = string | number | boolean | null | undefined
 
 export type ControlType = 'boolean' | 'slider' | 'color' | 'text' | 'textarea'
 
+export interface ControlGroupDefinition {
+  id: string
+  label: LocaleCopy
+}
+
 export interface ControlDefinition {
   key: string
   type: ControlType
   label: LocaleCopy
+  group?: ControlGroupDefinition
   helperText?: LocaleCopy
   min?: number
   max?: number
   step?: number
+}
+
+const spinnerControlGroup: ControlGroupDefinition = {
+  id: 'spinner',
+  label: { en: 'Spinner', ko: '스피너' },
+}
+
+const overlayControlGroup: ControlGroupDefinition = {
+  id: 'overlay',
+  label: { en: 'Overlay', ko: '오버레이' },
 }
 
 export type ComponentLoader = AsyncComponentLoader<unknown>
@@ -174,61 +190,70 @@ export const componentCatalog: LabComponentDefinition[] = [
     preview: () => import('@/demos/LoadingOverlayDemo.vue'),
     controls: [
       {
-        key: 'spinnerDiameter',
+        key: 'spinner.diameter',
         type: 'slider',
         label: { en: 'Spinner Diameter', ko: '스피너 지름' },
+        group: spinnerControlGroup,
         min: 32,
         max: 160,
         step: 4,
       },
       {
-        key: 'spinnerThickness',
+        key: 'spinner.thickness',
         type: 'slider',
         label: { en: 'Spinner Thickness', ko: '스피너 두께' },
+        group: spinnerControlGroup,
         min: 2,
         max: 16,
         step: 1,
       },
       {
-        key: 'spinnerTextSize',
+        key: 'spinner.textSize',
         type: 'slider',
         label: { en: 'Spinner Text Size', ko: '스피너 텍스트 크기' },
+        group: spinnerControlGroup,
         min: 12,
         max: 64,
         step: 1,
       },
       {
-        key: 'blurStrength',
+        key: 'overlay.blurStrength',
         type: 'slider',
         label: { en: 'Blur Strength', ko: '블러 강도' },
+        group: overlayControlGroup,
         min: 0,
         max: 30,
         step: 1,
       },
       {
-        key: 'spinnerIndicatorColor',
+        key: 'spinner.indicatorColor',
         type: 'color',
         label: { en: 'Indicator Color', ko: '인디케이터 색상' },
+        group: spinnerControlGroup,
       },
       {
-        key: 'spinnerTrackColor',
+        key: 'spinner.trackColor',
         type: 'color',
         label: { en: 'Track Color', ko: '트랙 색상' },
+        group: spinnerControlGroup,
       },
       {
-        key: 'spinnerTextColor',
+        key: 'spinner.textColor',
         type: 'color',
         label: { en: 'Spinner Text Color', ko: '스피너 텍스트 색상' },
+        group: spinnerControlGroup,
       },
       {
-        key: 'overlayColor',
+        key: 'overlay.overlayColor',
         type: 'color',
         label: { en: 'Overlay Color', ko: '오버레이 색상' },
+        group: overlayControlGroup,
       },
       {
-        key: 'spinnerText',
+        key: 'spinner.text',
         type: 'text',
         label: { en: 'Spinner Text', ko: '스피너 텍스트' },
+        group: spinnerControlGroup,
         helperText: {
           en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
           ko: '스피너 중앙에 표시할 선택적 텍스트입니다. 숫자나 짧은 문구를 사용할 수 있습니다.',
