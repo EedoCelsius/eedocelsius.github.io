@@ -121,7 +121,7 @@ const handleOptionalToggle = (control: ControlDefinition, event: Event) => {
     }
   }
 
-  activeControls[control.key] = active
+  activeControls[control.key] = target.checked
 }
 
 const loadComponentDefaults = async () => {
