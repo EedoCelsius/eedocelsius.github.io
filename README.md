@@ -26,7 +26,11 @@ playground/
       catalog.ts              # Component definitions and control metadata
     views/
       HomePage.vue            # Component list
-      ComponentPlayground.vue # Playground with dynamic controls
+      core/
+        index.vue             # Playground orchestrator and router entry
+        controls.vue          # Dynamic prop controls
+        preview.vue           # Live component preview
+        notFound.vue          # Fallback when a component is missing
     i18n/                     # Locale messages
     router/                   # Vue Router configuration
 ```
