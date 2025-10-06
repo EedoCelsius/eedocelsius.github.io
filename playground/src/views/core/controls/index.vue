@@ -7,7 +7,6 @@ import Section from './section.vue'
 
 const props = defineProps<{
   definition: LabComponentDefinition
-  props?: Record<string, PlaygroundPropValue>
 }>()
 
 const { t } = useI18n()
