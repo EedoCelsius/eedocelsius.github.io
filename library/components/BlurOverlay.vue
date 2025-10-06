@@ -28,10 +28,10 @@ const overlayStyle = computed(() => ({
 <template>
   <transition name="fade-blur">
     <div
-      class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur"
+      class="absolute inset-0 flex items-center justify-center rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur"
       :style="overlayStyle"
     >
-      <slot class="pointer-events-auto" />
+      <slot />
     </div>
   </transition>
 </template>
