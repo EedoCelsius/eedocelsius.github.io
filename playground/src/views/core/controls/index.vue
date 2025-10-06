@@ -25,7 +25,6 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const demoProps = defineModel<Record<string, PlaygroundPropValue>>('props', { default: () => ({}) })
-const activeControls = reactive<Record<string, boolean>>({})
 const storedOptionalValues = reactive<Record<string, PlaygroundPropValue>>({})
 
 const controlSections = computed(() => {
@@ -55,33 +54,23 @@ const controlSections = computed(() => {
 const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototype.hasOwnProperty.call(object, key)
 
 const isControlOptional = (control: ControlDefinition) => !hasOwn(componentDefaults.value, control.key)
-const isControlActive = (control: ControlDefinition) => !isControlOptional(control) || activeControls[control.key] === true
 
 const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
   const clonedDefaults = cloneProps(defaults)
   Object.keys(demoProps.value).forEach((key) => delete demoProps.value[key])
   Object.entries(clonedDefaults).forEach(([key, value]) => {
-    const control = props.definition.controls.find((item) => item.key === key)
-    if (!control || isControlActive(control)) {
-      demoProps.value[key] = value
-    }
+    demoProps.value[key] = value
   })
 }
 
-const resetActiveControls = () => {
-  Object.keys(activeControls).forEach((key) => delete activeControls[key])
+const resetOptionalState = () => {
   Object.keys(storedOptionalValues).forEach((key) => delete storedOptionalValues[key])
-
-  props.definition.controls.forEach((control) => {
-    activeControls[control.key] = !isControlOptional(control)
-  })
 }
 
 const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | undefined) => {
   const checked = Boolean(isActive)
 
   if (!isControlOptional(control)) {
-    activeControls[control.key] = true
     return
   }
 
@@ -116,8 +105,6 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
       delete demoProps.value[control.key]
     }
   }
-
-  activeControls[control.key] = checked
 }
 
 let definitionLoadToken = 0
@@ -128,8 +115,7 @@ watch(
     const token = ++definitionLoadToken
     componentDefaults.value = {}
     Object.keys(demoProps.value).forEach((key) => delete demoProps.value[key])
-    Object.keys(activeControls).forEach((key) => delete activeControls[key])
-    Object.keys(storedOptionalValues).forEach((key) => delete storedOptionalValues[key])
+    resetOptionalState()
     const module = await nextDefinition.component()
     if (token !== definitionLoadToken) {
       return
@@ -167,14 +153,14 @@ watch(
 
     const defaults = cloneProps(flattened)
     componentDefaults.value = defaults
-    resetActiveControls()
+    resetOptionalState()
     applyDefaults(defaults)
   },
   { immediate: true }
 )
 
 const resetProps = () => {
-  resetActiveControls()
+  resetOptionalState()
   applyDefaults(componentDefaults.value)
 }
 
@@ -200,7 +186,6 @@ const resetProps = () => {
             :control="control"
             v-model:value="demoProps[control.key]"
             :is-optional="isControlOptional(control)"
-            :is-active="isControlActive(control)"
             @toggle-optional="handleOptionalToggle(control, $event)"
           />
         </Section>

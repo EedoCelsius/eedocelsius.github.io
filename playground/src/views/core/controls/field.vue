@@ -13,10 +13,11 @@ import { toRgba } from '@shared/color'
 const props = defineProps<{
   control: ControlDefinition
   isOptional: boolean
-  isActive: boolean
 }>()
 
 const valueModel = defineModel<PlaygroundPropValue | undefined>('value')
+
+const isActive = computed(() => valueModel.value !== undefined)
 
 const emit = defineEmits<{
   (event: 'toggle-optional', value: boolean | undefined): void
