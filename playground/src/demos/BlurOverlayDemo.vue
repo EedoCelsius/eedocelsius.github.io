@@ -36,7 +36,7 @@ defineProps<BlurOverlayProps>()
       class="absolute inset-0 h-full w-full object-cover"
     />
     <BlurOverlay v-bind="$props">
-      <template #overlay>
+      <template>
         <div class="flex max-w-sm flex-col items-center gap-3 text-surface-0">
           <span class="text-xs font-semibold uppercase tracking-[0.4em] text-primary-300">Focus Mode</span>
           <h2 class="text-2xl font-semibold">Shipping polished experiences</h2>
