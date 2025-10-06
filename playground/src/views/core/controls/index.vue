@@ -38,10 +38,7 @@ const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototyp
 const isControlOptional = (control: ControlDefinition) => !hasOwn(componentDefaults.value, control.key)
 
 const applyDefaults = () => {
-  Object.keys(demoProps.value).forEach((key) => {
-    if (componentDefaults.value[key]) demoProps.value[key] = componentDefaults.value[key]
-    else delete demoProps.value[key]
-  })
+  demoProps.value = { ...componentDefaults.value }
 }
 
 const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | undefined) => {
