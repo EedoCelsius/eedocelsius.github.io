@@ -156,7 +156,7 @@ export const componentCatalog: LabComponentDefinition[] = [
     },
     description: {
       en: 'Applies a configurable blur glass effect on top of any content.',
-      ko: '어떤 콘텐츠든 부드러운 블러 글래스 효과로 가려줍니다다.',
+      ko: '어떤 콘텐츠든 부드러운 블러 글래스 효과로 가려줍니다.',
     },
     component: () => import('@library/components/BlurOverlay.vue'),
     preview: () => import('@/demos/BlurOverlayDemo.vue'),
@@ -192,7 +192,7 @@ export const componentCatalog: LabComponentDefinition[] = [
       {
         key: 'spinner.diameter',
         type: 'slider',
-        label: { en: 'Spinner Diameter', ko: '스피너 지름' },
+        label: { en: 'Diameter', ko: '지름' },
         group: spinnerControlGroup,
         min: 32,
         max: 160,
@@ -201,7 +201,7 @@ export const componentCatalog: LabComponentDefinition[] = [
       {
         key: 'spinner.thickness',
         type: 'slider',
-        label: { en: 'Spinner Thickness', ko: '스피너 두께' },
+        label: { en: 'Ring Thickness', ko: '테두리 두께' },
         group: spinnerControlGroup,
         min: 2,
         max: 16,
@@ -210,7 +210,7 @@ export const componentCatalog: LabComponentDefinition[] = [
       {
         key: 'spinner.textSize',
         type: 'slider',
-        label: { en: 'Spinner Text Size', ko: '스피너 텍스트 크기' },
+        label: { en: 'Text Size', ko: '텍스트 크기' },
         group: spinnerControlGroup,
         min: 12,
         max: 64,
@@ -240,19 +240,19 @@ export const componentCatalog: LabComponentDefinition[] = [
       {
         key: 'spinner.textColor',
         type: 'color',
-        label: { en: 'Spinner Text Color', ko: '스피너 텍스트 색상' },
+        label: { en: 'Text Color', ko: '텍스트 색상' },
         group: spinnerControlGroup,
       },
       {
         key: 'overlay.backgroundColor',
         type: 'color',
-        label: { en: 'Overlay Background', ko: '오버레이 배경' },
+        label: { en: 'Background Color', ko: '배경 색상' },
         group: overlayControlGroup,
       },
       {
         key: 'spinner.text',
         type: 'text',
-        label: { en: 'Spinner Text', ko: '스피너 텍스트' },
+        label: { en: 'Text', ko: '텍스트' },
         group: spinnerControlGroup,
         helperText: {
           en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
