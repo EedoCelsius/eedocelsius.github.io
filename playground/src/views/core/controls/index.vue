@@ -1,43 +1,83 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { ControlDefinition, GroupDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
+import type { ComponentDemo } from '@/demos/types'
+import type { ControlDefinition, GroupDefinition, PlaygroundPropValue } from '@/library/types'
 import Field from './field.vue'
 import Section from './section.vue'
 
 const props = defineProps<{
-  definition: LabComponentDefinition
+  demo: ComponentDemo
 }>()
 
 const { t } = useI18n()
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const demoProps = defineModel<Record<string, PlaygroundPropValue>>('props', { default: () => ({}) })
+
 type ControlSection = { id: string; group?: GroupDefinition; controls: ControlDefinition[] }
 
-const controlSections = props.definition.properties.map<ControlSection>((property) => {
-  if ('controls' in property) {
-    return {
-      id: property.id,
-      group: property,
-      controls: property.controls,
+const controlSections = computed<ControlSection[]>(() =>
+  props.demo.properties.map((property) => {
+    if ('controls' in property) {
+      return {
+        id: property.id,
+        group: property,
+        controls: property.controls,
+      }
     }
-  }
 
-  return {
-    id: property.key,
-    group: undefined,
-    controls: [property],
-  }
-})
+    return {
+      id: property.key,
+      group: undefined,
+      controls: [property],
+    }
+  })
+)
 
 const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototype.hasOwnProperty.call(object, key)
 
-const isControlOptional = (control: ControlDefinition) => !hasOwn(componentDefaults.value, control.key)
+const flattenDefaults = (defaults: Record<string, unknown> | undefined) => {
+  const flattened: Record<string, PlaygroundPropValue> = {}
+
+  if (!defaults) {
+    return flattened
+  }
+
+  const visit = (value: unknown, path: string[]) => {
+    if (typeof value === 'function') {
+      visit((value as () => unknown)(), path)
+      return
+    }
+
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      Object.entries(value as Record<string, unknown>).forEach(([key, nested]) => {
+        visit(nested, [...path, key])
+      })
+      return
+    }
+
+    if (value === undefined) {
+      return
+    }
+
+    if (path.length > 0) {
+      flattened[path.join('.')] = value as PlaygroundPropValue
+    }
+  }
+
+  Object.entries(defaults).forEach(([key, value]) => {
+    visit(value, [key])
+  })
+
+  return flattened
+}
 
 const applyDefaults = () => {
   demoProps.value = { ...componentDefaults.value }
 }
+
+const isControlOptional = (control: ControlDefinition) => !hasOwn(componentDefaults.value, control.key)
 
 const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | undefined) => {
   const checked = Boolean(isActive)
@@ -69,57 +109,19 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
     }
 
     demoProps.value[control.key] = value
-  } else {
-    if (hasOwn(demoProps.value, control.key)) {
-      delete demoProps.value[control.key]
-    }
+  } else if (hasOwn(demoProps.value, control.key)) {
+    delete demoProps.value[control.key]
   }
 }
 
-const loadComponentDefaults = async () => {
-  componentDefaults.value = {}
-  demoProps.value = {}
-
-  const module = await props.definition.component()
-  const flattened: Record<string, PlaygroundPropValue> = {}
-
-  const visit = (value: unknown, path: string[]) => {
-    if (typeof value === 'function') {
-      visit((value as () => unknown)(), path)
-      return
-    }
-
-    if (value && typeof value === 'object' && !Array.isArray(value)) {
-      Object.entries(value as Record<string, unknown>).forEach(([key, nested]) => {
-        visit(nested, [...path, key])
-      })
-      return
-    }
-
-    if (value === undefined) {
-      return
-    }
-
-    if (path.length > 0) {
-      flattened[path.join('.')] = value as PlaygroundPropValue
-    }
-  }
-
-  const defaultsSource = (module as { defaultProps?: unknown }).defaultProps
-  if (defaultsSource && typeof defaultsSource === 'object' && !Array.isArray(defaultsSource)) {
-    Object.entries(defaultsSource as Record<string, unknown>).forEach(([key, value]) => {
-      visit(value, [key])
-    })
-  }
-
-  componentDefaults.value = flattened
-  applyDefaults()
-}
-
-onBeforeMount(() => {
-  void loadComponentDefaults()
-})
-
+watch(
+  () => props.demo.defaultProps,
+  (defaults) => {
+    componentDefaults.value = flattenDefaults(defaults)
+    applyDefaults()
+  },
+  { immediate: true, deep: true }
+)
 </script>
 
 <template>

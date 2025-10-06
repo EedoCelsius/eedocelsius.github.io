@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import type { LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
-import { getComponentDefinition } from '@/library/catalog'
+import { computed, ref, watch } from 'vue'
+import type { ComponentDemo } from '@/demos/types'
+import { getComponentDemo } from '@/demos'
+import type { LabComponentSummary } from '@/library/catalog'
+import { getComponentSummary } from '@/library/catalog'
+import type { PlaygroundPropValue } from '@/library/types'
 import Controls from './controls/index.vue'
 import NotFound from './notFound.vue'
 import Preview from './preview.vue'
@@ -10,21 +13,30 @@ const props = defineProps<{
   componentId: string
 }>()
 
-const definition = computed<LabComponentDefinition | undefined>(() => getComponentDefinition(props.componentId))
+const summary = computed<LabComponentSummary | undefined>(() => getComponentSummary(props.componentId))
+const demo = computed<ComponentDemo | undefined>(() => getComponentDemo(props.componentId))
 
 const demoProps = ref<Record<string, PlaygroundPropValue>>({})
+
+watch(
+  () => props.componentId,
+  () => {
+    demoProps.value = {}
+  }
+)
 </script>
 
 <template>
-  <div v-if="definition" class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_22rem]">
+  <div v-if="summary && demo" class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_22rem]">
     <Preview
-      :key="definition.id"
-      :definition="definition"
+      :key="summary.id"
+      :summary="summary"
+      :demo="demo"
       :demo-props="demoProps"
     />
     <Controls
-      :key="definition.id"
-      :definition="definition"
+      :key="summary.id"
+      :demo="demo"
       v-model:props="demoProps"
     />
   </div>

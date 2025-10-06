@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, watch } from 'vue'
-import type { AsyncComponentLoader } from 'vue'
+import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import Spinner from '@library/components/Spinner.vue'
-import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
+import type { ComponentDemo } from '@/demos/types'
+import type { LabComponentSummary } from '@/library/catalog'
+import type { LocaleCopy, PlaygroundPropValue } from '@/library/types'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
-  definition: LabComponentDefinition
+  summary: LabComponentSummary
+  demo: ComponentDemo
   demoProps: Record<string, PlaygroundPropValue>
 }>()
 
@@ -15,10 +16,9 @@ const { t, locale } = useI18n()
 
 const localize = (copy: LocaleCopy) => copy[(locale.value as SupportedLocale)] ?? copy.en
 
-const localizedName = computed(() => localize(props.definition.name))
-const localizedDescription = computed(() => localize(props.definition.description))
-
-const demoComponent = defineAsyncComponent((props.definition.preview ?? props.definition.component) as AsyncComponentLoader<any>)
+const localizedName = computed(() => localize(props.summary.name))
+const localizedDescription = computed(() => localize(props.summary.description))
+const demoComponent = computed(() => props.demo.component)
 
 const resolvedDemoProps = computed(() => {
   const expanded: Record<string, unknown> = {}
@@ -72,17 +72,7 @@ watch(
       <p class="text-sm text-surface-600 dark:text-surface-300">{{ localizedDescription }}</p>
     </header>
     <div class="relative min-h-[360px] overflow-hidden rounded-3xl border border-surface-200/70 bg-surface-0 p-6 shadow-inner dark:border-surface-800/70 dark:bg-surface-900">
-      <Suspense v-if="demoComponent">
-        <component :is="demoComponent" v-bind="resolvedDemoProps" />
-        <template #fallback>
-          <div class="flex h-full items-center justify-center text-surface-400">
-            <Spinner :diameter="72" :thickness="6" />
-          </div>
-        </template>
-      </Suspense>
-      <div v-else class="flex h-full items-center justify-center text-surface-400">
-        <Spinner :diameter="72" :thickness="6" />
-      </div>
+      <component :is="demoComponent" v-bind="resolvedDemoProps" />
     </div>
   </section>
 </template>
