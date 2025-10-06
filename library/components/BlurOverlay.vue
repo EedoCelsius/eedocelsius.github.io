@@ -31,9 +31,7 @@ const overlayStyle = computed(() => ({
       class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur"
       :style="overlayStyle"
     >
-      <div class="pointer-events-auto">
-        <slot />
-      </div>
+      <slot class="pointer-events-auto" />
     </div>
   </transition>
 </template>
