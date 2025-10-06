@@ -104,10 +104,6 @@ defineProps<LoadingOverlayProps>()
       alt="Project dashboard"
       class="absolute inset-0 h-full w-full object-cover"
     />
-    <LoadingOverlay v-bind="$props" class="absolute inset-0">
-      <template #default>
-        <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-surface-900/50 via-surface-900/20 to-surface-900/70" />
-      </template>
-    </LoadingOverlay>
+    <LoadingOverlay v-bind="$props" />
   </div>
 </template>
