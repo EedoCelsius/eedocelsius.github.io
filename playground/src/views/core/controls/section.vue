@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { ControlDefinition, LocaleCopy } from '@/library/catalog'
+import type { ControlDefinition, GroupDefinition, LocaleCopy } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
-  section: { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }
+  section: { id: string; group?: GroupDefinition; controls: ControlDefinition[] }
 }>()
 
 const { locale } = useI18n()
