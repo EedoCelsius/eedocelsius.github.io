@@ -25,8 +25,8 @@ export const componentCatalog: LabComponentSummary[] = [
       ko: '스피너',
     },
     description: {
-      en: 'Animated circular spinner with optional centered text sizing.',
-      ko: '중앙 텍스트 크기를 조절할 수 있는 회전형 스피너입니다.',
+      en: 'Animated circular spinner with configurable size and colors.',
+      ko: '크기와 색상을 조절할 수 있는 회전형 스피너입니다.',
     },
   },
   {
@@ -47,8 +47,8 @@ export const componentCatalog: LabComponentSummary[] = [
       ko: '로딩 오버레이',
     },
     description: {
-      en: 'Displays the loading spinner with optional text and description over blurred content.',
-      ko: '블러 처리된 콘텐츠 위에 로딩 스피너와 선택적인 텍스트·설명을 표시합니다.',
+      en: 'Displays the loading spinner over blurred content.',
+      ko: '블러 처리된 콘텐츠 위에 로딩 스피너를 표시합니다.',
     },
   },
 ]
