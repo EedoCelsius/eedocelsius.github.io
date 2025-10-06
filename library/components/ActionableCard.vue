@@ -29,7 +29,6 @@ const cardPassThrough = {
   },
   body: {
     class: 'grid grid-cols-1 p-0 sm:grid-cols-[minmax(0,1fr)_auto]',
-    style: { padding: 0 }
   },
   content: {
     class: 'p-0 contents',
