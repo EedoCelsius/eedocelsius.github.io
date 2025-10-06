@@ -2,7 +2,6 @@
 import { computed, reactive, ref, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ControlDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
-import { toRgba } from '@shared/color'
 import ControlField from './components/ControlField.vue'
 import ControlSection from './components/ControlSection.vue'
 
@@ -30,7 +29,6 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
-const resolvedColors = reactive<Record<string, string>>({})
 const activeControls = reactive<Record<string, boolean>>({})
 const storedOptionalValues = reactive<Record<string, PlaygroundPropValue>>({})
 const collapsedSections = reactive<Record<string, boolean>>({})
@@ -89,7 +87,6 @@ const isControlActive = (control: ControlDefinition) => !isControlOptional(contr
 const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
   const clonedDefaults = cloneProps(defaults)
   Object.keys(currentProps).forEach((key) => delete currentProps[key])
-  Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
   Object.entries(clonedDefaults).forEach(([key, value]) => {
     const control = props.definition.controls.find((item) => item.key === key)
     if (!control || isControlActive(control)) {
@@ -145,9 +142,6 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
       storedOptionalValues[control.key] = currentProps[control.key]
       delete currentProps[control.key]
     }
-    if (control.type === 'color') {
-      delete resolvedColors[control.key]
-    }
   }
 
   activeControls[control.key] = checked
@@ -170,7 +164,6 @@ watch(
     const token = ++definitionLoadToken
     componentDefaults.value = {}
     Object.keys(currentProps).forEach((key) => delete currentProps[key])
-    Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
     Object.keys(activeControls).forEach((key) => delete activeControls[key])
     Object.keys(storedOptionalValues).forEach((key) => delete storedOptionalValues[key])
     Object.keys(collapsedSections).forEach((key) => delete collapsedSections[key])
@@ -217,31 +210,9 @@ watch(
   { immediate: true }
 )
 
-watchEffect(() => {
-  const keys = props.definition.controls
-    .filter((control) => control.type === 'color')
-    .map((control) => control.key)
-
-  const activeKeys = new Set(keys)
-  keys.forEach((key) => {
-    const value = currentProps[key]
-    resolvedColors[key] = toRgba(typeof value === 'string' ? value : undefined)
-  })
-
-  Object.keys(resolvedColors).forEach((key) => {
-    if (!activeKeys.has(key)) {
-      delete resolvedColors[key]
-    }
-  })
-})
-
 const resetProps = () => {
   resetActiveControls()
   applyDefaults(componentDefaults.value)
-}
-
-const setColorPropValue = (key: string, value: string | null) => {
-  currentProps[key] = (value ?? '') as PlaygroundPropValue
 }
 
 const toggleSection = (sectionId: string) => {
@@ -330,10 +301,8 @@ const isSectionCollapsed = (sectionId: string, hasGroup: boolean) => {
             :value="currentProps[control.key] as PlaygroundPropValue | undefined"
             :is-optional="isControlOptional(control)"
             :is-active="isControlActive(control)"
-            :resolved-color="resolvedColors[control.key]"
             @toggle-optional="handleOptionalToggle(control, $event)"
             @update:value="updateControlValue(control.key, $event)"
-            @update-color="setColorPropValue(control.key, $event)"
           />
         </ControlSection>
         <hr
