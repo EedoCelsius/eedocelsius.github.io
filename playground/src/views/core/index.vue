@@ -2,9 +2,9 @@
 import { computed, ref } from 'vue'
 import type { LabComponentDefinition } from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
-import PlaygroundControls from './controls/index.vue'
-import PlaygroundNotFound from './notFound.vue'
-import PlaygroundPreview from './preview.vue'
+import Controls from './controls/index.vue'
+import NotFound from './notFound.vue'
+import Preview from './preview.vue'
 
 const props = defineProps<{
   componentId: string
@@ -21,14 +21,14 @@ const handleResolvedPropsUpdate = (nextResolvedProps: Record<string, unknown>) =
 
 <template>
   <div v-if="definition" class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_22rem]">
-    <PlaygroundPreview
+    <Preview
       :definition="definition"
       :resolved-component-props="resolvedComponentProps"
     />
-    <PlaygroundControls
+    <Controls
       :definition="definition"
       @update:resolved-props="handleResolvedPropsUpdate"
     />
   </div>
-  <PlaygroundNotFound v-else />
+  <NotFound v-else />
 </template>
