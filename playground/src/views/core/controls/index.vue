@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { ControlDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
+import type { ControlDefinition, GroupDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
 import Field from './field.vue'
 import Section from './section.vue'
 
@@ -13,29 +13,25 @@ const { t } = useI18n()
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const demoProps = defineModel<Record<string, PlaygroundPropValue>>('props', { default: () => ({}) })
-const controlSections = computed(() => {
-  const UNGROUPED_ID = '__ungrouped__'
-  const sections: { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }[] = []
-  const sectionMap = new Map<string, { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }>()
+type ControlSection = { id: string; group?: GroupDefinition; controls: ControlDefinition[] }
 
-  props.definition.controls.forEach((control) => {
-    const identifier = control.group?.id ?? UNGROUPED_ID
-    let section = sectionMap.get(identifier)
-    if (!section) {
-      section = {
-        id: identifier,
-        group: control.group,
-        controls: [],
+const controlSections = computed<ControlSection[]>(() =>
+  props.definition.properties.map((property) => {
+    if ('controls' in property) {
+      return {
+        id: property.id,
+        group: property,
+        controls: property.controls,
       }
-      sectionMap.set(identifier, section)
-      sections.push(section)
     }
 
-    section.controls.push(control)
+    return {
+      id: property.key,
+      group: undefined,
+      controls: [property],
+    }
   })
-
-  return sections
-})
+)
 
 const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototype.hasOwnProperty.call(object, key)
 
