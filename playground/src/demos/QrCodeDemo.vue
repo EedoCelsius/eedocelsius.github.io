@@ -16,9 +16,9 @@ export const demoConfig: ComponentDemoConfig = {
       label: { en: 'Dark Color', ko: '어두운 색상' },
     },
     {
-      key: 'content',
+      key: 'data',
       type: 'textarea',
-      label: { en: 'Content', ko: '콘텐츠' },
+      label: { en: 'Data', ko: '데이터' },
       helperText: {
         en: 'Text or URL that will be encoded inside the QR code.',
         ko: 'QR 코드에 담을 텍스트 또는 URL을 입력하세요.',
