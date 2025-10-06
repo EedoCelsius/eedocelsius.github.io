@@ -2,8 +2,8 @@
 import { computed, reactive, ref, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ControlDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
-import ControlField from './components/ControlField.vue'
-import ControlSection from './components/ControlSection.vue'
+import ControlField from './field.vue'
+import ControlSection from './section.vue'
 
 const props = defineProps<{
   definition: LabComponentDefinition
