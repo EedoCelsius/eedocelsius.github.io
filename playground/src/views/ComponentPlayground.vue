@@ -141,7 +141,7 @@ const loadComponentDefaults = async () => {
   applyDefaults(defaults)
 }
 
-watch(definition, loadComponentDefaults)
+watch(definition, loadComponentDefaults, { immediate: true })
 
 const resetProps = () => {
   resetActiveControls()
