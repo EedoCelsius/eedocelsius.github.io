@@ -277,7 +277,7 @@ watchEffect(() => {
 
 const resetProps = () => {
   resetActiveControls()
-  applyDefaults(componentDefaults as Record<string, PlaygroundPropValue>)
+  applyDefaults(componentDefaults.value)
 }
   
 const setColorPropValue = (key: string, value: string | null) => {
