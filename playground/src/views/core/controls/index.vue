@@ -2,8 +2,8 @@
 import { computed, reactive, ref, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ControlDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
-import ControlField from './field.vue'
-import ControlSection from './section.vue'
+import Field from './field.vue'
+import Section from './section.vue'
 
 const props = defineProps<{
   definition: LabComponentDefinition
@@ -288,13 +288,13 @@ const isSectionCollapsed = (sectionId: string, hasGroup: boolean) => {
     <p class="text-sm text-surface-500 dark:text-surface-400">{{ t('playground.helper') }}</p>
     <form class="flex flex-col gap-6">
       <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
-        <ControlSection
+        <Section
           :section="section"
           :is-collapsed="isSectionCollapsed(section.id, Boolean(section.group))"
           :has-group="Boolean(section.group)"
           @toggle="toggleSection(section.id)"
         >
-          <ControlField
+          <Field
             v-for="control in section.controls"
             :key="control.key"
             :control="control"
@@ -304,7 +304,7 @@ const isSectionCollapsed = (sectionId: string, hasGroup: boolean) => {
             @toggle-optional="handleOptionalToggle(control, $event)"
             @update:value="updateControlValue(control.key, $event)"
           />
-        </ControlSection>
+        </Section>
         <hr
           v-if="sectionIndex < controlSections.length - 1"
           class="border-0 border-t border-surface-200/70 dark:border-surface-700/70"
