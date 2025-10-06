@@ -1,19 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive, ref, watch, watchEffect } from 'vue'
-import Checkbox from 'primevue/checkbox'
-import InputText from 'primevue/inputtext'
-import Slider from 'primevue/slider'
-import Textarea from 'primevue/textarea'
-import { ElColorPicker } from 'element-plus'
 import { useI18n } from 'vue-i18n'
-import type {
-  ControlDefinition,
-  LabComponentDefinition,
-  LocaleCopy,
-  PlaygroundPropValue,
-} from '@/library/catalog'
+import type { ControlDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
 import { toRgba } from '@shared/color'
-import type { SupportedLocale } from '@/i18n'
+import ControlField from './components/ControlField.vue'
+import ControlSection from './components/ControlSection.vue'
 
 const props = defineProps<{
   definition: LabComponentDefinition
@@ -24,7 +15,7 @@ const emit = defineEmits<{
   (event: 'update:resolved-props', value: Record<string, unknown>): void
 }>()
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 
 const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
   if (!value) {
@@ -36,8 +27,6 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
     return accumulator
   }, {})
 }
-
-const sanitizeControlKey = (key: string) => key.replace(/[^a-zA-Z0-9_-]+/g, '-')
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
@@ -118,10 +107,6 @@ const resetActiveControls = () => {
   })
 }
 
-const getControlLabelId = (control: ControlDefinition) => `${sanitizeControlKey(control.key)}-label`
-const getControlInputId = (control: ControlDefinition) => `${sanitizeControlKey(control.key)}-input`
-const getControlToggleId = (control: ControlDefinition) => `${sanitizeControlKey(control.key)}-toggle`
-
 const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | undefined) => {
   const checked = Boolean(isActive)
 
@@ -166,6 +151,15 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
   }
 
   activeControls[control.key] = checked
+}
+
+const updateControlValue = (key: string, value: PlaygroundPropValue | undefined) => {
+  if (value === undefined) {
+    delete currentProps[key]
+    return
+  }
+
+  currentProps[key] = value
 }
 
 let definitionLoadToken = 0
@@ -254,8 +248,6 @@ const toggleSection = (sectionId: string) => {
   collapsedSections[sectionId] = !(collapsedSections[sectionId] ?? true)
 }
 
-const localize = (copy: LocaleCopy) => copy[(locale.value as SupportedLocale)] ?? copy.en
-
 const resolvedComponentProps = computed(() => {
   const expanded: Record<string, unknown> = {}
 
@@ -311,6 +303,7 @@ const isSectionCollapsed = (sectionId: string, hasGroup: boolean) => {
 
   return collapsedSections[sectionId] ?? true
 }
+
 </script>
 
 <template>
@@ -324,104 +317,29 @@ const isSectionCollapsed = (sectionId: string, hasGroup: boolean) => {
     <p class="text-sm text-surface-500 dark:text-surface-400">{{ t('playground.helper') }}</p>
     <form class="flex flex-col gap-6">
       <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
-        <button
-          v-if="section.group"
-          type="button"
-          class="flex items-center justify-between text-left text-xs font-semibold uppercase tracking-[0.35em] text-surface-500 transition hover:text-primary-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-200 dark:text-surface-400"
-          :aria-expanded="isSectionCollapsed(section.id, true) ? 'false' : 'true'"
-          @click="toggleSection(section.id)"
+        <ControlSection
+          :section="section"
+          :is-collapsed="isSectionCollapsed(section.id, Boolean(section.group))"
+          :has-group="Boolean(section.group)"
+          @toggle="toggleSection(section.id)"
         >
-          <span>{{ localize(section.group.label) }}</span>
-          <i class="pi text-sm" :class="isSectionCollapsed(section.id, true) ? 'pi-angle-down' : 'pi-angle-up'" aria-hidden="true"></i>
-        </button>
-        <div v-show="!section.group || !isSectionCollapsed(section.id, Boolean(section.group))" class="flex flex-col gap-4">
-          <div v-for="control in section.controls" :key="control.key" class="flex flex-col gap-2 text-sm">
-            <div v-if="isControlOptional(control)" class="flex items-center gap-2">
-              <Checkbox
-                :input-id="getControlToggleId(control)"
-                :model-value="isControlActive(control)"
-                binary
-                class="shrink-0"
-                :aria-controls="getControlInputId(control)"
-                :aria-expanded="isControlActive(control) ? 'true' : 'false'"
-                :aria-label="t('playground.toggleControl', { name: localize(control.label) })"
-                :title="t('playground.toggleControl', { name: localize(control.label) })"
-                @update:model-value="handleOptionalToggle(control, $event)"
-              />
-              <label :id="getControlLabelId(control)" :for="getControlToggleId(control)" class="cursor-pointer font-medium text-surface-700 dark:text-surface-200">
-                {{ localize(control.label) }}
-              </label>
-            </div>
-            <label v-else-if="control.type !== 'boolean'" :for="getControlInputId(control)" class="font-medium text-surface-700 dark:text-surface-200">
-              {{ localize(control.label) }}
-            </label>
-            <template v-if="control.type === 'text'">
-              <InputText
-                v-if="isControlActive(control)"
-                :id="getControlInputId(control)"
-                v-model="(currentProps[control.key] as string | undefined)"
-                :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
-                class="w-full"
-              />
-            </template>
-            <template v-else-if="control.type === 'textarea'">
-              <Textarea
-                v-if="isControlActive(control)"
-                :id="getControlInputId(control)"
-                v-model="(currentProps[control.key] as string | undefined)"
-                rows="4"
-                auto-resize
-                :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
-                class="w-full"
-              />
-            </template>
-            <template v-else-if="control.type === 'color'">
-              <div v-if="isControlActive(control)" class="flex items-center gap-3">
-                <ElColorPicker
-                  :model-value="resolvedColors[control.key] ?? ''"
-                  show-alpha
-                  color-format="rgb"
-                  class="shrink-0"
-                  :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
-                  @active-change="setColorPropValue(control.key, $event)"
-                  @update:model-value="setColorPropValue(control.key, $event)"
-                />
-                <InputText
-                  :id="getControlInputId(control)"
-                  v-model="(currentProps[control.key] as string | undefined)"
-                  :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
-                  class="flex-1"
-                />
-              </div>
-            </template>
-            <template v-else-if="control.type === 'slider'">
-              <div v-if="isControlActive(control)" class="flex items-center gap-3">
-                <Slider
-                  :id="getControlInputId(control)"
-                  v-model="(currentProps[control.key] as number | undefined)"
-                  :min="control.min ?? 0"
-                  :max="control.max ?? 100"
-                  :step="control.step ?? 1"
-                  :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
-                  class="flex-1"
-                />
-                <span class="w-12 text-right text-xs font-semibold text-primary-500">{{ currentProps[control.key] }}</span>
-              </div>
-            </template>
-            <template v-else-if="control.type === 'boolean'">
-              <div v-if="isControlActive(control)" class="inline-flex items-center gap-3">
-                <Checkbox :input-id="getControlInputId(control)" v-model="(currentProps[control.key] as boolean | undefined)" binary />
-                <label :for="getControlInputId(control)" class="text-sm text-surface-600 dark:text-surface-300">
-                  {{ localize(control.label) }}
-                </label>
-              </div>
-            </template>
-            <p v-if="control.helperText && isControlActive(control)" class="text-xs text-surface-500 dark:text-surface-400">
-              {{ localize(control.helperText) }}
-            </p>
-          </div>
-        </div>
-        <hr v-if="sectionIndex < controlSections.length - 1" class="border-0 border-t border-surface-200/70 dark:border-surface-700/70" />
+          <ControlField
+            v-for="control in section.controls"
+            :key="control.key"
+            :control="control"
+            :value="currentProps[control.key] as PlaygroundPropValue | undefined"
+            :is-optional="isControlOptional(control)"
+            :is-active="isControlActive(control)"
+            :resolved-color="resolvedColors[control.key]"
+            @toggle-optional="handleOptionalToggle(control, $event)"
+            @update:value="updateControlValue(control.key, $event)"
+            @update-color="setColorPropValue(control.key, $event)"
+          />
+        </ControlSection>
+        <hr
+          v-if="sectionIndex < controlSections.length - 1"
+          class="border-0 border-t border-surface-200/70 dark:border-surface-700/70"
+        />
       </div>
     </form>
   </aside>
