@@ -5,7 +5,12 @@ import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElColorPicker } from 'element-plus'
 import Spinner from '@library/components/Spinner.vue'
-import type { ControlDefinition, LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
+import type {
+  ControlDefinition,
+  LabComponentDefinition,
+  LocaleCopy,
+  PlaygroundPropValue,
+} from '@/library/catalog'
 import { getComponentDefinition } from '@/library/catalog'
 import { toRgba } from '@shared/color'
 import type { SupportedLocale } from '@/i18n'
@@ -29,17 +34,96 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
   }, {})
 }
 
+const sanitizeControlKey = (key: string) => key.replace(/[^a-zA-Z0-9_-]+/g, '-')
+
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
 const resolvedColors = reactive<Record<string, string>>({})
 const activeControls = reactive<Record<string, boolean>>({})
 const storedOptionalValues = reactive<Record<string, PlaygroundPropValue>>({})
+const collapsedSections = reactive<Record<string, boolean>>({})
 
-const colorKeys = computed(() =>
-  definition.value?.controls
-    .filter((control) => control.type === 'color')
-    .map((control) => control.key) ?? []
-)
+const resolvedComponentProps = computed(() => {
+  const expanded: Record<string, unknown> = {}
+
+  Object.entries(currentProps).forEach(([path, value]) => {
+    const segments = path.split('.')
+    if (segments.length === 0) {
+      return
+    }
+
+    let target: Record<string, unknown> = expanded
+    for (let index = 0; index < segments.length - 1; index += 1) {
+      const segment = segments[index]
+      if (!segment) {
+        return
+      }
+      const existing = target[segment]
+      if (!existing || typeof existing !== 'object' || Array.isArray(existing)) {
+        target[segment] = {}
+      }
+      target = target[segment] as Record<string, unknown>
+    }
+
+    const lastSegment = segments[segments.length - 1]
+    if (!lastSegment) {
+      return
+    }
+    target[lastSegment] = value as unknown
+  })
+
+  return expanded
+})
+
+const controlSections = computed(() => {
+  if (!definition.value) {
+    return [] as { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }[]
+  }
+
+  const UNGROUPED_ID = '__ungrouped__'
+  const sections: { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }[] = []
+  const sectionMap = new Map<string, { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }>()
+
+  definition.value.controls.forEach((control) => {
+    const identifier = control.group?.id ?? UNGROUPED_ID
+    let section = sectionMap.get(identifier)
+    if (!section) {
+      section = {
+        id: identifier,
+        group: control.group,
+        controls: [],
+      }
+      sectionMap.set(identifier, section)
+      sections.push(section)
+    }
+
+    section.controls.push(control)
+  })
+
+  return sections
+})
+
+watchEffect(() => {
+  const sections = controlSections.value
+  const validSectionIds = new Set(sections.map((section) => section.id))
+
+  sections.forEach((section) => {
+    if (!Object.prototype.hasOwnProperty.call(collapsedSections, section.id)) {
+      collapsedSections[section.id] = section.group ? true : false
+      return
+    }
+
+    if (!section.group) {
+      collapsedSections[section.id] = false
+    }
+  })
+
+  Object.keys(collapsedSections).forEach((id) => {
+    if (!validSectionIds.has(id)) {
+      delete collapsedSections[id]
+    }
+  })
+})
 
 const hasOwn = (object: Record<string, unknown>, key: string) =>
   Object.prototype.hasOwnProperty.call(object, key)
@@ -72,30 +156,9 @@ const resetActiveControls = () => {
   })
 }
 
-const getControlInputId = (control: ControlDefinition) => `${control.key}-input`
-const getControlToggleId = (control: ControlDefinition) => `${control.key}-toggle`
-
-const getInitialValueForControl = (control: ControlDefinition): PlaygroundPropValue => {
-  if (hasOwn(storedOptionalValues, control.key)) {
-    return storedOptionalValues[control.key]
-  }
-
-  if (hasOwn(componentDefaults.value, control.key)) {
-    return componentDefaults.value[control.key]
-  }
-
-  switch (control.type) {
-    case 'slider':
-      return control.min ?? 0
-    case 'boolean':
-      return false
-    case 'textarea':
-    case 'text':
-    case 'color':
-    default:
-      return ''
-  }
-}
+const getControlLabelId = (control: ControlDefinition) => `${sanitizeControlKey(control.key)}-label`
+const getControlInputId = (control: ControlDefinition) => `${sanitizeControlKey(control.key)}-input`
+const getControlToggleId = (control: ControlDefinition) => `${sanitizeControlKey(control.key)}-toggle`
 
 const handleOptionalToggle = (control: ControlDefinition, event: Event) => {
   const target = event.target as HTMLInputElement | null
@@ -109,7 +172,29 @@ const handleOptionalToggle = (control: ControlDefinition, event: Event) => {
   }
 
   if (target.checked) {
-    const value = getInitialValueForControl(control)
+    let value: PlaygroundPropValue
+
+    if (hasOwn(storedOptionalValues, control.key)) {
+      value = storedOptionalValues[control.key]
+    } else if (hasOwn(componentDefaults.value, control.key)) {
+      value = componentDefaults.value[control.key]
+    } else {
+      switch (control.type) {
+        case 'slider':
+          value = control.min ?? 0
+          break
+        case 'boolean':
+          value = false
+          break
+        case 'textarea':
+        case 'text':
+        case 'color':
+        default:
+          value = ''
+          break
+      }
+    }
+
     currentProps[control.key] = value
   } else {
     if (hasOwn(currentProps, control.key)) {
@@ -121,11 +206,11 @@ const handleOptionalToggle = (control: ControlDefinition, event: Event) => {
     }
   }
 
-  activeControls[control.key] = active
+  activeControls[control.key] = target.checked
 }
 
-const loadComponentDefaults = async () => {
-  if (!definition.value) {
+watch(definition, async (nextDefinition) => {
+  if (!nextDefinition) {
     componentDefaults.value = {}
     Object.keys(currentProps).forEach((key) => delete currentProps[key])
     Object.keys(resolvedColors).forEach((key) => delete resolvedColors[key])
@@ -133,23 +218,49 @@ const loadComponentDefaults = async () => {
     return
   }
 
-  const module = await definition.value.component()
+  const module = await nextDefinition.component()
+  const flattened: Record<string, PlaygroundPropValue> = {}
 
-  const defaults = cloneProps((module as { defaultProps?: Record<string, PlaygroundPropValue> }).defaultProps)
+  const visit = (value: unknown, path: string[]) => {
+    if (typeof value === 'function') {
+      visit((value as () => unknown)(), path)
+      return
+    }
+
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      Object.entries(value as Record<string, unknown>).forEach(([key, nested]) => {
+        visit(nested, [...path, key])
+      })
+      return
+    }
+
+    if (value === undefined) {
+      return
+    }
+
+    if (path.length > 0) {
+      flattened[path.join('.')] = value as PlaygroundPropValue
+    }
+  }
+
+  const defaultsSource = (module as { defaultProps?: unknown }).defaultProps
+  if (defaultsSource && typeof defaultsSource === 'object' && !Array.isArray(defaultsSource)) {
+    Object.entries(defaultsSource as Record<string, unknown>).forEach(([key, value]) => {
+      visit(value, [key])
+    })
+  }
+
+  const defaults = cloneProps(flattened)
   componentDefaults.value = defaults
   resetActiveControls()
   applyDefaults(defaults)
-}
-
-watch(definition, loadComponentDefaults)
-
-const resetProps = () => {
-  resetActiveControls()
-  applyDefaults(componentDefaults.value)
-}
+})
 
 watchEffect(() => {
-  const keys = colorKeys.value
+  const keys =
+    definition.value?.controls
+      .filter((control) => control.type === 'color')
+      .map((control) => control.key) ?? []
 
   const activeKeys = new Set(keys)
   keys.forEach((key) => {
@@ -168,9 +279,7 @@ const setColorPropValue = (key: string, value: string | null) => {
   currentProps[key] = (value ?? '') as PlaygroundPropValue
 }
 
-const activeLocale = computed(() => locale.value as SupportedLocale)
-
-const localize = (copy: LocaleCopy) => copy[activeLocale.value] ?? copy.en
+const localize = (copy: LocaleCopy) => copy[(locale.value as SupportedLocale)] ?? copy.en
 
 const localizedName = computed(() => (definition.value ? localize(definition.value.name) : ''))
 const localizedDescription = computed(() => (definition.value ? localize(definition.value.description) : ''))
@@ -183,10 +292,8 @@ const previewComponent = computed(() => {
   return defineAsyncComponent(loader as AsyncComponentLoader<any>)
 })
 
-const baseTitle = computed(() => String(t('app.title')))
-
 watch(
-  [localizedName, baseTitle],
+  [localizedName, () => String(t('app.title'))],
   ([name, appTitle]) => {
     document.title = name ? `${name} • ${appTitle}` : appTitle
   },
@@ -218,7 +325,7 @@ watch(
       </header>
       <div class="relative min-h-[360px] overflow-hidden rounded-3xl border border-surface-200/70 bg-surface-0 p-6 shadow-inner dark:border-surface-800/70 dark:bg-surface-900">
         <Suspense v-if="previewComponent">
-          <component :is="previewComponent" v-bind="currentProps" />
+          <component :is="previewComponent" v-bind="resolvedComponentProps" />
           <template #fallback>
             <div class="flex h-full items-center justify-center text-surface-400">
               <Spinner :diameter="72" :thickness="6" />
@@ -236,112 +343,153 @@ watch(
         <button
           type="button"
           class="text-xs font-semibold text-primary-500 transition hover:text-primary-400"
-          @click="resetProps"
+          @click="() => {
+            resetActiveControls()
+            applyDefaults(componentDefaults as Record<string, PlaygroundPropValue>)
+          }"
         >
           {{ t('playground.reset') }}
         </button>
       </div>
       <p class="text-sm text-surface-500 dark:text-surface-400">{{ t('playground.helper') }}</p>
-      <form class="flex flex-col gap-5">
+      <form class="flex flex-col gap-6">
         <div
-          v-for="control in definition.controls"
-          :key="control.key"
-          class="flex flex-col gap-2 text-sm"
+          v-for="(section, sectionIndex) in controlSections"
+          :key="section.id"
+          class="flex flex-col gap-4"
         >
-          <div v-if="isControlOptional(control)" class="flex items-center gap-2">
-            <input
-              :id="getControlToggleId(control)"
-              type="checkbox"
-              class="h-4 w-4 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
-              :checked="isControlActive(control)"
-              :aria-controls="getControlInputId(control)"
-              :aria-expanded="isControlActive(control) ? 'true' : 'false'"
-              :aria-label="t('playground.toggleControl', { name: localize(control.label) })"
-              :title="t('playground.toggleControl', { name: localize(control.label) })"
-              @change="handleOptionalToggle(control, $event)"
-            />
-            <label :for="getControlInputId(control)" class="font-medium text-surface-700 dark:text-surface-200">
+          <button
+            v-if="section.group"
+            type="button"
+            class="flex items-center justify-between text-left text-xs font-semibold uppercase tracking-[0.35em] text-surface-500 transition hover:text-primary-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-200 dark:text-surface-400"
+            :aria-expanded="(collapsedSections[section.id] ?? true) ? 'false' : 'true'"
+            @click="collapsedSections[section.id] = !(collapsedSections[section.id] ?? true)"
+          >
+            <span>{{ localize(section.group.label) }}</span>
+            <i
+              class="pi text-sm"
+              :class="(collapsedSections[section.id] ?? true) ? 'pi-angle-down' : 'pi-angle-up'"
+              aria-hidden="true"
+            ></i>
+          </button>
+          <div
+            v-show="!section.group || !(collapsedSections[section.id] ?? true)"
+            class="flex flex-col gap-4"
+          >
+            <div
+              v-for="control in section.controls"
+              :key="control.key"
+              class="flex flex-col gap-2 text-sm"
+            >
+              <div v-if="isControlOptional(control)" class="flex items-center gap-2">
+                <input
+                  :id="getControlToggleId(control)"
+                type="checkbox"
+                class="h-4 w-4 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
+                :checked="isControlActive(control)"
+                :aria-controls="getControlInputId(control)"
+                :aria-expanded="isControlActive(control) ? 'true' : 'false'"
+                :aria-label="t('playground.toggleControl', { name: localize(control.label) })"
+                :title="t('playground.toggleControl', { name: localize(control.label) })"
+                @change="handleOptionalToggle(control, $event)"
+              />
+              <label
+                :id="getControlLabelId(control)"
+                :for="getControlToggleId(control)"
+                class="cursor-pointer font-medium text-surface-700 dark:text-surface-200"
+              >
+                {{ localize(control.label) }}
+              </label>
+            </div>
+            <label
+              v-else-if="control.type !== 'boolean'"
+              :for="getControlInputId(control)"
+              class="font-medium text-surface-700 dark:text-surface-200"
+            >
               {{ localize(control.label) }}
             </label>
-          </div>
-          <label
-            v-else-if="control.type !== 'boolean'"
-            :for="getControlInputId(control)"
-            class="font-medium text-surface-700 dark:text-surface-200"
-          >
-            {{ localize(control.label) }}
-          </label>
-          <template v-if="control.type === 'text'">
-            <input
-              v-if="isControlActive(control)"
-              :id="getControlInputId(control)"
-              v-model="(currentProps[control.key] as string | undefined)"
-              type="text"
-              class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
-            />
-          </template>
-          <template v-else-if="control.type === 'textarea'">
-            <textarea
-              v-if="isControlActive(control)"
-              :id="getControlInputId(control)"
-              v-model="(currentProps[control.key] as string | undefined)"
-              rows="4"
-              class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
-            ></textarea>
-          </template>
-          <template v-else-if="control.type === 'color'">
-            <div v-if="isControlActive(control)" class="flex items-center gap-3">
-              <ElColorPicker
-                :model-value="resolvedColors[control.key] ?? ''"
-                show-alpha
-                color-format="rgb"
-                class="shrink-0"
-                @active-change="setColorPropValue(control.key, $event)"
-                @update:model-value="setColorPropValue(control.key, $event)"
-              />
+            <template v-if="control.type === 'text'">
               <input
+                v-if="isControlActive(control)"
                 :id="getControlInputId(control)"
                 v-model="(currentProps[control.key] as string | undefined)"
                 type="text"
-                class="flex-1 rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
+                :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
+                class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
               />
-            </div>
-          </template>
-          <template v-else-if="control.type === 'slider'">
-            <div v-if="isControlActive(control)" class="flex items-center gap-3">
-              <input
+            </template>
+            <template v-else-if="control.type === 'textarea'">
+              <textarea
+                v-if="isControlActive(control)"
                 :id="getControlInputId(control)"
-                v-model.number="(currentProps[control.key] as number | undefined)"
-                type="range"
-                :min="control.min ?? 0"
-                :max="control.max ?? 100"
-                :step="control.step ?? 1"
-                class="flex-1 accent-primary-500"
-              />
-              <span class="w-12 text-right text-xs font-semibold text-primary-500">{{ currentProps[control.key] }}</span>
-            </div>
-          </template>
-          <template v-else-if="control.type === 'boolean'">
-            <label
-              v-if="isControlActive(control)"
-              :for="getControlInputId(control)"
-              class="inline-flex items-center gap-3"
+                v-model="(currentProps[control.key] as string | undefined)"
+                rows="4"
+                :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
+                class="w-full rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
+              ></textarea>
+            </template>
+            <template v-else-if="control.type === 'color'">
+              <div v-if="isControlActive(control)" class="flex items-center gap-3">
+                <ElColorPicker
+                  :model-value="resolvedColors[control.key] ?? ''"
+                  show-alpha
+                  color-format="rgb"
+                  class="shrink-0"
+                  :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
+                  @active-change="setColorPropValue(control.key, $event)"
+                  @update:model-value="setColorPropValue(control.key, $event)"
+                />
+                <input
+                  :id="getControlInputId(control)"
+                  v-model="(currentProps[control.key] as string | undefined)"
+                  type="text"
+                  :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
+                  class="flex-1 rounded-xl border border-surface-200/70 bg-surface-0 px-3 py-2 text-sm text-surface-700 shadow-sm transition focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-100 dark:border-surface-700/70 dark:bg-surface-900 dark:text-surface-0 dark:focus:border-primary-300"
+                />
+              </div>
+            </template>
+            <template v-else-if="control.type === 'slider'">
+              <div v-if="isControlActive(control)" class="flex items-center gap-3">
+                <input
+                  :id="getControlInputId(control)"
+                  v-model.number="(currentProps[control.key] as number | undefined)"
+                  type="range"
+                  :min="control.min ?? 0"
+                  :max="control.max ?? 100"
+                  :step="control.step ?? 1"
+                  :aria-labelledby="isControlOptional(control) ? getControlLabelId(control) : undefined"
+                  class="flex-1 accent-primary-500"
+                />
+                <span class="w-12 text-right text-xs font-semibold text-primary-500">{{ currentProps[control.key] }}</span>
+              </div>
+            </template>
+            <template v-else-if="control.type === 'boolean'">
+              <label
+                v-if="isControlActive(control)"
+                :for="getControlInputId(control)"
+                class="inline-flex items-center gap-3"
+              >
+                <input
+                  :id="getControlInputId(control)"
+                  v-model="(currentProps[control.key] as boolean | undefined)"
+                  type="checkbox"
+                  class="h-5 w-5 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
+                />
+                <span class="text-sm text-surface-600 dark:text-surface-300">{{ localize(control.label) }}</span>
+              </label>
+            </template>
+            <p
+              v-if="control.helperText && isControlActive(control)"
+              class="text-xs text-surface-500 dark:text-surface-400"
             >
-              <input
-                :id="getControlInputId(control)"
-                v-model="(currentProps[control.key] as boolean | undefined)"
-                type="checkbox"
-                class="h-5 w-5 rounded border border-surface-300 text-primary-500 focus:ring-primary-200 dark:border-surface-600"
-              />
-              <span class="text-sm text-surface-600 dark:text-surface-300">{{ localize(control.label) }}</span>
-            </label>
-          </template>
-          <p
-            v-if="control.helperText && isControlActive(control)"
-            class="text-xs text-surface-500 dark:text-surface-400"
-          >
-            {{ localize(control.helperText) }}
-          </p>
+              {{ localize(control.helperText) }}
+            </p>
+          </div>
+          </div>
+          <hr
+            v-if="sectionIndex < controlSections.length - 1"
+            class="border-0 border-t border-surface-200/70 dark:border-surface-700/70"
+          />
         </div>
       </form>
       <span
