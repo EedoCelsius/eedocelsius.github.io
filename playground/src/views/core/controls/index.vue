@@ -24,7 +24,7 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
 }
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
-const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
+const currentProps = defineModel<Record<string, PlaygroundPropValue>>('props')
 const activeControls = reactive<Record<string, boolean>>({})
 const storedOptionalValues = reactive<Record<string, PlaygroundPropValue>>({})
 
