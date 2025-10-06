@@ -36,6 +36,6 @@ defineProps<QrCodeProps>()
 
 <template>
   <div class="flex justify-center">
-    <QrCode v-bind="$props" class="w-64 h-64">test</QrCode>
+    <QrCode v-bind="$props" class="w-64 h-64" />
   </div>
 </template>
