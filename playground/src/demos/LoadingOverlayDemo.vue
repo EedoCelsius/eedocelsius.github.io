@@ -26,14 +26,6 @@ export const demoConfig: ComponentDemoConfig = {
           step: 1,
         },
         {
-          key: 'spinner.textSize',
-          type: 'slider',
-          label: { en: 'Text Size', ko: '텍스트 크기' },
-          min: 12,
-          max: 64,
-          step: 1,
-        },
-        {
           key: 'spinner.indicatorColor',
           type: 'color',
           label: { en: 'Indicator Color', ko: '인디케이터 색상' },
@@ -42,20 +34,6 @@ export const demoConfig: ComponentDemoConfig = {
           key: 'spinner.trackColor',
           type: 'color',
           label: { en: 'Track Color', ko: '트랙 색상' },
-        },
-        {
-          key: 'spinner.textColor',
-          type: 'color',
-          label: { en: 'Text Color', ko: '텍스트 색상' },
-        },
-        {
-          key: 'spinner.text',
-          type: 'text',
-          label: { en: 'Text', ko: '텍스트' },
-          helperText: {
-            en: 'Optional center text inside the spinner. Supports numbers or short phrases.',
-            ko: '스피너 중앙에 표시할 선택적 텍스트입니다. 숫자나 짧은 문구를 사용할 수 있습니다.',
-          },
         },
       ],
     },
@@ -77,15 +55,6 @@ export const demoConfig: ComponentDemoConfig = {
           label: { en: 'Background Color', ko: '배경 색상' },
         },
       ],
-    },
-    {
-      key: 'description',
-      type: 'text',
-      label: { en: 'Description', ko: '설명' },
-      helperText: {
-        en: 'Text shown under the spinner. Leave empty to hide.',
-        ko: '스피너 아래에 표시되는 문구입니다. 비워두면 숨겨집니다.',
-      },
     },
   ],
 }

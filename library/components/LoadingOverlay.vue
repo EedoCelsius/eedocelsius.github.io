@@ -13,20 +13,15 @@ export type props = {
     backgroundColor?: string
   }
   spinner?: {
-    text?: string | number
     diameter?: number
     thickness?: number
-    textSize?: number
-    textColor?: string
     trackColor?: string
     indicatorColor?: string
   }
-  description?: string
 }
 </script>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import BlurOverlay from './BlurOverlay.vue'
 import Spinner from './Spinner.vue'
 
@@ -34,8 +29,6 @@ const props = withDefaults(defineProps<props>(), {
   overlay: () => ({ ...defaultProps.overlay }),
   spinner: () => ({ ...defaultProps.spinner }),
 })
-
-const hasDescription = computed(() => Boolean(props.description?.trim()))
 </script>
 
 <template>
@@ -46,11 +39,7 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
         :thickness="props.spinner.thickness"
         :track-color="props.spinner.trackColor"
         :indicator-color="props.spinner.indicatorColor"
-        :text="props.spinner.text"
-        :text-size="props.spinner.textSize"
-        :text-color="props.spinner.textColor"
       />
-      <p v-if="hasDescription" class="max-w-xs text-sm text-surface-0/80">{{ props.description }}</p>
     </div>
   </BlurOverlay>
 </template>
