@@ -20,8 +20,7 @@ const handleResolvedPropsUpdate = (nextResolvedProps: Record<string, unknown>) =
 </script>
 
 <template>
-  <PlaygroundNotFound v-if="!definition" />
-  <div v-else class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_22rem]">
+  <div v-if="definition" class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_22rem]">
     <PlaygroundPreview
       :definition="definition"
       :resolved-component-props="resolvedComponentProps"
@@ -31,4 +30,5 @@ const handleResolvedPropsUpdate = (nextResolvedProps: Record<string, unknown>) =
       @update:resolved-props="handleResolvedPropsUpdate"
     />
   </div>
+  <PlaygroundNotFound v-else />
 </template>
