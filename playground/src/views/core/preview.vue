@@ -1,0 +1,58 @@
+<script setup lang="ts">
+import { computed, defineAsyncComponent, watch } from 'vue'
+import type { AsyncComponentLoader } from 'vue'
+import { useI18n } from 'vue-i18n'
+import Spinner from '@library/components/Spinner.vue'
+import type { LabComponentDefinition, LocaleCopy } from '@/library/catalog'
+import type { SupportedLocale } from '@/i18n'
+
+const props = defineProps<{
+  definition: LabComponentDefinition
+  resolvedComponentProps: Record<string, unknown>
+}>()
+
+const { t, locale } = useI18n()
+
+const localize = (copy: LocaleCopy) => copy[(locale.value as SupportedLocale)] ?? copy.en
+
+const localizedName = computed(() => localize(props.definition.name))
+const localizedDescription = computed(() => localize(props.definition.description))
+
+const previewComponent = computed(() => {
+  const loader = props.definition.preview ?? props.definition.component
+  return defineAsyncComponent(loader as AsyncComponentLoader<any>)
+})
+
+const hasPreview = computed(() => previewComponent.value !== null)
+
+watch(
+  [localizedName, () => String(t('app.title'))],
+  ([name, appTitle]) => {
+    document.title = name ? `${name} • ${appTitle}` : appTitle
+  },
+  { immediate: true }
+)
+</script>
+
+<template>
+  <section class="card-surface flex flex-col gap-6 p-6">
+    <header class="space-y-3">
+      <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary-500">{{ t('playground.preview') }}</p>
+      <h1 class="text-3xl font-semibold text-surface-900 dark:text-surface-0">{{ localizedName }}</h1>
+      <p class="text-sm text-surface-600 dark:text-surface-300">{{ localizedDescription }}</p>
+    </header>
+    <div class="relative min-h-[360px] overflow-hidden rounded-3xl border border-surface-200/70 bg-surface-0 p-6 shadow-inner dark:border-surface-800/70 dark:bg-surface-900">
+      <Suspense v-if="hasPreview">
+        <component :is="previewComponent" v-bind="resolvedComponentProps" />
+        <template #fallback>
+          <div class="flex h-full items-center justify-center text-surface-400">
+            <Spinner :diameter="72" :thickness="6" />
+          </div>
+        </template>
+      </Suspense>
+      <div v-else class="flex h-full items-center justify-center text-surface-400">
+        <Spinner :diameter="72" :thickness="6" />
+      </div>
+    </div>
+  </section>
+</template>
