@@ -1,3 +1,26 @@
+<script lang="ts">
+import type { PlaygroundDemoConfig } from '@/library/types'
+
+export const playgroundDemo: PlaygroundDemoConfig = {
+  component: () => import('@library/components/BlurOverlay.vue'),
+  properties: [
+    {
+      key: 'blurStrength',
+      type: 'slider',
+      label: { en: 'Blur Strength', ko: '블러 강도' },
+      min: 0,
+      max: 30,
+      step: 1,
+    },
+    {
+      key: 'backgroundColor',
+      type: 'color',
+      label: { en: 'Background Color', ko: '배경 색상' },
+    },
+  ],
+}
+</script>
+
 <script setup lang="ts">
 import { BlurOverlay, type BlurOverlayProps } from '@library/components'
 
