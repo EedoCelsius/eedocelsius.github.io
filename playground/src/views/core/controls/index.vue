@@ -128,9 +128,8 @@ watch(
       })
     }
 
-    const defaults = cloneProps(flattened)
-    componentDefaults.value = defaults
-    applyDefaults(defaults)
+    componentDefaults.value = flattened
+    applyDefaults()
   },
   { immediate: true }
 )
