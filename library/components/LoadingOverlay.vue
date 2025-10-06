@@ -42,7 +42,7 @@ const hasDescription = computed(() => Boolean(props.description?.trim()))
   <div class="relative isolate">
     <slot />
     <BlurOverlay :blur-strength="props.overlay.blurStrength" :background-color="props.overlay.backgroundColor">
-      <template #overlay>
+      <template>
         <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
           <Spinner
             :diameter="props.spinner.diameter"
