@@ -102,7 +102,7 @@ defineProps<LoadingOverlayProps>()
     <img
       src="https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1000&q=80"
       alt="Project dashboard"
-      class="w-full h-full object-cover"
+      class="inset-0 object-cover"
     />
     <LoadingOverlay v-bind="$props" />
   </div>
