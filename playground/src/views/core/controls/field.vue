@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Checkbox from 'primevue/checkbox'
+import Dropdown from 'primevue/dropdown'
 import InputText from 'primevue/inputtext'
 import Slider from 'primevue/slider'
 import Textarea from 'primevue/textarea'
@@ -42,6 +43,13 @@ const stringModel = computed<string | undefined>({
   get: () => (typeof valueModel.value === 'string' ? valueModel.value : undefined),
   set: (value) => { valueModel.value = value },
 })
+
+const selectOptions = computed(() =>
+  props.control.options?.map((option) => ({
+    label: localize(option.label),
+    value: option.value,
+  })) ?? []
+)
 
 const colorModel = computed<string | null>({
   get: () => toRgba(stringModel.value),
@@ -87,6 +95,19 @@ const booleanModel = computed<boolean | undefined>({
         v-model="stringModel"
         :aria-labelledby="isOptional ? labelId : undefined"
         class="w-full"
+      />
+    </template>
+    <template v-else-if="control.type === 'select'">
+      <Dropdown
+        v-if="isActive"
+        :id="inputId"
+        v-model="valueModel"
+        :options="selectOptions"
+        option-label="label"
+        option-value="value"
+        class="w-full"
+        :aria-labelledby="isOptional ? labelId : undefined"
+        :show-clear="true"
       />
     </template>
     <template v-else-if="control.type === 'textarea'">

@@ -96,6 +96,9 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
         case 'slider':
           value = control.min ?? 0
           break
+        case 'select':
+          value = control.options?.[0]?.value ?? ''
+          break
         case 'boolean':
           value = false
           break
