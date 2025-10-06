@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ControlDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
 import Field from './field.vue'
@@ -31,7 +31,6 @@ const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const currentProps = reactive<Record<string, PlaygroundPropValue>>({})
 const activeControls = reactive<Record<string, boolean>>({})
 const storedOptionalValues = reactive<Record<string, PlaygroundPropValue>>({})
-const collapsedSections = reactive<Record<string, boolean>>({})
 
 const controlSections = computed(() => {
   const UNGROUPED_ID = '__ungrouped__'
@@ -55,28 +54,6 @@ const controlSections = computed(() => {
   })
 
   return sections
-})
-
-watchEffect(() => {
-  const sections = controlSections.value
-  const validSectionIds = new Set(sections.map((section) => section.id))
-
-  sections.forEach((section) => {
-    if (!Object.prototype.hasOwnProperty.call(collapsedSections, section.id)) {
-      collapsedSections[section.id] = section.group ? true : false
-      return
-    }
-
-    if (!section.group) {
-      collapsedSections[section.id] = false
-    }
-  })
-
-  Object.keys(collapsedSections).forEach((id) => {
-    if (!validSectionIds.has(id)) {
-      delete collapsedSections[id]
-    }
-  })
 })
 
 const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototype.hasOwnProperty.call(object, key)
@@ -166,7 +143,6 @@ watch(
     Object.keys(currentProps).forEach((key) => delete currentProps[key])
     Object.keys(activeControls).forEach((key) => delete activeControls[key])
     Object.keys(storedOptionalValues).forEach((key) => delete storedOptionalValues[key])
-    Object.keys(collapsedSections).forEach((key) => delete collapsedSections[key])
     const module = await nextDefinition.component()
     if (token !== definitionLoadToken) {
       return
@@ -213,10 +189,6 @@ watch(
 const resetProps = () => {
   resetActiveControls()
   applyDefaults(componentDefaults.value)
-}
-
-const toggleSection = (sectionId: string) => {
-  collapsedSections[sectionId] = !(collapsedSections[sectionId] ?? true)
 }
 
 const resolvedComponentProps = computed(() => {
@@ -267,14 +239,6 @@ watch(
   { immediate: true, deep: true }
 )
 
-const isSectionCollapsed = (sectionId: string, hasGroup: boolean) => {
-  if (!hasGroup) {
-    return false
-  }
-
-  return collapsedSections[sectionId] ?? true
-}
-
 </script>
 
 <template>
@@ -290,9 +254,6 @@ const isSectionCollapsed = (sectionId: string, hasGroup: boolean) => {
       <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
         <Section
           :section="section"
-          :is-collapsed="isSectionCollapsed(section.id, Boolean(section.group))"
-          :has-group="Boolean(section.group)"
-          @toggle="toggleSection(section.id)"
         >
           <Field
             v-for="control in section.controls"

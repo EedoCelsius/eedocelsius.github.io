@@ -1,24 +1,35 @@
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ControlDefinition, LocaleCopy } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
 
-defineProps<{
+const props = defineProps<{
   section: { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }
-  isCollapsed: boolean
-  hasGroup: boolean
-}>()
-
-const emit = defineEmits<{
-  (event: 'toggle'): void
 }>()
 
 const { locale } = useI18n()
 
+const hasGroup = computed(() => Boolean(props.section.group))
+const isCollapsed = ref(hasGroup.value)
+
+watch(
+  hasGroup,
+  (value) => {
+    if (!value) {
+      isCollapsed.value = false
+    }
+  }
+)
+
 const localize = (copy: LocaleCopy) => copy[locale.value as SupportedLocale] ?? copy.en
 
 const handleToggle = () => {
-  emit('toggle')
+  if (!hasGroup.value) {
+    return
+  }
+
+  isCollapsed.value = !isCollapsed.value
 }
 </script>
 
