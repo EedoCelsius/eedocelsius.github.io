@@ -6,7 +6,7 @@ import InputText from 'primevue/inputtext'
 import Slider from 'primevue/slider'
 import Textarea from 'primevue/textarea'
 import { ElColorPicker } from 'element-plus'
-import type { ControlDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/types'
+import type { ControlDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
 import { toRgba } from '@shared/color'
 

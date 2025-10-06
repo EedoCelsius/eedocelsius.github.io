@@ -3,11 +3,11 @@ import { computed, defineAsyncComponent, watch } from 'vue'
 import type { AsyncComponentLoader } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Spinner from '@library/components/Spinner.vue'
-import type { LocaleCopy, PlaygroundComponent, PlaygroundPropValue } from '@/library/types'
+import type { LabComponentDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
-  definition: PlaygroundComponent
+  definition: LabComponentDefinition
   demoProps: Record<string, PlaygroundPropValue>
 }>()
 
@@ -18,7 +18,7 @@ const localize = (copy: LocaleCopy) => copy[(locale.value as SupportedLocale)] ?
 const localizedName = computed(() => localize(props.definition.name))
 const localizedDescription = computed(() => localize(props.definition.description))
 
-const demoComponent = defineAsyncComponent(props.definition.preview as AsyncComponentLoader<any>)
+const demoComponent = defineAsyncComponent((props.definition.preview ?? props.definition.component) as AsyncComponentLoader<any>)
 
 const resolvedDemoProps = computed(() => {
   const expanded: Record<string, unknown> = {}

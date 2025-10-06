@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { ControlDefinition, GroupDefinition, PlaygroundComponent, PlaygroundPropValue } from '@/library/types'
+import type { ControlDefinition, GroupDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
 import Field from './field.vue'
 import Section from './section.vue'
 
 const props = defineProps<{
-  definition: PlaygroundComponent
+  definition: LabComponentDefinition
 }>()
 
 const { t } = useI18n()
