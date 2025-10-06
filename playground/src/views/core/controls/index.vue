@@ -7,11 +7,11 @@ import Section from './section.vue'
 
 const props = defineProps<{
   definition: LabComponentDefinition
+  props?: Record<string, PlaygroundPropValue>
 }>()
 
 const emit = defineEmits<{
   (event: 'update:props', value: Record<string, PlaygroundPropValue>): void
-  (event: 'update:resolved-props', value: Record<string, unknown>): void
 }>()
 
 const { t } = useI18n()
@@ -191,50 +191,10 @@ const resetProps = () => {
   applyDefaults(componentDefaults.value)
 }
 
-const resolvedComponentProps = computed(() => {
-  const expanded: Record<string, unknown> = {}
-
-  Object.entries(currentProps).forEach(([path, value]) => {
-    const segments = path.split('.')
-    if (segments.length === 0) {
-      return
-    }
-
-    let target: Record<string, unknown> = expanded
-    for (let index = 0; index < segments.length - 1; index += 1) {
-      const segment = segments[index]
-      if (!segment) {
-        return
-      }
-      const existing = target[segment]
-      if (!existing || typeof existing !== 'object' || Array.isArray(existing)) {
-        target[segment] = {}
-      }
-      target = target[segment] as Record<string, unknown>
-    }
-
-    const lastSegment = segments[segments.length - 1]
-    if (!lastSegment) {
-      return
-    }
-    target[lastSegment] = value as unknown
-  })
-
-  return expanded
-})
-
 watch(
   currentProps,
   (value) => {
     emit('update:props', cloneProps(value))
-  },
-  { immediate: true, deep: true }
-)
-
-watch(
-  resolvedComponentProps,
-  (value) => {
-    emit('update:resolved-props', value)
   },
   { immediate: true, deep: true }
 )
