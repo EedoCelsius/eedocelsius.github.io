@@ -18,10 +18,12 @@ const demoProps = ref<Record<string, PlaygroundPropValue>>({})
 <template>
   <div v-if="definition" class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_22rem]">
     <Preview
+      :key="definition.id"
       :definition="definition"
       :demo-props="demoProps"
     />
     <Controls
+      :key="definition.id"
       :definition="definition"
       v-model:props="demoProps"
     />
