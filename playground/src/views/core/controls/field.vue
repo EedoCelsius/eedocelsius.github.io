@@ -39,30 +39,22 @@ const toggleLabel = computed(() =>
 
 const stringModel = computed<string | undefined>({
   get: () => (typeof valueModel.value === 'string' ? valueModel.value : undefined),
-  set: (value) => {
-    valueModel.value = value
-  },
+  set: (value) => { valueModel.value = value },
 })
 
 const colorModel = computed<string | null>({
   get: () => toRgba(stringModel.value),
-  set: (value) => {
-    valueModel.value = value ?? ''
-  },
+  set: (value) => { valueModel.value = value ?? '' },
 })
 
 const numberModel = computed<number | undefined>({
   get: () => (typeof valueModel.value === 'number' ? valueModel.value : undefined),
-  set: (value) => {
-    valueModel.value = value
-  },
+  set: (value) => { valueModel.value = value },
 })
 
 const booleanModel = computed<boolean | undefined>({
   get: () => (typeof valueModel.value === 'boolean' ? valueModel.value : undefined),
-  set: (value) => {
-    valueModel.value = value
-  },
+  set: (value) => { valueModel.value = value },
 })
 </script>
 
