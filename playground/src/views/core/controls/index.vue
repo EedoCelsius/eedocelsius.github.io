@@ -59,11 +59,11 @@ const isControlActive = (control: ControlDefinition) => !isControlOptional(contr
 
 const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
   const clonedDefaults = cloneProps(defaults)
-  Object.keys(currentProps).forEach((key) => delete currentProps[key])
+  Object.keys(currentProps.value).forEach((key) => delete currentProps.value[key])
   Object.entries(clonedDefaults).forEach(([key, value]) => {
     const control = props.definition.controls.find((item) => item.key === key)
     if (!control || isControlActive(control)) {
-      currentProps[key] = value
+      currentProps.value[key] = value
     }
   })
 }
@@ -109,11 +109,11 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
       }
     }
 
-    currentProps[control.key] = value
+    currentProps.value[control.key] = value
   } else {
-    if (hasOwn(currentProps, control.key)) {
-      storedOptionalValues[control.key] = currentProps[control.key]
-      delete currentProps[control.key]
+    if (hasOwn(currentProps.value, control.key)) {
+      storedOptionalValues[control.key] = currentProps.value[control.key]
+      delete currentProps.value[control.key]
     }
   }
 
@@ -127,7 +127,7 @@ watch(
   async (nextDefinition) => {
     const token = ++definitionLoadToken
     componentDefaults.value = {}
-    Object.keys(currentProps).forEach((key) => delete currentProps[key])
+    Object.keys(currentProps.value).forEach((key) => delete currentProps.value[key])
     Object.keys(activeControls).forEach((key) => delete activeControls[key])
     Object.keys(storedOptionalValues).forEach((key) => delete storedOptionalValues[key])
     const module = await nextDefinition.component()
