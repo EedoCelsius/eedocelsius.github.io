@@ -254,7 +254,7 @@ watch(definition, async (nextDefinition) => {
   componentDefaults.value = defaults
   resetActiveControls()
   applyDefaults(defaults)
-})
+}, { immediate: true })
 
 watchEffect(() => {
   const keys =
@@ -275,6 +275,11 @@ watchEffect(() => {
   })
 })
 
+const resetProps = () => {
+  resetActiveControls()
+  applyDefaults(componentDefaults as Record<string, PlaygroundPropValue>)
+}
+  
 const setColorPropValue = (key: string, value: string | null) => {
   currentProps[key] = (value ?? '') as PlaygroundPropValue
 }
@@ -343,10 +348,7 @@ watch(
         <button
           type="button"
           class="text-xs font-semibold text-primary-500 transition hover:text-primary-400"
-          @click="() => {
-            resetActiveControls()
-            applyDefaults(componentDefaults as Record<string, PlaygroundPropValue>)
-          }"
+          @click="resetProps"
         >
           {{ t('playground.reset') }}
         </button>
