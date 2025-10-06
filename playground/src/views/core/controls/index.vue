@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { ControlDefinition, LabComponentDefinition, PlaygroundPropValue } from '@/library/catalog'
 import Field from './field.vue'
@@ -24,8 +24,6 @@ const cloneProps = (value?: Record<string, PlaygroundPropValue>) => {
 
 const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
 const demoProps = defineModel<Record<string, PlaygroundPropValue>>('props', { default: () => ({}) })
-const storedOptionalValues = reactive<Record<string, PlaygroundPropValue>>({})
-
 const controlSections = computed(() => {
   const UNGROUPED_ID = '__ungrouped__'
   const sections: { id: string; group?: ControlDefinition['group']; controls: ControlDefinition[] }[] = []
@@ -62,10 +60,6 @@ const applyDefaults = (defaults: Record<string, PlaygroundPropValue>) => {
   })
 }
 
-const resetOptionalState = () => {
-  Object.keys(storedOptionalValues).forEach((key) => delete storedOptionalValues[key])
-}
-
 const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | undefined) => {
   const checked = Boolean(isActive)
 
@@ -76,9 +70,7 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
   if (checked) {
     let value: PlaygroundPropValue
 
-    if (hasOwn(storedOptionalValues, control.key)) {
-      value = storedOptionalValues[control.key]
-    } else if (hasOwn(componentDefaults.value, control.key)) {
+    if (hasOwn(componentDefaults.value, control.key)) {
       value = componentDefaults.value[control.key]
     } else {
       switch (control.type) {
@@ -100,7 +92,6 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
     demoProps.value[control.key] = value
   } else {
     if (hasOwn(demoProps.value, control.key)) {
-      storedOptionalValues[control.key] = demoProps.value[control.key]
       delete demoProps.value[control.key]
     }
   }
@@ -114,7 +105,6 @@ watch(
     const token = ++definitionLoadToken
     componentDefaults.value = {}
     Object.keys(demoProps.value).forEach((key) => delete demoProps.value[key])
-    resetOptionalState()
     const module = await nextDefinition.component()
     if (token !== definitionLoadToken) {
       return
@@ -152,14 +142,12 @@ watch(
 
     const defaults = cloneProps(flattened)
     componentDefaults.value = defaults
-    resetOptionalState()
     applyDefaults(defaults)
   },
   { immediate: true }
 )
 
 const resetProps = () => {
-  resetOptionalState()
   applyDefaults(componentDefaults.value)
 }
 
