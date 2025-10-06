@@ -9,7 +9,6 @@ export type props = {
   content: string
   lightColor?: string
   darkColor?: string
-  icon?: string
 }
 </script>
 
@@ -65,16 +64,8 @@ updateQrCode()
     <div v-else class="flex h-full w-full items-center justify-center text-xs text-center">
       <span>{{ qrError }}</span>
     </div>
-    <div
-      v-if="props.icon?.trim()"
-      class="absolute inset-0 flex items-center justify-center"
-      aria-hidden="true"
-    >
-      <span
-        class="flex h-1/4 w-1/4 items-center justify-center p-1 bg-surface-0"
-      >
-        <img :src="props.icon" alt="" class="w-full object-contain" />
-      </span>
+    <div class="absolute flex h-1/4 w-1/4 items-center justify-center" aria-hidden="true">
+      <slot />
     </div>
   </section>
 </template>
