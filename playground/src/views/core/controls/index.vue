@@ -120,6 +120,15 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
   activeControls[control.key] = checked
 }
 
+const updateControlValue = (key: string, value: PlaygroundPropValue | undefined) => {
+  if (value === undefined) {
+    delete currentProps[key]
+    return
+  }
+
+  currentProps[key] = value
+}
+
 let definitionLoadToken = 0
 
 watch(
@@ -198,10 +207,11 @@ const resetProps = () => {
             v-for="control in section.controls"
             :key="control.key"
             :control="control"
-            v-model:value="currentProps[control.key]"
+            :value="currentProps[control.key] as PlaygroundPropValue | undefined"
             :is-optional="isControlOptional(control)"
             :is-active="isControlActive(control)"
             @toggle-optional="handleOptionalToggle(control, $event)"
+            @update:value="updateControlValue(control.key, $event)"
           />
         </Section>
         <hr
