@@ -174,8 +174,16 @@ watchEffect(() => {
   })
 })
 
-const handleColorPickerChange = (key: string, value: string | null) => {
+const setColorPropValue = (key: string, value: string | null) => {
   currentProps[key] = (value ?? '') as PlaygroundPropValue
+}
+
+const handleColorPickerActiveChange = (key: string, value: string | null) => {
+  setColorPropValue(key, value)
+}
+
+const handleColorPickerChange = (key: string, value: string | null) => {
+  setColorPropValue(key, value)
 }
 
 const activeLocale = computed(() => locale.value as SupportedLocale)
@@ -306,6 +314,7 @@ watch(
                 show-alpha
                 color-format="rgb"
                 class="shrink-0"
+                @active-change="handleColorPickerActiveChange(control.key, $event)"
                 @update:model-value="handleColorPickerChange(control.key, $event)"
               />
               <input
