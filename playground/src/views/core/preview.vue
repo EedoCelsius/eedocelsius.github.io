@@ -8,7 +8,7 @@ import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
   definition: LabComponentDefinition
-  componentProps: Record<string, PlaygroundPropValue>
+  demoProps: Record<string, PlaygroundPropValue>
 }>()
 
 const { t, locale } = useI18n()
@@ -18,10 +18,15 @@ const localize = (copy: LocaleCopy) => copy[(locale.value as SupportedLocale)] ?
 const localizedName = computed(() => localize(props.definition.name))
 const localizedDescription = computed(() => localize(props.definition.description))
 
-const resolveComponentProps = (flatProps: Record<string, PlaygroundPropValue>) => {
+const demoComponent = computed(() => {
+  const loader = props.definition.preview ?? props.definition.component
+  return defineAsyncComponent(loader as AsyncComponentLoader<any>)
+})
+
+const resolvedDemoProps = computed(() => {
   const expanded: Record<string, unknown> = {}
 
-  Object.entries(flatProps).forEach(([path, value]) => {
+  Object.entries(props.demoProps).forEach(([path, value]) => {
     const segments = path.split('.')
     if (segments.length === 0) {
       return
@@ -51,16 +56,7 @@ const resolveComponentProps = (flatProps: Record<string, PlaygroundPropValue>) =
   })
 
   return expanded
-}
-
-const previewComponent = computed(() => {
-  const loader = props.definition.preview ?? props.definition.component
-  return defineAsyncComponent(loader as AsyncComponentLoader<any>)
 })
-
-const hasPreview = computed(() => previewComponent.value !== null)
-
-const resolvedComponentProps = computed(() => resolveComponentProps(props.componentProps))
 
 watch(
   [localizedName, () => String(t('app.title'))],
@@ -79,8 +75,8 @@ watch(
       <p class="text-sm text-surface-600 dark:text-surface-300">{{ localizedDescription }}</p>
     </header>
     <div class="relative min-h-[360px] overflow-hidden rounded-3xl border border-surface-200/70 bg-surface-0 p-6 shadow-inner dark:border-surface-800/70 dark:bg-surface-900">
-      <Suspense v-if="hasPreview">
-        <component :is="previewComponent" v-bind="resolvedComponentProps" />
+      <Suspense v-if="demoComponent">
+        <component :is="demoComponent" v-bind="resolvedDemoProps" />
         <template #fallback>
           <div class="flex h-full items-center justify-center text-surface-400">
             <Spinner :diameter="72" :thickness="6" />
