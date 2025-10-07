@@ -24,17 +24,15 @@ const overlayStyle = computed(() => ({
   WebkitBackdropFilter: `blur(${props.blurStrength}px)`,
   background: props.backgroundColor,
 }))
-
-const $scopedSlots = useSlots()
 </script>
 
 <template>
   <transition name="fade-blur">
-    <Card
-      class="absolute inset-0 h-full w-full rounded-inherit border-none shadow-none"
-      :style="overlayStyle"
-      v-slots="$scopedSlots"
-    />
+    <Card class="absolute inset-0 h-full w-full rounded-inherit border-none shadow-none" :style="overlayStyle">
+      <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
+        <slot :name="name" v-bind="data"></slot>
+      </template>
+    </Card>
   </transition>
 </template>
 
