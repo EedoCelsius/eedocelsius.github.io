@@ -5,7 +5,12 @@ export type LocaleCopy = {
 
 export type PlaygroundPropValue = string | number | boolean | null | undefined
 
-export type ControlType = 'boolean' | 'slider' | 'color' | 'text' | 'textarea'
+export type ControlType = 'boolean' | 'slider' | 'color' | 'text' | 'textarea' | 'select'
+
+export interface ControlOption {
+  label: LocaleCopy
+  value: PlaygroundPropValue
+}
 
 export interface ControlDefinition {
   key: string
@@ -15,6 +20,7 @@ export interface ControlDefinition {
   min?: number
   max?: number
   step?: number
+  options?: ControlOption[]
 }
 
 export interface GroupDefinition {
