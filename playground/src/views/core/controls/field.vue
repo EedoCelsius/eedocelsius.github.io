@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Checkbox from 'primevue/checkbox'
+import Dropdown from 'primevue/dropdown'
 import InputText from 'primevue/inputtext'
 import Slider from 'primevue/slider'
 import Textarea from 'primevue/textarea'
@@ -36,6 +37,13 @@ const toggleId = computed(() => `${controlKey.value}-toggle`)
 
 const toggleLabel = computed(() =>
   t('playground.toggleControl', { name: localize(props.control.label) })
+)
+
+const selectOptions = computed(() =>
+  (props.control.options ?? []).map((option) => ({
+    label: localize(option.label),
+    value: option.value,
+  }))
 )
 
 const stringModel = computed<string | undefined>({
@@ -96,6 +104,18 @@ const booleanModel = computed<boolean | undefined>({
         v-model="stringModel"
         rows="4"
         auto-resize
+        :aria-labelledby="isOptional ? labelId : undefined"
+        class="w-full"
+      />
+    </template>
+    <template v-else-if="control.type === 'select'">
+      <Dropdown
+        v-if="isActive"
+        :id="inputId"
+        v-model="valueModel"
+        :options="selectOptions"
+        option-label="label"
+        option-value="value"
         :aria-labelledby="isOptional ? labelId : undefined"
         class="w-full"
       />

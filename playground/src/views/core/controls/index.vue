@@ -35,6 +35,10 @@ const controlSections = computed<ControlSection[]>(() =>
   })
 )
 
+const hasControls = computed(() =>
+  controlSections.value.some((section) => section.controls.length > 0)
+)
+
 const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototype.hasOwnProperty.call(object, key)
 
 const flattenDefaults = (defaults: Record<string, unknown> | undefined) => {
@@ -99,6 +103,9 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
         case 'boolean':
           value = false
           break
+        case 'select':
+          value = control.options?.[0]?.value ?? null
+          break
         case 'textarea':
         case 'text':
         case 'color':
@@ -134,24 +141,29 @@ watch(
     </div>
     <p class="text-sm text-surface-500 dark:text-surface-400">{{ t('playground.helper') }}</p>
     <form class="flex flex-col gap-6">
-      <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
-        <Section
-          :section="section"
-        >
-          <Field
-            v-for="control in section.controls"
-            :key="control.key"
-            :control="control"
-            v-model:value="demoProps[control.key]"
-            :is-optional="isControlOptional(control)"
-            @toggle-optional="handleOptionalToggle(control, $event)"
+      <template v-if="hasControls">
+        <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
+          <Section
+            :section="section"
+          >
+            <Field
+              v-for="control in section.controls"
+              :key="control.key"
+              :control="control"
+              v-model:value="demoProps[control.key]"
+              :is-optional="isControlOptional(control)"
+              @toggle-optional="handleOptionalToggle(control, $event)"
+            />
+          </Section>
+          <hr
+            v-if="section.group && sectionIndex < controlSections.length - 1"
+            class="border-0 border-t border-surface-200/70 dark:border-surface-700/70"
           />
-        </Section>
-        <hr
-          v-if="section.group && sectionIndex < controlSections.length - 1"
-          class="border-0 border-t border-surface-200/70 dark:border-surface-700/70"
-        />
-      </div>
+        </div>
+      </template>
+      <p v-else class="text-sm text-surface-500 dark:text-surface-400">
+        {{ t('playground.noProps') }}
+      </p>
     </form>
   </aside>
 </template>
