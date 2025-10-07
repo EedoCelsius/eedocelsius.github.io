@@ -192,7 +192,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <component ref="rootRef" :is="props.as" class="group-root overflow-hidden">
+  <component ref="rootRef" :is="props.as" class="group-root">
     <slot />
   </component>
 </template>
