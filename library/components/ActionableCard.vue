@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<props>(), defaultProps)
   <Group
     as="section"
     corner-radius="1.5rem"
-    class="actionable-card grid w-full grid-cols-1 rounded-3xl border border-surface-200 bg-surface-0 text-surface-900 shadow-soft transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
+    class="grid w-full grid-cols-1 shadow-soft transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
   >
     <Button
       type="button"
