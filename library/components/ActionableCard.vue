@@ -11,17 +11,7 @@ export type props = {
 <script setup lang="ts">
 import Button from 'primevue/button'
 import Card from 'primevue/card'
-
 import Group from './Group.vue'
-
-defineOptions({
-  name: 'ActionableCard',
-})
-
-defineSlots<{
-  default: () => unknown
-  action: () => unknown
-}>()
 
 const props = withDefaults(defineProps<props>(), defaultProps)
 </script>
