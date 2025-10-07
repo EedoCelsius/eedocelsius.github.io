@@ -1,15 +1,17 @@
 <script lang="ts">
 export const defaultProps = {
   as: 'div',
+  cornerRadius: '0px',
 } as const
 
 export type props = {
   as?: keyof HTMLElementTagNameMap
+  cornerRadius?: string
 }
 </script>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 defineOptions({
   name: 'Group',
@@ -22,6 +24,7 @@ defineSlots<{
 const props = withDefaults(defineProps<props>(), defaultProps)
 
 const rootRef = ref<HTMLElement | null>(null)
+const cornerRadius = computed(() => props.cornerRadius)
 
 const CORNER_CLASSES = [
   'group-corner-top-left',
@@ -203,18 +206,18 @@ onBeforeUnmount(() => {
 }
 
 .group-root ::v-slotted(.group-corner-top-left) {
-  border-top-left-radius: revert !important;
+  border-top-left-radius: v-bind(cornerRadius) !important;
 }
 
 .group-root ::v-slotted(.group-corner-top-right) {
-  border-top-right-radius: revert !important;
+  border-top-right-radius: v-bind(cornerRadius) !important;
 }
 
 .group-root ::v-slotted(.group-corner-bottom-left) {
-  border-bottom-left-radius: revert !important;
+  border-bottom-left-radius: v-bind(cornerRadius) !important;
 }
 
 .group-root ::v-slotted(.group-corner-bottom-right) {
-  border-bottom-right-radius: revert !important;
+  border-bottom-right-radius: v-bind(cornerRadius) !important;
 }
 </style>
