@@ -25,21 +25,14 @@ const overlayStyle = computed(() => ({
   background: props.backgroundColor,
 }))
 
-const cardPt = computed(() => ({
-  body: {
-    class: 'flex h-full w-full items-center justify-center p-0',
-  },
-}))
-
 const $scopedSlots = useSlots()
 </script>
 
 <template>
   <transition name="fade-blur">
     <Card
-      class="absolute inset-0 h-full w-full rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur shadow-none"
+      class="absolute inset-0 h-full w-full rounded-inherit border-none shadow-none"
       :style="overlayStyle"
-      :pt="cardPt"
       v-slots="$scopedSlots"
     />
   </transition>
