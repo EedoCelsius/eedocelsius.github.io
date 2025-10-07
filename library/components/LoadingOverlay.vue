@@ -1,6 +1,11 @@
 <script lang="ts">
 export const defaultProps = {
-  overlay: {},
+  overlay: {
+    blurStrength: 7,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    centerVertical: true,
+    centerHorizontal: true,
+  },
   spinner: {
     diameter: 48,
     thickness: 4,
@@ -11,6 +16,8 @@ export type props = {
   overlay?: {
     blurStrength?: number
     backgroundColor?: string
+    centerVertical?: boolean
+    centerHorizontal?: boolean
   }
   spinner?: {
     diameter?: number
@@ -32,7 +39,7 @@ const props = withDefaults(defineProps<props>(), {
 </script>
 
 <template>
-  <BlurOverlay :blur-strength="props.overlay.blurStrength" :background-color="props.overlay.backgroundColor">
+  <BlurOverlay v-bind="props.overlay">
     <template #content>
       <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
         <Spinner
