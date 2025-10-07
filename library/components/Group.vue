@@ -1,7 +1,7 @@
 <script lang="ts">
 export const defaultProps = {} as const
 
-export type props = Record<string, never>
+export type props = {}
 </script>
 
 <script setup lang="ts">
