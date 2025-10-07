@@ -201,6 +201,10 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+.group-root {
+  border-radius: v-bind(cornerRadius);
+}
+
 .group-root ::v-slotted(.group-item) {
   border-radius: 0 !important;
 }
