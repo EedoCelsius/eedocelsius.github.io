@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ElCard, ElDivider, ElText } from 'element-plus'
 import type { ComponentDemo } from '@/demos/types'
 import type { LabComponentSummary } from '@/library/catalog'
 import type { LocaleCopy, PlaygroundPropValue } from '@/library/types'
@@ -65,14 +66,17 @@ watch(
 </script>
 
 <template>
-  <section class="card-surface flex flex-col gap-6 p-6">
-    <header class="space-y-3">
-      <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary-500">{{ t('playground.preview') }}</p>
-      <h1 class="text-3xl font-semibold text-surface-900 dark:text-surface-0">{{ localizedName }}</h1>
-      <p class="text-sm text-surface-600 dark:text-surface-300">{{ localizedDescription }}</p>
-    </header>
-    <div class="relative min-h-[360px] overflow-hidden rounded-3xl border border-surface-200/70 bg-surface-0 p-6 shadow-inner dark:border-surface-800/70 dark:bg-surface-900">
+  <ElCard>
+    <template #header>
+      <div>
+        <ElText size="small" type="primary">{{ t('playground.preview') }}</ElText>
+        <ElText tag="h1">{{ localizedName }}</ElText>
+        <ElText>{{ localizedDescription }}</ElText>
+      </div>
+    </template>
+    <ElDivider />
+    <div style="min-height: 360px; display: flex; align-items: center; justify-content: center;">
       <component :is="demoComponent" v-bind="resolvedDemoProps" />
     </div>
-  </section>
+  </ElCard>
 </template>
