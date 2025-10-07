@@ -36,13 +36,21 @@ defineProps<BlurOverlayProps>()
       class="absolute inset-0 w-full h-full object-cover"
     />
     <BlurOverlay v-bind="$props">
-      <div class="flex max-w-sm flex-col items-center gap-3 text-surface-0">
-        <span class="text-xs font-semibold uppercase tracking-[0.4em] text-primary-300">Focus Mode</span>
-        <h2 class="text-2xl font-semibold">Shipping polished experiences</h2>
-        <p class="text-sm text-surface-0/80">
+      <template #header>
+        <div class="flex justify-center">
+          <span class="rounded-full bg-primary-500/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-primary-200">
+            Focus Mode
+          </span>
+        </div>
+      </template>
+      <template #title>
+        <h2 class="text-2xl font-semibold text-center text-surface-0">Shipping polished experiences</h2>
+      </template>
+      <template #content>
+        <p class="mx-auto max-w-sm text-center text-sm text-surface-0/80">
           Blur surrounding distractions while presenting a focused call-to-action for your customers.
         </p>
-      </div>
+      </template>
     </BlurOverlay>
   </div>
 </template>
