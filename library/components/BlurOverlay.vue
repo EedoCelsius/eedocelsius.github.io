@@ -30,7 +30,10 @@ const overlayStyle = computed(() => ({
 
 <template>
   <transition name="fade-blur">
-    <Card class="absolute inset-0 h-full w-full rounded-inherit border-none shadow-none" :style="overlayStyle">
+    <Card
+      class="absolute inset-0 h-full w-full rounded-inherit border-none shadow-none"
+      :style="overlayStyle"
+    >
       <template v-for="(_, name) in slots" :key="name" v-slot:[name]="data">
         <slot :name="name" v-bind="data"></slot>
       </template>
@@ -51,5 +54,18 @@ const overlayStyle = computed(() => ({
 
 .rounded-inherit {
   border-radius: inherit;
+}
+
+:deep(.p-card) {
+  height: 100%;
+}
+
+:deep(.p-card-body) {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 </style>
