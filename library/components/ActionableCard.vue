@@ -34,16 +34,6 @@ const props = withDefaults(defineProps<props>(), defaultProps)
     corner-radius="1.5rem"
     class="actionable-card grid w-full grid-cols-1 rounded-3xl border border-surface-200 bg-surface-0 text-surface-900 shadow-soft transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
   >
-    <Card
-      class="card-area h-full"
-      :pt="{ content: { class: 'p-0' } }"
-    >
-      <template #content>
-        <div class="flex h-full flex-col justify-center gap-4" :class="props.cardClass">
-          <slot />
-        </div>
-      </template>
-    </Card>
     <Button
       unstyled
       type="button"
@@ -54,5 +44,15 @@ const props = withDefaults(defineProps<props>(), defaultProps)
         <slot name="action" />
       </span>
     </Button>
+    <Card
+      class="card-area h-full"
+      :pt="{ content: { class: 'p-0' } }"
+    >
+      <template #content>
+        <div class="flex h-full flex-col justify-center gap-4" :class="props.cardClass">
+          <slot />
+        </div>
+      </template>
+    </Card>
   </Group>
 </template>
