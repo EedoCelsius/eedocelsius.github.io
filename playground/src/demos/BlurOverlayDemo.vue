@@ -18,16 +18,6 @@ export const demoConfig: ComponentDemoConfig = {
       type: 'color',
       label: { en: 'Background Color', ko: '배경 색상' },
     },
-    {
-      key: 'centerVertical',
-      type: 'boolean',
-      label: { en: 'Center Vertically', ko: '세로 가운데 정렬' },
-    },
-    {
-      key: 'centerHorizontal',
-      type: 'boolean',
-      label: { en: 'Center Horizontally', ko: '가로 가운데 정렬' },
-    },
   ],
 }
 </script>

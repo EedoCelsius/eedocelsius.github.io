@@ -2,15 +2,11 @@
 export const defaultProps = {
   blurStrength: 7,
   backgroundColor: 'rgba(0, 0, 0, 0.25)',
-  centerVertical: true,
-  centerHorizontal: true,
 } as const
 
 export type props = {
   blurStrength?: number
   backgroundColor?: string
-  centerVertical?: boolean
-  centerHorizontal?: boolean
 }
 </script>
 
@@ -29,8 +25,6 @@ const overlayStyle = computed(() => ({
   backdropFilter: `blur(${props.blurStrength}px)`,
   WebkitBackdropFilter: `blur(${props.blurStrength}px)`,
   background: props.backgroundColor,
-  '--blur-overlay-align-items': props.centerVertical ? 'center' : 'flex-start',
-  '--blur-overlay-justify-content': props.centerHorizontal ? 'center' : 'flex-start',
 }))
 </script>
 
@@ -70,8 +64,8 @@ const overlayStyle = computed(() => ({
   display: flex;
   height: 100%;
   width: 100%;
-  align-items: var(--blur-overlay-align-items);
-  justify-content: var(--blur-overlay-justify-content);
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 </style>
