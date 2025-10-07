@@ -35,7 +35,6 @@ const props = withDefaults(defineProps<props>(), defaultProps)
     class="actionable-card grid w-full grid-cols-1 rounded-3xl border border-surface-200 bg-surface-0 text-surface-900 shadow-soft transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
   >
     <Button
-      unstyled
       type="button"
       class="action-area flex h-full min-h-[60px] w-full items-center justify-center sm:min-h-full sm:min-w-[112px]"
       :class="props.actionClass"
