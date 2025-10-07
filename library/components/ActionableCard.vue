@@ -1,7 +1,5 @@
 <script lang="ts">
 export const defaultProps = {
-  cardClass: 'p-6 sm:p-8',
-  actionClass: 'bg-surface-950 text-surface-0',
 } as const
 
 export type props = {
@@ -34,15 +32,6 @@ const props = withDefaults(defineProps<props>(), defaultProps)
     corner-radius="1.5rem"
     class="grid w-full grid-cols-1 shadow-soft transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
   >
-    <Button
-      type="button"
-      class="action-area flex h-full min-h-[60px] w-full items-center justify-center sm:min-h-full sm:min-w-[112px]"
-      :class="props.actionClass"
-    >
-      <span class="flex h-full w-full items-center justify-center">
-        <slot name="action" />
-      </span>
-    </Button>
     <Card
       class="card-area h-full"
       :pt="{ content: { class: 'p-0' } }"
@@ -53,5 +42,14 @@ const props = withDefaults(defineProps<props>(), defaultProps)
         </div>
       </template>
     </Card>
+    <Button
+      type="button"
+      class="action-area flex h-full min-h-[60px] w-full items-center justify-center sm:min-h-full sm:min-w-[112px]"
+      :class="props.actionClass"
+    >
+      <span class="flex h-full w-full items-center justify-center">
+        <slot name="action" />
+      </span>
+    </Button>
   </Group>
 </template>
