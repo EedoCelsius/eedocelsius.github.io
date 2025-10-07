@@ -51,21 +51,11 @@ const travelClass = ref(travelClasses[0]?.value ?? '')
 const departureDate = ref(new Date())
 
 const dropdownPT = {
-  root: { class: 'flex-1 !border-0 !rounded-none !shadow-none min-w-[12rem] min-h-[3.25rem]' },
-  label: { class: 'px-4 py-3 text-sm font-medium text-surface-700' },
-  dropdown: { class: '!rounded-none border-l border-surface-200 px-3 text-surface-500' },
+  root: { class: 'flex-1 min-w-[12rem] min-h-[3.25rem]' },
 }
 
 const calendarPT = {
-  root: { class: 'flex-1 !border-0 !rounded-none !shadow-none min-w-[12rem] min-h-[3.25rem]' },
-  pcInputText: {
-    root: {
-      class:
-        'w-full border-0 bg-transparent px-4 py-3 text-sm font-medium text-surface-700 focus:outline-none focus:ring-0',
-    },
-  },
-  dropdown: { class: '!rounded-none border-l border-surface-200 text-surface-500' },
-  dropdownIcon: { class: 'text-surface-500' },
+  root: { class: 'flex-1 min-w-[12rem] min-h-[3.25rem]' },
 }
 </script>
 
