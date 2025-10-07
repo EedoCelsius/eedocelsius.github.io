@@ -4,17 +4,7 @@ import type { ComponentDemoConfig } from '@/demos/types'
 
 export const demoConfig: ComponentDemoConfig = {
   defaultProps: groupDefaults,
-  properties: [
-    {
-      key: 'as',
-      type: 'text',
-      label: { en: 'Element tag', ko: '요소 태그' },
-      helperText: {
-        en: 'Specify which HTML element should wrap the group.',
-        ko: '그룹을 감싸는 HTML 요소를 지정합니다.',
-      },
-    },
-  ],
+  properties: [],
 }
 </script>
 

@@ -1,11 +1,7 @@
 <script lang="ts">
-export const defaultProps = {
-  as: 'div',
-} as const
+export const defaultProps = {} as const
 
-export type props = {
-  as?: keyof HTMLElementTagNameMap
-}
+export type props = Record<string, never>
 </script>
 
 <script setup lang="ts">
@@ -18,8 +14,6 @@ defineOptions({
 defineSlots<{
   default: () => unknown
 }>()
-
-const props = withDefaults(defineProps<props>(), defaultProps)
 
 const rootRef = ref<HTMLElement | null>(null)
 const CORNER_CLASSES = [
@@ -191,9 +185,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <component ref="rootRef" :is="props.as" class="group-root">
+  <div ref="rootRef" class="group-root">
     <slot />
-  </component>
+  </div>
 </template>
 
 <style scoped>
