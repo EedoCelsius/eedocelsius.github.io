@@ -12,7 +12,7 @@ export type props = {
 
 <script setup lang="ts">
 import Card from 'primevue/card'
-import { computed, useSlots } from 'vue'
+import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<props>(),
@@ -29,7 +29,7 @@ const overlayStyle = computed(() => ({
 <template>
   <transition name="fade-blur">
     <Card class="absolute inset-0 h-full w-full rounded-inherit border-none shadow-none" :style="overlayStyle">
-      <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
+      <template v-for="(_, name) in $scopedSlots" v-slot:[name]="data">
         <slot :name="name" v-bind="data"></slot>
       </template>
     </Card>
