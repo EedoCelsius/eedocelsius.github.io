@@ -14,15 +14,6 @@ export const demoConfig: ComponentDemoConfig = {
         ko: '그룹을 감싸는 HTML 요소를 지정합니다.',
       },
     },
-    {
-      key: 'cornerRadius',
-      type: 'text',
-      label: { en: 'Corner radius', ko: '모서리 반경' },
-      helperText: {
-        en: 'Define the border radius applied to the outer items in the group.',
-        ko: '그룹의 바깥쪽 항목에 적용할 테두리 반경 값을 지정합니다.',
-      },
-    },
   ],
 }
 </script>
