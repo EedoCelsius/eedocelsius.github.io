@@ -28,9 +28,7 @@ const props = withDefaults(defineProps<props>(), defaultProps)
 
 <template>
   <Group
-    as="section"
-    corner-radius="1.5rem"
-    class="grid w-full grid-cols-1 shadow-soft transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
+    class="grid w-full grid-cols-1 rounded-3xl shadow-soft transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
   >
     <Card
       class="card-area h-full"
