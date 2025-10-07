@@ -19,39 +19,102 @@ export const demoConfig: ComponentDemoConfig = {
 </script>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import Dropdown from 'primevue/dropdown'
+import Calendar from 'primevue/calendar'
+import Button from 'primevue/button'
 import { Group, type GroupProps } from '@library/components'
 
+type Option = {
+  label: string
+  value: string
+}
+
 const props = defineProps<GroupProps>()
+
+const airports: Option[] = [
+  { label: '서울 (ICN)', value: 'ICN' },
+  { label: '부산 (PUS)', value: 'PUS' },
+  { label: '제주 (CJU)', value: 'CJU' },
+  { label: '도쿄 (HND)', value: 'HND' },
+]
+
+const travelClasses: Option[] = [
+  { label: '일반석', value: 'economy' },
+  { label: '프리미엄 일반석', value: 'premium' },
+  { label: '비즈니스석', value: 'business' },
+]
+
+const origin = ref(airports[0]?.value ?? '')
+const destination = ref(airports[2]?.value ?? airports[0]?.value ?? '')
+const travelClass = ref(travelClasses[0]?.value ?? '')
+const departureDate = ref(new Date())
+
+const dropdownPT = {
+  root: { class: 'flex-1 !border-0 !rounded-none !shadow-none min-w-[12rem] min-h-[3.25rem]' },
+  label: { class: 'px-4 py-3 text-sm font-medium text-surface-700' },
+  dropdown: { class: '!rounded-none border-l border-surface-200 px-3 text-surface-500' },
+}
+
+const calendarPT = {
+  root: { class: 'flex-1 !border-0 !rounded-none !shadow-none min-w-[12rem] min-h-[3.25rem]' },
+  pcInputText: {
+    root: {
+      class:
+        'w-full border-0 bg-transparent px-4 py-3 text-sm font-medium text-surface-700 focus:outline-none focus:ring-0',
+    },
+  },
+  dropdown: { class: '!rounded-none border-l border-surface-200 text-surface-500' },
+  dropdownIcon: { class: 'text-surface-500' },
+}
 </script>
 
 <template>
   <div class="flex justify-center">
     <Group
       v-bind="props"
-      class="group-demo inline-flex divide-x divide-surface-200 rounded-2xl border border-surface-200 bg-surface-0 text-sm font-semibold text-surface-600 shadow-soft"
+      class="group-demo inline-flex w-full max-w-4xl divide-x divide-surface-200 overflow-hidden rounded-2xl border border-surface-200 bg-surface-0 text-sm shadow-soft"
       role="group"
-      aria-label="Payment frequency"
+      aria-label="항공권 검색 필터"
     >
-      <button
+      <Dropdown
+        v-model="origin"
+        :options="airports"
+        option-label="label"
+        option-value="value"
+        placeholder="출발지"
+        :pt="dropdownPT"
+      />
+      <Dropdown
+        v-model="destination"
+        :options="airports"
+        option-label="label"
+        option-value="value"
+        placeholder="도착지"
+        :pt="dropdownPT"
+      />
+      <Calendar
+        v-model="departureDate"
+        show-icon
+        icon-display="input"
+        date-format="yy.mm.dd"
+        update-model-type="date"
+        :pt="calendarPT"
+      />
+      <Dropdown
+        v-model="travelClass"
+        :options="travelClasses"
+        option-label="label"
+        option-value="value"
+        placeholder="좌석 등급"
+        :pt="dropdownPT"
+      />
+      <Button
         type="button"
-        class="px-5 py-3 transition hover:bg-surface-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-200"
-      >
-        Monthly
-      </button>
-      <button
-        type="button"
-        class="bg-primary-600 px-5 py-3 text-white transition hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-200"
-        aria-pressed="true"
-      >
-        Quarterly
-      </button>
-      <button
-        type="button"
-        class="px-5 py-3 transition hover:bg-surface-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-200"
-      >
-        Annually
-      </button>
+        icon="pi pi-search"
+        label="검색"
+        class="flex items-center gap-2 px-6 text-sm font-semibold !rounded-none"
+      />
     </Group>
   </div>
 </template>
-
