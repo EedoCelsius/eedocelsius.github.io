@@ -52,18 +52,11 @@ const props = defineProps<ActionableCardProps>()
         </div>
       </div>
       <template #action>
-        <button
-          type="button"
-          class="flex h-full min-h-[60px] w-full items-center justify-center gap-2 px-6 text-sm font-semibold text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-primary-500 hover:bg-primary-400 focus-visible:outline-primary-200 sm:min-w-[112px]"
-          aria-label="이체 정보 복사"
-        >
-          <span class="flex items-center gap-2 sm:hidden">
-            <span class="font-semibold text-white">이체 정보 복사</span>
-            <i class="pi pi-clipboard text-base text-white" aria-hidden="true"></i>
-          </span>
-          <i class="pi pi-clipboard hidden text-xl text-white sm:flex" aria-hidden="true"></i>
+        <span class="flex items-center gap-2 px-6 text-sm font-semibold">
+          <span class="sm:hidden">이체 정보 복사</span>
+          <i class="pi pi-clipboard text-lg" aria-hidden="true"></i>
           <span class="sr-only sm:not-sr-only sm:hidden">이체 정보 복사</span>
-        </button>
+        </span>
       </template>
     </ActionableCard>
   </div>

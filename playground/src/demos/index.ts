@@ -1,11 +1,16 @@
 import ActionableCardDemo, { demoConfig as actionableCardConfig } from './ActionableCardDemo.vue'
 import BlurOverlayDemo, { demoConfig as blurOverlayConfig } from './BlurOverlayDemo.vue'
+import GroupDemo, { demoConfig as groupConfig } from './GroupDemo.vue'
 import LoadingOverlayDemo, { demoConfig as loadingOverlayConfig } from './LoadingOverlayDemo.vue'
 import QrCodeDemo, { demoConfig as qrCodeConfig } from './QrCodeDemo.vue'
 import SpinnerDemo, { demoConfig as spinnerConfig } from './SpinnerDemo.vue'
 import type { ComponentDemo } from './types'
 
 const demoEntries: Record<string, ComponentDemo> = {
+  group: {
+    component: GroupDemo,
+    ...groupConfig,
+  },
   'actionable-card': {
     component: ActionableCardDemo,
     ...actionableCardConfig,
