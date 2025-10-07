@@ -11,7 +11,8 @@ export type props = {
 </script>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import Card from 'primevue/card'
+import { computed, useSlots } from 'vue'
 
 const props = withDefaults(
   defineProps<props>(),
@@ -23,16 +24,24 @@ const overlayStyle = computed(() => ({
   WebkitBackdropFilter: `blur(${props.blurStrength}px)`,
   background: props.backgroundColor,
 }))
+
+const cardPt = computed(() => ({
+  body: {
+    class: 'flex h-full w-full items-center justify-center p-0',
+  },
+}))
+
+const $scopedSlots = useSlots()
 </script>
 
 <template>
   <transition name="fade-blur">
-    <div
-      class="absolute inset-0 flex items-center justify-center rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur"
+    <Card
+      class="absolute inset-0 h-full w-full rounded-inherit border border-surface-0/10 text-surface-0 backdrop-blur shadow-none"
       :style="overlayStyle"
-    >
-      <slot />
-    </div>
+      :pt="cardPt"
+      v-slots="$scopedSlots"
+    />
   </transition>
 </template>
 
