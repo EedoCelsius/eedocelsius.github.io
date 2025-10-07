@@ -8,6 +8,17 @@ export interface LabComponentSummary {
 
 export const componentCatalog: LabComponentSummary[] = [
   {
+    id: 'group',
+    name: {
+      en: 'Group',
+      ko: '그룹',
+    },
+    description: {
+      en: 'Wrap adjacent elements so they behave like a single surface.',
+      ko: '인접한 요소들을 하나의 표면처럼 묶습니다.',
+    },
+  },
+  {
     id: 'actionable-card',
     name: {
       en: 'Actionable Card',
