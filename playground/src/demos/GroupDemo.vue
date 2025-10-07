@@ -4,26 +4,7 @@ import type { ComponentDemoConfig } from '@/demos/types'
 
 export const demoConfig: ComponentDemoConfig = {
   defaultProps: groupDefaults,
-  properties: [
-    {
-      key: 'as',
-      type: 'text',
-      label: { en: 'Element tag', ko: '요소 태그' },
-      helperText: {
-        en: 'Specify which HTML element should wrap the group.',
-        ko: '그룹을 감싸는 HTML 요소를 지정합니다.',
-      },
-    },
-    {
-      key: 'cornerRadius',
-      type: 'text',
-      label: { en: 'Corner radius', ko: '모서리 반경' },
-      helperText: {
-        en: 'Define the border radius applied to the outer items in the group.',
-        ko: '그룹의 바깥쪽 항목에 적용할 테두리 반경 값을 지정합니다.',
-      },
-    },
-  ],
+  properties: [],
 }
 </script>
 
