@@ -5,7 +5,7 @@ export const localeStorageKey = 'component-lab-locale'
 const messages = {
   en: {
     app: {
-      title: 'Component Lab',
+      home: 'Homepage',
       themeToggle: 'Toggle theme',
     },
     home: {
@@ -27,7 +27,7 @@ const messages = {
   },
   ko: {
     app: {
-      title: 'Component Lab',
+      home: '홈페이지',
       themeToggle: '테마 전환',
     },
     home: {
