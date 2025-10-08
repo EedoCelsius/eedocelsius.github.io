@@ -28,6 +28,7 @@ export const demoConfig: ComponentDemoConfig = {
 </script>
 
 <script setup lang="ts">
+import { ElText } from 'element-plus'
 import { ActionableCard, type ActionableCardProps } from '@library/components'
 
 const props = defineProps<ActionableCardProps>()
@@ -38,25 +39,25 @@ const props = defineProps<ActionableCardProps>()
     <ActionableCard v-bind="props" class="max-w-2xl">
       <div class="flex items-start gap-4">
         <div class="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-2xl font-semibold text-amber-500">
-          KB
+          <ElText tag="span" class="font-semibold">KB</ElText>
         </div>
         <div class="space-y-3">
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-lg font-semibold text-surface-900">KB국민</span>
-            <span class="text-sm font-medium text-surface-500">강일준</span>
+            <ElText tag="span" size="large" class="font-semibold">KB국민</ElText>
+            <ElText tag="span" size="small" class="font-medium" type="info">강일준</ElText>
           </div>
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-lg font-semibold tracking-wide text-surface-900">93800200352361</span>
+            <ElText tag="span" size="large" class="font-semibold tracking-wide">93800200352361</ElText>
             <i class="pi pi-clipboard text-base text-primary-500" aria-hidden="true"></i>
           </div>
         </div>
       </div>
       <template #action>
-        <span class="flex items-center gap-2 px-6 text-sm font-semibold">
-          <span class="sm:hidden">이체 정보 복사</span>
+        <ElText tag="span" size="small" class="flex items-center gap-2 px-6 font-semibold">
+          <ElText tag="span" size="small" class="sm:hidden">이체 정보 복사</ElText>
           <i class="pi pi-clipboard text-lg" aria-hidden="true"></i>
-          <span class="sr-only sm:not-sr-only sm:hidden">이체 정보 복사</span>
-        </span>
+          <ElText tag="span" size="small" class="sr-only sm:not-sr-only sm:hidden">이체 정보 복사</ElText>
+        </ElText>
       </template>
     </ActionableCard>
   </div>
