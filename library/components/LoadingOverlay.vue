@@ -24,11 +24,11 @@ export default defineComponent({
   },
   props: {
     overlay: {
-      type: Object as BlurOverlayProps>,
+      type: Object as BlurOverlayProps,
       default: () => defaultProps.overlay,
     },
     spinner: {
-      type: Object as SpinnerProps>,
+      type: Object as SpinnerProps,
       default: () => defaultProps.spinner,
     },
   },
