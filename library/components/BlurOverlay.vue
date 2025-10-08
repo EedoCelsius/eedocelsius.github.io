@@ -82,11 +82,24 @@ export default defineComponent({
 }
 
 :deep(.p-card) {
+  height: 100%;
+}
+
+:deep(.p-card-body) {
   display: flex;
   height: 100%;
   width: 100%;
   align-items: var(--blur-overlay-align-items);
   justify-content: var(--blur-overlay-justify-content);
   text-align: center;
+}
+
+:deep(.p-card-header),
+:deep(.p-card-footer) {
+  display: flex;
+  width: 100%;
+  align-items: var(--blur-overlay-align-items);
+  justify-content: var(--blur-overlay-justify-content);
+  text-align: var(--blur-overlay-text-align);
 }
 </style>
