@@ -153,22 +153,23 @@ watch(
             {{ t('playground.reset') }}
           </ElLink>
         </div>
-        <form class="flex flex-col gap-5">
+        <form class="flex flex-col">
           <template v-if="hasControls">
-            <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
-              <Section
-                :section="section"
-              >
-                <Field
-                  v-for="control in section.controls"
-                  :key="control.key"
-                  :control="control"
-                  v-model:value="demoProps[control.key]"
-                  :is-optional="isControlOptional(control)"
-                  @toggle-optional="handleOptionalToggle(control, $event)"
-                />
-              </Section>
-            </div>
+            <Section
+              v-for="section in controlSections"
+              :key="section.id"
+              :section="section"
+              :class="['first:mt-0', section.group ? 'mt-0' : 'mt-5']"
+            >
+              <Field
+                v-for="control in section.controls"
+                :key="control.key"
+                :control="control"
+                v-model:value="demoProps[control.key]"
+                :is-optional="isControlOptional(control)"
+                @toggle-optional="handleOptionalToggle(control, $event)"
+              />
+            </Section>
           </template>
           <ElText v-else tag="p" size="small" type="info">
             {{ t('playground.noProps') }}
