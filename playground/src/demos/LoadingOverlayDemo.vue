@@ -77,7 +77,7 @@ defineProps<LoadingOverlayProps>()
 </script>
 
 <template>
-  <div class="h-80 overflow-hidden rounded-3xl border border-surface-200 bg-surface-0 shadow-inner dark:border-surface-800 dark:bg-surface-900">
+  <div class="relative h-80 overflow-hidden rounded-3xl border border-surface-200 bg-surface-0 shadow-inner dark:border-surface-800 dark:bg-surface-900">
     <img
       src="https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1000&q=80"
       alt="Project dashboard"
