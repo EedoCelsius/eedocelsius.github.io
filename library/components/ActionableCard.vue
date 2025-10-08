@@ -37,7 +37,9 @@ export default defineComponent({
 <template>
   <Group class="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto]">
     <Card class="h-full">
-      <slot />
+      <template v-for="(_, name) in $slots" :key="name" v-slot:[name]="data">
+        <slot :name="name" v-bind="data" />
+      </template>
     </Card>
     <Button
       class="flex h-full min-h-md w-full items-center justify-center sm:min-h-full sm:min-w-lg"
