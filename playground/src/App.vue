@@ -100,7 +100,7 @@ watch(
 </script>
 
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen px-6">
     <header class="sticky top-0 z-40 max-w-6xl mx-auto py-4">
       <Toolbar
         :pt="{
