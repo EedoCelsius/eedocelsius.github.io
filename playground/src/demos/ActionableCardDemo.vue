@@ -7,7 +7,7 @@ export const demoConfig: ComponentDemoConfig = {
   properties: [
     {
       key: 'card',
-      type: 'object',
+      type: 'textarea',
       label: { en: 'Card Properties', ko: '카드 속성' },
       helperText: {
         en: 'Props forwarded to the PrimeVue Card component.',
@@ -16,7 +16,7 @@ export const demoConfig: ComponentDemoConfig = {
     },
     {
       key: 'button',
-      type: 'object',
+      type: 'textarea',
       label: { en: 'Button Properties', ko: '버튼 속성' },
       helperText: {
         en: 'Props forwarded to the PrimeVue Button component.',

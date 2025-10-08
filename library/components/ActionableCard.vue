@@ -21,6 +21,11 @@ export default defineComponent({
     Card,
     Group,
   },
+  setup() {
+    return {
+      defaultProps,
+    }
+  },
   props: {
     card: {
       type: Object as PropType<Record<string, unknown>>,
