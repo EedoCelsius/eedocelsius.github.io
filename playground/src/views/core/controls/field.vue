@@ -6,7 +6,7 @@ import Dropdown from 'primevue/dropdown'
 import InputText from 'primevue/inputtext'
 import Slider from 'primevue/slider'
 import Textarea from 'primevue/textarea'
-import { ElColorPicker, ElText } from 'element-plus'
+import { ElColorPicker } from 'element-plus'
 import type { ControlDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/types'
 import type { SupportedLocale } from '@/i18n'
 import { toRgba } from '@shared/color'
@@ -148,14 +148,7 @@ const booleanModel = computed<boolean | undefined>({
           :aria-labelledby="isOptional ? labelId : undefined"
           class="flex-1"
         />
-        <ElText
-          tag="span"
-          class="inline-block w-12 text-right font-semibold"
-          size="small"
-          type="primary"
-        >
-          {{ numberModel ?? '' }}
-        </ElText>
+        <span class="w-12 text-right text-xs font-semibold text-primary-500">{{ numberModel ?? '' }}</span>
       </div>
     </template>
     <template v-else-if="control.type === 'boolean'">
@@ -166,13 +159,8 @@ const booleanModel = computed<boolean | undefined>({
         </label>
       </div>
     </template>
-    <ElText
-      v-if="control.helperText && isActive"
-      tag="p"
-      size="small"
-      type="info"
-    >
+    <p v-if="control.helperText && isActive" class="text-xs text-surface-500 dark:text-surface-400">
       {{ localize(control.helperText) }}
-    </ElText>
+    </p>
   </div>
 </template>
