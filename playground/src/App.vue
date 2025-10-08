@@ -107,7 +107,7 @@ watch(
 </script>
 
 <template>
-  <div class="app-container">
+  <div class="flex flex-col  min-h-screen">
     <Toolbar>
       <template #start>
         <RouterLink to="/">
@@ -133,28 +133,8 @@ watch(
         />
       </template>
     </Toolbar>
-    <main class="main-content">
+    <main class="flex px-6 pb-16">
       <RouterView :key="route.fullPath" />
     </main>
   </div>
 </template>
-
-<style scoped>
-.app-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  flex: 1;
-}
-
-.main-content {
-  padding: 1.5rem;
-}
-
-:deep(a) {
-  text-decoration: none;
-}
-</style>
