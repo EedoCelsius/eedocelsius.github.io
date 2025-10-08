@@ -1,4 +1,8 @@
 <script lang="ts">
+import BlurOverlay from './BlurOverlay.vue'
+import Spinner from './Spinner.vue'
+import { defineComponent, type PropType } from 'vue'
+
 export const defaultProps = {
   overlay: {
     blurStrength: 7,
@@ -26,27 +30,38 @@ export type props = {
     indicatorColor?: string
   }
 }
-</script>
 
-<script setup lang="ts">
-import BlurOverlay from './BlurOverlay.vue'
-import Spinner from './Spinner.vue'
+type OverlayConfig = NonNullable<props['overlay']>
+type SpinnerConfig = NonNullable<props['spinner']>
 
-const props = withDefaults(defineProps<props>(), {
-  overlay: () => ({ ...defaultProps.overlay }),
-  spinner: () => ({ ...defaultProps.spinner }),
+export default defineComponent({
+  name: 'LoadingOverlay',
+  components: {
+    BlurOverlay,
+    Spinner,
+  },
+  props: {
+    overlay: {
+      type: Object as PropType<OverlayConfig>,
+      default: () => ({ ...defaultProps.overlay }),
+    },
+    spinner: {
+      type: Object as PropType<SpinnerConfig>,
+      default: () => ({ ...defaultProps.spinner }),
+    },
+  },
 })
 </script>
 
 <template>
-  <BlurOverlay v-bind="props.overlay">
+  <BlurOverlay v-bind="overlay">
     <template #content>
       <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
         <Spinner
-          :diameter="props.spinner.diameter"
-          :thickness="props.spinner.thickness"
-          :track-color="props.spinner.trackColor"
-          :indicator-color="props.spinner.indicatorColor"
+          :diameter="spinner?.diameter"
+          :thickness="spinner?.thickness"
+          :track-color="spinner?.trackColor"
+          :indicator-color="spinner?.indicatorColor"
         >
           <slot name="spinner" />
         </Spinner>

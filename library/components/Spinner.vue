@@ -1,4 +1,6 @@
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 export const defaultProps = {
   diameter: 96,
   thickness: 8,
@@ -10,28 +12,41 @@ export type props = {
   trackColor?: string
   indicatorColor?: string
 }
-</script>
 
-<script setup lang="ts">
-import { computed } from 'vue'
+const FALLBACK_TRACK_COLOR = 'color-mix(in srgb, currentColor 35%, transparent)'
 
-const props = withDefaults(
-  defineProps<props>(),
-  defaultProps
-)
+export default defineComponent({
+  name: 'Spinner',
+  props: {
+    diameter: {
+      type: Number,
+      default: defaultProps.diameter,
+    },
+    thickness: {
+      type: Number,
+      default: defaultProps.thickness,
+    },
+    trackColor: String,
+    indicatorColor: String,
+  },
+  computed: {
+    dimensions(): Record<string, string> {
+      const diameter = `${this.diameter}px`
 
-const dimensions = computed(() => ({
-  width: `${props.diameter}px`,
-  height: `${props.diameter}px`,
-}))
-
-const fallbackTrackColor = 'color-mix(in srgb, currentColor 35%, transparent)'
-
-const ringStyle = computed(() => ({
-  borderWidth: `${props.thickness}px`,
-  borderColor: props.trackColor ?? fallbackTrackColor,
-  borderTopColor: props.indicatorColor ?? 'currentColor',
-}))
+      return {
+        width: diameter,
+        height: diameter,
+      }
+    },
+    ringStyle(): Record<string, string> {
+      return {
+        borderWidth: `${this.thickness}px`,
+        borderColor: this.trackColor ?? FALLBACK_TRACK_COLOR,
+        borderTopColor: this.indicatorColor ?? 'currentColor',
+      }
+    },
+  },
+})
 </script>
 
 <template>
