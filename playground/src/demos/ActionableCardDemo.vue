@@ -54,7 +54,7 @@ const props = defineProps<ActionableCardProps>()
           </div>
         </div>
       </template>
-      <template #action>
+      <template #button>
         <ElText tag="span" size="small" class="flex items-center gap-2 px-6 font-semibold">
           <ElText tag="span" size="small" class="sm:hidden">이체 정보 복사</ElText>
           <i class="pi pi-clipboard text-lg" aria-hidden="true"></i>
