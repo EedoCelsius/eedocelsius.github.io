@@ -47,7 +47,7 @@ defineProps<BlurOverlayProps>()
     />
     <BlurOverlay v-bind="$props">
       <div class="flex flex-col gap-4">
-        <span class="text-xs font-semibold uppercase tracking-[0.4em] text-primary-900">
+        <span class="text-xs font-semibold uppercase tracking-[0.4em] text-primary-500">
           Focus Mode
         </span>
         <h2 class="text-2xl font-semibold">Shipping polished experiences</h2>
