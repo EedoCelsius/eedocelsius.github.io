@@ -105,7 +105,7 @@ watch(
       <Toolbar class="mx-auto flex max-w-6xl items-center rounded-full px-6 py-3 shadow-lg backdrop-blur">
         <template #start>
           <RouterLink to="/">
-            <ElText size="large" tag="span">{{ t('app.title') }}</ElText>
+            <ElText tag="b" size="large">{{ t('app.title') }}</ElText>
           </RouterLink>
         </template>
         <template #end>
