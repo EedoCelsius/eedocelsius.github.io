@@ -101,7 +101,7 @@ watch(
 
 <template>
   <div class="min-h-screen px-4">
-    <header class="sticky top-0 z-40 max-w-6xl mx-auto py-4">
+    <header class="sticky top-0 z-40 max-w-6xl mx-auto pt-4">
       <Toolbar
         :pt="{
           root: {
