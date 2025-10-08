@@ -47,7 +47,7 @@ export default defineComponent({
       </template>
     </Card>
     <Button
-      class="flex h-full min-h-md w-full items-center justify-center sm:min-h-full sm:min-w-lg"
+      class="flex h-full min-h-12 min-w-16 items-center justify-center"
       v-bind="{ ...defaultProps.button, ...button }"
     >
       <template v-if="$slots.button">
