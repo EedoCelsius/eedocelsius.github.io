@@ -6,6 +6,8 @@ import {
   ElColorPicker,
   ElInput,
   ElOption,
+  ElRadio,
+  ElRadioGroup,
   ElSelect,
   ElSlider,
   ElText,
@@ -159,8 +161,19 @@ const booleanModel = computed<boolean | undefined>({
       </div>
     </template>
     <template v-else-if="control.type === 'boolean'">
-      <div v-if="isActive" class="inline-flex items-center gap-3">
-        <ElCheckbox :id="inputId" v-model="booleanModel" :label="localize(control.label)" />
+      <div v-if="isActive" class="flex flex-col gap-2">
+        <span class="font-medium text-surface-700 dark:text-surface-200">
+          {{ localize(control.label) }}
+        </span>
+        <ElRadioGroup
+          :id="inputId"
+          v-model="booleanModel"
+          class="flex gap-4"
+          :aria-label="isOptional ? localize(control.label) : undefined"
+        >
+          <ElRadio :label="true">{{ t('playground.booleanTrue') }}</ElRadio>
+          <ElRadio :label="false">{{ t('playground.booleanFalse') }}</ElRadio>
+        </ElRadioGroup>
       </div>
     </template>
     <ElText
