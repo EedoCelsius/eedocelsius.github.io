@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { ElText } from 'element-plus'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import { componentCatalog } from '@/library/catalog'
@@ -25,9 +26,20 @@ const localizedComponents = computed(() =>
 <template>
   <section class="space-y-4">
     <div class="space-y-3">
-      <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary-500">Component Lab</p>
-      <h1 class="text-4xl font-semibold text-surface-900 dark:text-surface-0">{{ t('home.title') }}</h1>
-      <p class="max-w-2xl text-base text-surface-600 dark:text-surface-300">{{ t('home.description') }}</p>
+      <ElText
+        tag="p"
+        class="font-semibold uppercase tracking-[0.4em]"
+        size="small"
+        type="primary"
+      >
+        Component Lab
+      </ElText>
+      <ElText tag="h1" class="text-4xl font-semibold">
+        {{ t('home.title') }}
+      </ElText>
+      <ElText tag="p" class="max-w-2xl" type="info">
+        {{ t('home.description') }}
+      </ElText>
     </div>
     <div class="grid gap-6 md:grid-cols-2">
       <Card

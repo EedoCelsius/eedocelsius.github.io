@@ -33,6 +33,7 @@ export const demoConfig: ComponentDemoConfig = {
 </script>
 
 <script setup lang="ts">
+import { ElText } from 'element-plus'
 import { BlurOverlay, type BlurOverlayProps } from '@library/components'
 
 defineProps<BlurOverlayProps>()
@@ -47,13 +48,20 @@ defineProps<BlurOverlayProps>()
     />
     <BlurOverlay v-bind="$props">
       <div class="flex flex-col gap-4">
-        <span class="text-xs font-semibold uppercase tracking-[0.4em] text-primary-500">
+        <ElText
+          tag="span"
+          class="font-semibold uppercase tracking-[0.4em]"
+          size="small"
+          type="primary"
+        >
           Focus Mode
-        </span>
-        <h2 class="text-2xl font-semibold">Shipping polished experiences</h2>
-        <p class="text-sm">
+        </ElText>
+        <ElText tag="h2" size="large" class="font-semibold">
+          Shipping polished experiences
+        </ElText>
+        <ElText tag="p" size="small">
           Blur surrounding distractions while presenting a focused call-to-action for your customers.
-        </p>
+        </ElText>
       </div>
     </BlurOverlay>
   </div>
