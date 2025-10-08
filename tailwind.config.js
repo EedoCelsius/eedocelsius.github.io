@@ -7,6 +7,7 @@ export default {
     './playground/src/**/*.{vue,js,ts,jsx,tsx}',
     './library/**/*.{vue,js,ts,jsx,tsx}',
   ],
+  safelist: [{ pattern: /.*/ }],
   darkMode: 'class',
   theme: {
     extend: {
