@@ -5,8 +5,8 @@ import Group from './Group.vue'
 import { defineComponent, type PropType } from 'vue'
 
 export const defaultProps = {
-  card: () => ({} as Record<string, unknown>),
-  button: () => ({} as Record<string, unknown>),
+  card: {} as Record<string, unknown>,
+  button: {} as Record<string, unknown>,
 } as const
 
 export type props = {
@@ -36,17 +36,17 @@ export default defineComponent({
 
 <template>
   <Group class="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto]">
-    <Card class="h-full" v-bind="card">
+    <Card class="h-full" v-bind="{ ...defaultProps.card, ...card }">
       <template v-for="(_, name) in $slots" :key="name" v-slot:[name]="data">
         <slot :name="name" v-bind="data" />
       </template>
     </Card>
     <Button
       class="flex h-full min-h-md w-full items-center justify-center sm:min-h-full sm:min-w-lg"
-      v-bind="button"
+      v-bind="{ ...defaultProps.button, ...button }"
     >
       <span class="flex h-full w-full items-center justify-center">
-        <slot name="action" />
+        <slot name="button" />
       </span>
     </Button>
   </Group>
