@@ -167,8 +167,8 @@ const booleanModel = computed<boolean | undefined>({
         class="flex gap-4"
         :aria-label="isOptional ? localize(control.label) : undefined"
       >
-        <ElRadio label=true />
-        <ElRadio label=false />
+        <ElRadio :label=true />
+        <ElRadio :label=false />
       </ElRadioGroup>
     </template>
     <ElText
