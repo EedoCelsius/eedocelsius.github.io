@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { ElText } from 'element-plus'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 
@@ -14,8 +15,12 @@ const { t } = useI18n()
         <div class="text-4xl text-primary-500">
           <i class="pi pi-compass"></i>
         </div>
-        <h1 class="text-2xl font-semibold text-surface-900 dark:text-surface-0">{{ t('playground.notFoundTitle') }}</h1>
-        <p class="max-w-md text-sm text-surface-600 dark:text-surface-300">{{ t('playground.notFoundDescription') }}</p>
+        <ElText tag="h1" class="text-2xl font-semibold">
+          {{ t('playground.notFoundTitle') }}
+        </ElText>
+        <ElText tag="p" class="max-w-md" size="small" type="info">
+          {{ t('playground.notFoundDescription') }}
+        </ElText>
         <RouterLink to="/">
           <Button
             :label="t('playground.backHome')"
