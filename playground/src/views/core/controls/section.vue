@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import Button from 'primevue/button'
+import Accordion from 'primevue/accordion'
+import AccordionContent from 'primevue/accordioncontent'
+import AccordionHeader from 'primevue/accordionheader'
+import AccordionPanel from 'primevue/accordionpanel'
 import type { ControlDefinition, GroupDefinition, LocaleCopy } from '@/library/types'
 import type { SupportedLocale } from '@/i18n'
 
@@ -12,43 +15,26 @@ const props = defineProps<{
 const { locale } = useI18n()
 
 const hasGroup = computed(() => Boolean(props.section.group))
-const isCollapsed = ref(hasGroup.value)
-
-watch(
-  hasGroup,
-  (value) => {
-    if (!value) {
-      isCollapsed.value = false
-    }
-  }
-)
 
 const localize = (copy: LocaleCopy) => copy[locale.value as SupportedLocale] ?? copy.en
-
-const handleToggle = () => {
-  if (!hasGroup.value) {
-    return
-  }
-
-  isCollapsed.value = !isCollapsed.value
-}
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <Button
-      v-if="hasGroup && section.group"
-      type="button"
-      :label="localize(section.group.label)"
-      :icon="isCollapsed ? 'pi pi-angle-down' : 'pi pi-angle-up'"
-      icon-pos="right"
-      text
-      class="justify-between"
-      :aria-expanded="isCollapsed ? 'false' : 'true'"
-      @click="handleToggle"
-    />
-    <div v-show="!hasGroup || !isCollapsed" class="flex flex-col gap-4">
-      <slot />
-    </div>
+  <div v-if="hasGroup && section.group" class="flex flex-col gap-4">
+    <Accordion>
+      <AccordionPanel :value="section.id">
+        <AccordionHeader>
+          {{ localize(section.group.label) }}
+        </AccordionHeader>
+        <AccordionContent>
+          <div class="flex flex-col gap-4">
+            <slot />
+          </div>
+        </AccordionContent>
+      </AccordionPanel>
+    </Accordion>
+  </div>
+  <div v-else class="flex flex-col gap-4">
+    <slot />
   </div>
 </template>
