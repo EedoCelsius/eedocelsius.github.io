@@ -25,7 +25,7 @@ export const demoConfig: ComponentDemoConfig = {
     },
   ],
 }
-const props = { icon: "pi pi-home"}
+const props = { button: { icon: "pi pi-home" } }
 </script>
 
 <script setup lang="ts">
