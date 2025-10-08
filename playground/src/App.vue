@@ -102,7 +102,7 @@ watch(
 <template>
   <div class="min-h-screen">
     <header class="sticky top-0 z-40 px-4 pt-4">
-      <Toolbar class="mx-auto max-w-6xl rounded-full shadow-lg border-none">
+      <Toolbar class="mx-auto max-w-6xl rounded-full shadow-lg backdrop-blur" pt="{ class: 'border-none bg-white/75 dark:bg-slate-900/75' }">
         <template #start>
           <RouterLink to="/">
             <ElText tag="b" size="large">{{ t('app.title') }}</ElText>
