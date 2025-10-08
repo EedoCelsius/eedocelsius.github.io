@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ElText } from 'element-plus'
 import Card from 'primevue/card'
 import Panel from 'primevue/panel'
 import type { ComponentDemo } from '@/demos/types'
@@ -74,8 +75,12 @@ watch(
     <template #content>
       <div class="space-y-4">
         <div class="space-y-2">
-          <h1 class="text-2xl font-semibold text-surface-900 dark:text-surface-0">{{ localizedName }}</h1>
-          <p class="text-sm text-surface-600 dark:text-surface-300">{{ localizedDescription }}</p>
+          <ElText tag="h1" class="text-2xl font-semibold">
+            {{ localizedName }}
+          </ElText>
+          <ElText tag="p" size="small" type="info">
+            {{ localizedDescription }}
+          </ElText>
         </div>
         <Panel :pt="{ content: { class: 'min-h-[360px]' } }">
           <component :is="demoComponent" v-bind="resolvedDemoProps" />
