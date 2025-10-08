@@ -25,12 +25,13 @@ export const demoConfig: ComponentDemoConfig = {
     },
   ],
 }
-const props = { button: { icon: "pi pi-home" } }
 </script>
 
 <script setup lang="ts">
 import { ElText } from 'element-plus'
-import { ActionableCard } from '@library/components'
+import { ActionableCard, type ActionableCardProps } from '@library/components'
+
+const props = defineProps<ActionableCardProps>()
 </script>
 
 <template>
