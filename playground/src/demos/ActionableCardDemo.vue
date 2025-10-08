@@ -10,8 +10,8 @@ export const demoConfig: ComponentDemoConfig = {
       type: 'object',
       label: { en: 'Card Properties', ko: '카드 속성' },
       helperText: {
-        en: 'Props forwarded directly to the PrimeVue Card component.',
-        ko: 'PrimeVue Card 컴포넌트에 그대로 전달되는 속성입니다.',
+        en: 'Props forwarded to the PrimeVue Card component.',
+        ko: 'PrimeVue Card 컴포넌트에 전달되는 속성입니다.',
       },
     },
     {
@@ -19,8 +19,8 @@ export const demoConfig: ComponentDemoConfig = {
       type: 'object',
       label: { en: 'Button Properties', ko: '버튼 속성' },
       helperText: {
-        en: 'Props forwarded directly to the PrimeVue Button component.',
-        ko: 'PrimeVue Button 컴포넌트에 그대로 전달되는 속성입니다.',
+        en: 'Props forwarded to the PrimeVue Button component.',
+        ko: 'PrimeVue Button 컴포넌트에 전달되는 속성입니다.',
       },
     },
   ],
