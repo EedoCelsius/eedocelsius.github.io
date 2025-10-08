@@ -108,7 +108,7 @@ watch(
             class: 'mx-auto max-w-6xl rounded-full shadow-lg backdrop-blur',
             style: {
               border: 'none',
-              background: 'color-mix(in srgb, var(--p-toolbar-background, #ffffff) 75%, transparent)'
+              background: 'color-mix(in srgb, var(--p-toolbar-background) 50%, transparent)'
             }
           }
         }"
