@@ -149,6 +149,7 @@ watch(
           <Button
             type="button"
             :label="t('playground.reset')"
+            class="text-xs"
             text
             @click="applyDefaults"
           />
