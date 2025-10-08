@@ -101,7 +101,7 @@ watch(
 
 <template>
   <div class="min-h-screen">
-    <header class="sticky top-0 z-40 px-4 pt-4">
+    <header class="sticky top-0 z-40 p-4">
       <Toolbar
         :pt="{
           root: {
@@ -140,7 +140,7 @@ watch(
       </Toolbar>
     </header>
 
-    <main class="mx-auto w-full max-w-6xl px-6 pb-16 pt-4">
+    <main class="mx-auto w-full max-w-6xl px-6 pb-16 pt-8">
       <RouterView :key="route.fullPath" />
     </main>
   </div>
