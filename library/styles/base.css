@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    @apply font-sans bg-surface-100;
+    @apply font-sans bg-surface-50;
   }
 
   body {
