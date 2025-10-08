@@ -38,11 +38,11 @@ export default defineComponent({
   props: {
     overlay: {
       type: Object as PropType<OverlayConfig>,
-      default: () => ({ ...defaultProps.overlay }),
+      default: () => defaultProps.overlay,
     },
     spinner: {
       type: Object as PropType<SpinnerConfig>,
-      default: () => ({ ...defaultProps.spinner }),
+      default: () => defaultProps.spinner,
     },
   },
 })
