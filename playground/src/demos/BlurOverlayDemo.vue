@@ -40,7 +40,7 @@ defineProps<BlurOverlayProps>()
 </script>
 
 <template>
-  <div class="flex h-80 items-center justify-center overflow-hidden rounded-3xl border border-surface-200 bg-surface-0 p-10 text-center shadow-inner dark:border-surface-800 dark:bg-surface-900">
+  <div class="relative flex h-80 items-center justify-center overflow-hidden rounded-3xl border border-surface-200 bg-surface-0 p-10 text-center shadow-inner dark:border-surface-800 dark:bg-surface-900">
     <img
       src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80"
       alt="Developer workspace"
