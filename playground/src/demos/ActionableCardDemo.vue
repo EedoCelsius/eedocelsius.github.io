@@ -37,21 +37,25 @@ const props = defineProps<ActionableCardProps>()
 <template>
   <div class="flex justify-center">
     <ActionableCard v-bind="props" class="max-w-2xl">
-      <div class="flex items-start gap-4">
-        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-2xl font-semibold text-amber-500">
-          <ElText tag="span" class="font-semibold">KB</ElText>
-        </div>
-        <div class="space-y-3">
-          <div class="flex flex-wrap items-center gap-2">
-            <ElText tag="span" size="large" class="font-semibold">KB국민</ElText>
-            <ElText tag="span" size="small" class="font-medium" type="info">강일준</ElText>
+      <template #default>
+        <template #content>
+          <div class="flex items-start gap-4">
+            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-2xl font-semibold text-amber-500">
+              <ElText tag="span" class="font-semibold">KB</ElText>
+            </div>
+            <div class="space-y-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <ElText tag="span" size="large" class="font-semibold">KB국민</ElText>
+                <ElText tag="span" size="small" class="font-medium" type="info">강일준</ElText>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <ElText tag="span" size="large" class="font-semibold tracking-wide">93800200352361</ElText>
+                <i class="pi pi-clipboard text-base text-primary-500" aria-hidden="true"></i>
+              </div>
+            </div>
           </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <ElText tag="span" size="large" class="font-semibold tracking-wide">93800200352361</ElText>
-            <i class="pi pi-clipboard text-base text-primary-500" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
+        </template>
+      </template>
       <template #action>
         <ElText tag="span" size="small" class="flex items-center gap-2 px-6 font-semibold">
           <ElText tag="span" size="small" class="sm:hidden">이체 정보 복사</ElText>
