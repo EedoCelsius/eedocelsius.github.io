@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import {
-  ElCheckbox,
-  ElColorPicker,
-  ElInput,
-  ElOption,
-  ElSelect,
-  ElSlider,
-  ElText,
-} from 'element-plus'
+import Checkbox from 'primevue/checkbox'
+import Dropdown from 'primevue/dropdown'
+import InputText from 'primevue/inputtext'
+import Slider from 'primevue/slider'
+import Textarea from 'primevue/textarea'
+import { ElColorPicker, ElText } from 'element-plus'
 import type { ControlDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/types'
 import type { SupportedLocale } from '@/i18n'
 import { toRgba } from '@shared/color'
@@ -73,9 +70,10 @@ const booleanModel = computed<boolean | undefined>({
 <template>
   <div class="flex flex-col gap-2 text-sm">
     <div v-if="isOptional" class="flex items-center gap-2">
-      <ElCheckbox
-        :id="toggleId"
+      <Checkbox
+        :input-id="toggleId"
         :model-value="isActive"
+        binary
         class="shrink-0"
         :aria-controls="inputId"
         :aria-expanded="isActive ? 'true' : 'false'"
@@ -91,7 +89,7 @@ const booleanModel = computed<boolean | undefined>({
       {{ localize(control.label) }}
     </label>
     <template v-if="control.type === 'text'">
-      <ElInput
+      <InputText
         v-if="isActive"
         :id="inputId"
         v-model="stringModel"
@@ -100,32 +98,27 @@ const booleanModel = computed<boolean | undefined>({
       />
     </template>
     <template v-else-if="control.type === 'textarea'">
-      <ElInput
+      <Textarea
         v-if="isActive"
         :id="inputId"
         v-model="stringModel"
-        type="textarea"
         rows="4"
-        :autosize="true"
+        auto-resize
         :aria-labelledby="isOptional ? labelId : undefined"
         class="w-full"
       />
     </template>
     <template v-else-if="control.type === 'select'">
-      <ElSelect
+      <Dropdown
         v-if="isActive"
         :id="inputId"
         v-model="valueModel"
+        :options="selectOptions"
+        option-label="label"
+        option-value="value"
         :aria-labelledby="isOptional ? labelId : undefined"
         class="w-full"
-      >
-        <ElOption
-          v-for="option in selectOptions"
-          :key="option.value"
-          :label="option.label"
-          :value="option.value"
-        />
-      </ElSelect>
+      />
     </template>
     <template v-else-if="control.type === 'color'">
       <div v-if="isActive" class="flex items-center gap-3">
@@ -136,7 +129,7 @@ const booleanModel = computed<boolean | undefined>({
           class="shrink-0"
           :aria-labelledby="isOptional ? labelId : undefined"
         />
-        <ElInput
+        <InputText
           :id="inputId"
           v-model="stringModel"
           :aria-labelledby="isOptional ? labelId : undefined"
@@ -146,7 +139,7 @@ const booleanModel = computed<boolean | undefined>({
     </template>
     <template v-else-if="control.type === 'slider'">
       <div v-if="isActive" class="flex items-center gap-3">
-        <ElSlider
+        <Slider
           :id="inputId"
           v-model="numberModel"
           :min="control.min ?? 0"
@@ -167,7 +160,7 @@ const booleanModel = computed<boolean | undefined>({
     </template>
     <template v-else-if="control.type === 'boolean'">
       <div v-if="isActive" class="inline-flex items-center gap-3">
-        <ElCheckbox :id="inputId" v-model="booleanModel" />
+        <Checkbox :input-id="inputId" v-model="booleanModel" binary />
         <label :for="inputId" class="text-sm text-surface-600 dark:text-surface-300">
           {{ localize(control.label) }}
         </label>
