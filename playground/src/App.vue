@@ -116,7 +116,7 @@ watch(
       >
         <template #start>
           <RouterLink to="/">
-            <ElText tag="b" size="large" class="pl-px">{{ t('app.title') }}</ElText>
+            <ElText tag="b" size="large" class="pl-1">{{ t('app.title') }}</ElText>
           </RouterLink>
         </template>
         <template #end>
