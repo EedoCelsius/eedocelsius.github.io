@@ -17,9 +17,6 @@ export default {
         sans: ['"Noto Sans KR"', 'Inter', 'ui-sans-serif', 'system-ui'],
         display: ['"Noto Sans KR"', 'Inter', 'ui-sans-serif', 'system-ui'],
       },
-      boxShadow: {
-        soft: '0 20px 45px -20px rgba(15, 23, 42, 0.35)',
-      },
     },
   },
   plugins: [primeui],
