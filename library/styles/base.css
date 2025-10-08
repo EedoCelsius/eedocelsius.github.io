@@ -3,16 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: light;
-    @apply font-sans bg-surface-50;
-  }
-  
-  :root.dark {
-    color-scheme: dark;
-    @apply font-sans bg-surface-800;
-  }
-
   body {
     @apply antialiased transition-colors duration-300;
   }
