@@ -14,6 +14,6 @@
   }
 
   body {
-    @apply antialiased transition-colors duration-300;
+    @apply antialiased bg-inherit transition-colors duration-300;
   }
 }
