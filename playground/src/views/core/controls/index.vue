@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ElText } from 'element-plus'
-import Button from 'primevue/button'
+import { ElLink, ElText } from 'element-plus'
 import Card from 'primevue/card'
 import Divider from 'primevue/divider'
 import type { ComponentDemo } from '@/demos/types'
@@ -146,13 +145,14 @@ watch(
           <ElText tag="p" size="small" type="info">
             {{ t('playground.helper') }}
           </ElText>
-          <Button
-            type="button"
-            :label="t('playground.reset')"
+          <ElLink
+            type="primary"
+            :underline="false"
             class="text-xs"
-            text
             @click="applyDefaults"
-          />
+          >
+            {{ t('playground.reset') }}
+          </ElLink>
         </div>
         <form class="flex flex-col gap-5">
           <template v-if="hasControls">
