@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import Card from 'primevue/card'
+import Button from 'primevue/button'
+import Divider from 'primevue/divider'
 import type { ComponentDemo } from '@/demos/types'
 import type { ControlDefinition, GroupDefinition, PlaygroundPropValue } from '@/library/types'
 import Field from './field.vue'
@@ -132,38 +135,46 @@ watch(
 </script>
 
 <template>
-  <aside class="card-surface flex h-fit flex-col gap-6 p-6">
-    <div class="flex items-center justify-between">
-      <p class="text-sm font-semibold uppercase tracking-[0.4em] text-primary-500">{{ t('playground.controls') }}</p>
-      <button type="button" class="text-xs font-semibold text-primary-500 transition hover:text-primary-400" @click="applyDefaults">
-        {{ t('playground.reset') }}
-      </button>
-    </div>
-    <p class="text-sm text-surface-500 dark:text-surface-400">{{ t('playground.helper') }}</p>
-    <form class="flex flex-col gap-6">
-      <template v-if="hasControls">
-        <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
-          <Section
-            :section="section"
+  <Card class="h-fit">
+    <template #title>
+      <div class="flex items-center justify-between gap-3">
+        <span>{{ t('playground.controls') }}</span>
+        <Button
+          type="button"
+          :label="t('playground.reset')"
+          size="small"
+          severity="secondary"
+          text
+          @click="applyDefaults"
+        />
+      </div>
+    </template>
+    <template #subtitle>
+      <span>{{ t('playground.helper') }}</span>
+    </template>
+    <template #content>
+      <form class="flex flex-col gap-4">
+        <template v-if="hasControls">
+          <div
+            v-for="(section, sectionIndex) in controlSections"
+            :key="section.id"
+            class="flex flex-col gap-4"
           >
-            <Field
-              v-for="control in section.controls"
-              :key="control.key"
-              :control="control"
-              v-model:value="demoProps[control.key]"
-              :is-optional="isControlOptional(control)"
-              @toggle-optional="handleOptionalToggle(control, $event)"
-            />
-          </Section>
-          <hr
-            v-if="section.group && sectionIndex < controlSections.length - 1"
-            class="border-0 border-t border-surface-200/70 dark:border-surface-700/70"
-          />
-        </div>
-      </template>
-      <p v-else class="text-sm text-surface-500 dark:text-surface-400">
-        {{ t('playground.noProps') }}
-      </p>
-    </form>
-  </aside>
+            <Section :section="section">
+              <Field
+                v-for="control in section.controls"
+                :key="control.key"
+                :control="control"
+                v-model:value="demoProps[control.key]"
+                :is-optional="isControlOptional(control)"
+                @toggle-optional="handleOptionalToggle(control, $event)"
+              />
+            </Section>
+            <Divider v-if="section.group && sectionIndex < controlSections.length - 1" />
+          </div>
+        </template>
+        <p v-else>{{ t('playground.noProps') }}</p>
+      </form>
+    </template>
+  </Card>
 </template>
