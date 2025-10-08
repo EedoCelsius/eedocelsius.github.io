@@ -37,18 +37,16 @@ export default defineComponent({
 
 <template>
   <BlurOverlay v-bind="overlay">
-    <template #content>
-      <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
-        <Spinner
-          :diameter="spinner?.diameter"
-          :thickness="spinner?.thickness"
-          :track-color="spinner?.trackColor"
-          :indicator-color="spinner?.indicatorColor"
-        >
-          <slot name="spinner" />
-        </Spinner>
-        <slot />
-      </div>
-    </template>
+    <div class="flex flex-col items-center gap-4 text-center text-surface-0" aria-live="polite">
+      <Spinner
+        :diameter="spinner?.diameter"
+        :thickness="spinner?.thickness"
+        :track-color="spinner?.trackColor"
+        :indicator-color="spinner?.indicatorColor"
+      >
+        <slot name="spinner" />
+      </Spinner>
+      <slot />
+    </div>
   </BlurOverlay>
 </template>

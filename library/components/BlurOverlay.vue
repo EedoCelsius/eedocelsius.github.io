@@ -1,5 +1,4 @@
 <script lang="ts">
-import Card from 'primevue/card'
 import { defineComponent } from 'vue'
 
 export const defaultProps = {
@@ -18,7 +17,6 @@ export type props = {
 
 export default defineComponent({
   name: 'BlurOverlay',
-  components: { Card },
   props: {
     blurStrength: {
       type: Number,
@@ -55,14 +53,9 @@ export default defineComponent({
 
 <template>
   <transition name="fade-blur">
-    <Card
-      class="absolute inset-0 h-full w-full rounded-inherit border-none shadow-none"
-      :style="overlayStyle"
-    >
-      <template v-for="(_, name) in $slots" :key="name" v-slot:[name]="data">
-        <slot :name="name" v-bind="data" />
-      </template>
-    </Card>
+    <div class="blur-overlay flex absolute inset-0 h-full w-full rounded-inherit" :style="overlayStyle">
+      <slot />
+    </div>
   </transition>
 </template>
 
@@ -81,14 +74,7 @@ export default defineComponent({
   border-radius: inherit;
 }
 
-:deep(.p-card) {
-  height: 100%;
-}
-
-:deep(.p-card-body) {
-  display: flex;
-  height: 100%;
-  width: 100%;
+.blur-overlay {
   align-items: var(--blur-overlay-align-items);
   justify-content: var(--blur-overlay-justify-content);
 }
