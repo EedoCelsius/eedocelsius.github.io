@@ -35,7 +35,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <Group class="grid w-full grid-cols-1 rounded-md shadow-soft transition-colors sm:grid-cols-[minmax(0,1fr)_auto]">
+  <Group class="grid w-full grid-cols-1 rounded-md shadow-md transition-colors sm:grid-cols-[minmax(0,1fr)_auto]">
     <Card class="h-full">
       <template #content>
         <div class="flex h-full flex-col justify-center gap-4" :class="cardClass">
