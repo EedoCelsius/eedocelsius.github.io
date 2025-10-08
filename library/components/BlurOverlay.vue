@@ -87,7 +87,6 @@ export default defineComponent({
 
 :deep(.p-card-body) {
   display: flex;
-  height: 100%;
   width: 100%;
   align-items: var(--blur-overlay-align-items);
   justify-content: var(--blur-overlay-justify-content);
