@@ -31,6 +31,9 @@ export default defineComponent({
       default: defaultProps.button,
     },
   },
+  setup() {
+    return { defaultProps }
+  },
 })
 </script>
 
