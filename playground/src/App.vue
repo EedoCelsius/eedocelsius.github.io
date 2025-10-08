@@ -102,7 +102,7 @@ watch(
 <template>
   <div class="min-h-screen">
     <header class="sticky top-0 z-40">
-      <Toolbar>
+      <Toolbar class="max-w-6xl mx-auto">
         <template #start>
           <RouterLink to="/">
             <ElText size="large" tag="span">{{ t('app.title') }}</ElText>
