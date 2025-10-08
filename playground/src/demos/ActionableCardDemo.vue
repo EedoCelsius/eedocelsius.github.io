@@ -6,21 +6,21 @@ export const demoConfig: ComponentDemoConfig = {
   defaultProps: actionableCardDefaults,
   properties: [
     {
-      key: 'cardClass',
-      type: 'text',
-      label: { en: 'Card classes', ko: '카드 클래스' },
+      key: 'card',
+      type: 'object',
+      label: { en: 'Card Properties', ko: '카드 속성' },
       helperText: {
-        en: 'Utility classes applied to the content area wrapper.',
-        ko: '콘텐츠 영역 래퍼에 적용할 Tailwind 클래스입니다.',
+        en: 'Props forwarded to the PrimeVue Card component.',
+        ko: 'PrimeVue Card 컴포넌트에 전달되는 속성입니다.',
       },
     },
     {
-      key: 'actionClass',
-      type: 'text',
-      label: { en: 'Action classes', ko: '액션 클래스' },
+      key: 'button',
+      type: 'object',
+      label: { en: 'Button Properties', ko: '버튼 속성' },
       helperText: {
-        en: 'Utility classes applied to the action slot wrapper.',
-        ko: '액션 슬롯 래퍼에 적용할 Tailwind 클래스입니다.',
+        en: 'Props forwarded to the PrimeVue Button component.',
+        ko: 'PrimeVue Button 컴포넌트에 전달되는 속성입니다.',
       },
     },
   ],
