@@ -105,10 +105,11 @@ watch(
       <Toolbar
         :pt="{
           root: {
-            class: 'mx-auto max-w-6xl rounded-full shadow-lg backdrop-blur',
+            class: 'mx-auto max-w-6xl shadow-lg backdrop-blur',
             style: {
               border: 'none',
-              background: 'color-mix(in srgb, var(--p-toolbar-background) 25%, transparent)'
+              background: 'color-mix(in srgb, var(--p-toolbar-background) 25%, transparent)',
+              borderRadius: 'border-radius: calc(infinity * 1px)'
             }
           }
         }"
