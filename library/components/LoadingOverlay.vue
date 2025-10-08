@@ -1,7 +1,7 @@
 <script lang="ts">
 import { default as BlurOverlay, type props as BlurOverlayProps } from './BlurOverlay.vue'
 import { default as Spinner, type props as SpinnerProps } from './Spinner.vue'
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 
 export const defaultProps = {
   overlay: undefined,
@@ -24,11 +24,11 @@ export default defineComponent({
   },
   props: {
     overlay: {
-      type: Object as BlurOverlayProps,
+      type: Object as PropType<BlurOverlayProps>,
       default: () => defaultProps.overlay,
     },
     spinner: {
-      type: Object as SpinnerProps,
+      type: Object as PropType<SpinnerProps>,
       default: () => defaultProps.spinner,
     },
   },
