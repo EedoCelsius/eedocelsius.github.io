@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    @apply font-sans bg-surface-50;
-  }
 
   body {
     @apply antialiased transition-colors duration-300;
