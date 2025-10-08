@@ -2,16 +2,16 @@
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Group from './Group.vue'
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 
 export const defaultProps = {
-  cardClass: undefined,
-  actionClass: undefined,
+  card: () => ({} as Record<string, unknown>),
+  button: () => ({} as Record<string, unknown>),
 } as const
 
 export type props = {
-  cardClass?: string
-  actionClass?: string
+  card?: Record<string, unknown>
+  button?: Record<string, unknown>
 }
 
 export default defineComponent({
@@ -22,13 +22,13 @@ export default defineComponent({
     Group,
   },
   props: {
-    cardClass: {
-      type: String,
-      default: defaultProps.cardClass,
+    card: {
+      type: Object as PropType<Record<string, unknown>>,
+      default: defaultProps.card,
     },
-    actionClass: {
-      type: String,
-      default: defaultProps.actionClass,
+    button: {
+      type: Object as PropType<Record<string, unknown>>,
+      default: defaultProps.button,
     },
   },
 })
@@ -36,14 +36,14 @@ export default defineComponent({
 
 <template>
   <Group class="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto]">
-    <Card class="h-full">
+    <Card class="h-full" v-bind="card">
       <template v-for="(_, name) in $slots" :key="name" v-slot:[name]="data">
         <slot :name="name" v-bind="data" />
       </template>
     </Card>
     <Button
       class="flex h-full min-h-md w-full items-center justify-center sm:min-h-full sm:min-w-lg"
-      :class="actionClass"
+      v-bind="button"
     >
       <span class="flex h-full w-full items-center justify-center">
         <slot name="action" />
