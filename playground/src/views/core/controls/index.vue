@@ -141,17 +141,19 @@ watch(
     </template>
     <template #content>
       <div class="flex flex-col gap-5">
-        <ElText tag="p" size="small" type="info">
-          {{ t('playground.helper') }}
-        </ElText>
-        <ElLink
-          type="primary"
-          :underline="false"
-          class="text-xs"
-          @click="applyDefaults"
-        >
-          {{ t('playground.reset') }}
-        </ElLink>
+        <div class="flex flex-col gap-2">
+          <ElText tag="p" size="small" type="info">
+            {{ t('playground.helper') }}
+          </ElText>
+          <ElLink
+            type="primary"
+            :underline="false"
+            class="self-end w-fit text-xs"
+            @click="applyDefaults"
+          >
+            {{ t('playground.reset') }}
+          </ElLink>
+        </div>
         <form class="flex flex-col gap-5">
           <template v-if="hasControls">
             <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
