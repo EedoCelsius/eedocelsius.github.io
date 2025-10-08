@@ -108,7 +108,7 @@ watch(
             class: 'mx-auto max-w-6xl rounded-full shadow-lg backdrop-blur',
             style: {
               border: 'none',
-              background: 'color-mix(in srgb, var(--p-toolbar-background) 50%, transparent)'
+              background: 'color-mix(in srgb, var(--p-toolbar-background) 25%, transparent)'
             }
           }
         }"
@@ -140,7 +140,7 @@ watch(
       </Toolbar>
     </header>
 
-    <main class="mx-auto w-full max-w-6xl px-6 pb-16 pt-10">
+    <main class="mx-auto w-full max-w-6xl px-6 pb-16 pt-4">
       <RouterView :key="route.fullPath" />
     </main>
   </div>
