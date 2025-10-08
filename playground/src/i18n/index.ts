@@ -23,8 +23,6 @@ const messages = {
       notFoundDescription: 'The component you are looking for does not exist or is not yet available.',
       backHome: 'Back to home',
       toggleControl: 'Toggle editing for “{name}”',
-      booleanTrue: 'True',
-      booleanFalse: 'False',
     },
   },
   ko: {
@@ -47,8 +45,6 @@ const messages = {
       notFoundDescription: '요청한 컴포넌트가 존재하지 않거나 아직 준비되지 않았습니다.',
       backHome: '홈으로 돌아가기',
       toggleControl: '“{name}” 수정 전환',
-      booleanTrue: '참',
-      booleanFalse: '거짓',
     },
   },
 }
