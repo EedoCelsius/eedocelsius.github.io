@@ -11,8 +11,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: component-lab-pages
-  cancel-in-progress: false
+  group: component-lab-pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
