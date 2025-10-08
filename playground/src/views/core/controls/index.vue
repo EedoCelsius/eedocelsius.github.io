@@ -141,9 +141,7 @@ watch(
     <template #content>
       <div class="flex flex-col gap-5">
         <div class="flex flex-col gap-2">
-          <ElText tag="p" size="small" type="info">
-            {{ t('playground.helper') }}
-          </ElText>
+          <ElText tag="p" size="small" type="info" class="self-start">{{ t('playground.helper') }}</ElText>
           <ElLink
             type="primary"
             :underline="false"
@@ -171,9 +169,7 @@ watch(
               />
             </Section>
           </template>
-          <ElText v-else tag="p" size="small" type="info">
-            {{ t('playground.noProps') }}
-          </ElText>
+          <ElText v-else tag="p" size="small" type="info">{{ t('playground.noProps') }}</ElText>
         </form>
       </div>
     </template>
