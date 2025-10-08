@@ -4,12 +4,7 @@ import Spinner from './Spinner.vue'
 import { defineComponent, type PropType } from 'vue'
 
 export const defaultProps = {
-  overlay: {
-    blurStrength: 7,
-    backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    centerVertical: true,
-    centerHorizontal: true,
-  },
+  overlay: undefined,
   spinner: {
     diameter: 48,
     thickness: 4,
