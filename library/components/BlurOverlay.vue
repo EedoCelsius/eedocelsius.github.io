@@ -1,4 +1,7 @@
 <script lang="ts">
+import Card from 'primevue/card'
+import { defineComponent } from 'vue'
+
 export const defaultProps = {
   blurStrength: 7,
   backgroundColor: 'rgba(0, 0, 0, 0.25)',
@@ -12,26 +15,42 @@ export type props = {
   centerVertical?: boolean
   centerHorizontal?: boolean
 }
-</script>
 
-<script setup lang="ts">
-import Card from 'primevue/card'
-import { computed, useSlots } from 'vue'
+export default defineComponent({
+  name: 'BlurOverlay',
+  components: { Card },
+  props: {
+    blurStrength: {
+      type: Number,
+      default: defaultProps.blurStrength,
+    },
+    backgroundColor: {
+      type: String,
+      default: defaultProps.backgroundColor,
+    },
+    centerVertical: {
+      type: Boolean,
+      default: defaultProps.centerVertical,
+    },
+    centerHorizontal: {
+      type: Boolean,
+      default: defaultProps.centerHorizontal,
+    },
+  },
+  computed: {
+    overlayStyle(): Record<string, string> {
+      const blur = `blur(${this.blurStrength}px)`
 
-const props = withDefaults(
-  defineProps<props>(),
-  defaultProps
-)
-
-const slots = useSlots()
-
-const overlayStyle = computed(() => ({
-  backdropFilter: `blur(${props.blurStrength}px)`,
-  WebkitBackdropFilter: `blur(${props.blurStrength}px)`,
-  background: props.backgroundColor,
-  '--blur-overlay-align-items': props.centerVertical ? 'center' : 'flex-start',
-  '--blur-overlay-justify-content': props.centerHorizontal ? 'center' : 'flex-start',
-}))
+      return {
+        backdropFilter: blur,
+        WebkitBackdropFilter: blur,
+        background: this.backgroundColor,
+        '--blur-overlay-align-items': this.centerVertical ? 'center' : 'flex-start',
+        '--blur-overlay-justify-content': this.centerHorizontal ? 'center' : 'flex-start',
+      }
+    },
+  },
+})
 </script>
 
 <template>
@@ -40,8 +59,8 @@ const overlayStyle = computed(() => ({
       class="absolute inset-0 h-full w-full rounded-inherit border-none shadow-none"
       :style="overlayStyle"
     >
-      <template v-for="(_, name) in slots" :key="name" v-slot:[name]="data">
-        <slot :name="name" v-bind="data"></slot>
+      <template v-for="(_, name) in $slots" :key="name" v-slot:[name]="data">
+        <slot :name="name" v-bind="data" />
       </template>
     </Card>
   </transition>

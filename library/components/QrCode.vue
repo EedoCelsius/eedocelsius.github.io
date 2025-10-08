@@ -1,4 +1,8 @@
 <script lang="ts">
+import QRCode from 'qrcode'
+import { toHex } from '@shared/color'
+import { defineComponent } from 'vue'
+
 export const defaultProps = {
   data: window.location.href,
   lightColor: 'white',
@@ -10,52 +14,64 @@ export type props = {
   lightColor?: string
   darkColor?: string
 }
-</script>
 
-<script setup lang="ts">
-import { ref, watch } from 'vue'
-import QRCode from 'qrcode'
-import { toHex } from '@shared/color'
-
-const props = withDefaults(
-  defineProps<props>(),
-  defaultProps
-)
-
-const qrSource = ref('')
-const qrError = ref('')
-  
-const updateQrCode = () => {
-  const darkHex = toHex(props.darkColor) || '#000000'
-  const lightHex = toHex(props.lightColor) || '#ffffff'
-
-  QRCode.toDataURL(
-    props.data,
-    {
-      margin: 0,
-      color: {
-        dark: darkHex,
-        light: lightHex,
-      },
+export default defineComponent({
+  name: 'QrCode',
+  props: {
+    data: {
+      type: String,
+      default: defaultProps.data,
     },
-    (error: Error | null | undefined, url: string) => {
-      if (error) {
-        qrError.value = String(error)
-        return
-      }
-
-      qrSource.value = url
-      qrError.value = ''
+    lightColor: {
+      type: String,
+      default: defaultProps.lightColor,
+    },
+    darkColor: {
+      type: String,
+      default: defaultProps.darkColor,
+    },
+  },
+  data() {
+    return {
+      qrSource: '',
+      qrError: '',
     }
-  )
-}
+  },
+  watch: {
+    data: 'updateQrCode',
+    lightColor: 'updateQrCode',
+    darkColor: 'updateQrCode',
+  },
+  created() {
+    this.updateQrCode()
+  },
+  methods: {
+    updateQrCode(): void {
+      const darkHex = toHex(this.darkColor) || '#000000'
+      const lightHex = toHex(this.lightColor) || '#ffffff'
 
-watch(
-  () => [props.data, props.darkColor, props.lightColor],
-  updateQrCode
-)
+      QRCode.toDataURL(
+        this.data,
+        {
+          margin: 0,
+          color: {
+            dark: darkHex,
+            light: lightHex,
+          },
+        },
+        (error: Error | null | undefined, url: string) => {
+          if (error) {
+            this.qrError = String(error)
+            return
+          }
 
-updateQrCode()
+          this.qrSource = url
+          this.qrError = ''
+        }
+      )
+    },
+  },
+})
 </script>
 
 <template>

@@ -1,21 +1,10 @@
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 export const defaultProps = {} as const
 
 export type props = {}
-</script>
 
-<script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
-
-defineOptions({
-  name: 'Group',
-})
-
-defineSlots<{
-  default: () => unknown
-}>()
-
-const rootRef = ref<HTMLElement | null>(null)
 const CORNER_CLASSES = [
   'group-corner-top-left',
   'group-corner-top-right',
@@ -23,169 +12,156 @@ const CORNER_CLASSES = [
   'group-corner-bottom-right',
 ] as const
 
-const scheduleUpdate = (() => {
-  if (typeof window === 'undefined') {
-    return () => undefined
+const EPSILON = 1
+
+type CornerEntry = {
+  child: HTMLElement
+  rect: DOMRect
+}
+
+const isHTMLElement = (element: Element): element is HTMLElement => element instanceof HTMLElement
+
+const resetCornerMarkers = (child: HTMLElement) => {
+  child.classList.add('group-item')
+
+  for (const corner of CORNER_CLASSES) {
+    child.classList.remove(corner)
   }
+}
 
-  let frame = 0
+const pickClosestEntries = (
+  entries: CornerEntry[],
+  target: number,
+  projector: (rect: DOMRect) => number
+) => entries.filter(({ rect }) => Math.abs(projector(rect) - target) <= EPSILON)
 
-  const updateCornerRadius = () => {
-    const root = rootRef.value
+const pickExtremeEntry = (
+  entries: CornerEntry[],
+  projector: (rect: DOMRect) => number,
+  isBetter: (candidate: number, current: number) => boolean
+): CornerEntry | undefined =>
+  entries.reduce<CornerEntry | undefined>((best, entry) => {
+    if (!best) return entry
 
-    if (!root) return
+    return isBetter(projector(entry.rect), projector(best.rect)) ? entry : best
+  }, undefined)
 
-    const children = Array.from(root.children).filter(
-      (child): child is HTMLElement => child instanceof HTMLElement,
-    )
+const markCorner = (entry: CornerEntry | undefined, className: (typeof CORNER_CLASSES)[number]) => {
+  entry?.child.classList.add(className)
+}
 
-    if (!children.length) return
+export default defineComponent({
+  name: 'Group',
+  data() {
+    return {
+      frame: 0,
+      observer: null as MutationObserver | null,
+      resizeObserver: null as ResizeObserver | null,
+    }
+  },
+  methods: {
+    scheduleUpdate(): void {
+      if (typeof window === 'undefined') return
 
-    const entries = children.map((child) => {
-      child.classList.add('group-item')
+      window.cancelAnimationFrame(this.frame)
+      this.frame = window.requestAnimationFrame(() => this.updateCornerRadius())
+    },
+    updateCornerRadius(): void {
+      const root = this.$refs.root as HTMLElement | undefined
 
-      for (const cornerClass of CORNER_CLASSES) {
-        child.classList.remove(cornerClass)
+      if (!root) return
+
+      const children = Array.from(root.children).filter(isHTMLElement)
+
+      if (!children.length) return
+
+      const entries = children.map<CornerEntry>((child) => {
+        resetCornerMarkers(child)
+        return { child, rect: child.getBoundingClientRect() }
+      })
+
+      const topMost = Math.min(...entries.map(({ rect }) => rect.top))
+      const bottomMost = Math.max(...entries.map(({ rect }) => rect.bottom))
+      const leftMost = Math.min(...entries.map(({ rect }) => rect.left))
+      const rightMost = Math.max(...entries.map(({ rect }) => rect.right))
+
+      const topRow = pickClosestEntries(entries, topMost, (rect) => rect.top)
+      const bottomRow = pickClosestEntries(entries, bottomMost, (rect) => rect.bottom)
+      const leftColumn = pickClosestEntries(entries, leftMost, (rect) => rect.left)
+      const rightColumn = pickClosestEntries(entries, rightMost, (rect) => rect.right)
+
+      const topLeft = pickExtremeEntry(topRow, (rect) => rect.left, (candidate, current) => candidate < current)
+      const topRight = pickExtremeEntry(topRow, (rect) => rect.right, (candidate, current) => candidate > current)
+      const bottomLeft = pickExtremeEntry(bottomRow, (rect) => rect.left, (candidate, current) => candidate < current)
+      const bottomRight = pickExtremeEntry(bottomRow, (rect) => rect.right, (candidate, current) => candidate > current)
+
+      const ensureColumnCorners = (
+        columnEntries: CornerEntry[],
+        topClass: (typeof CORNER_CLASSES)[number],
+        bottomClass: (typeof CORNER_CLASSES)[number]
+      ) => {
+        if (!columnEntries.length) return
+
+        const top = pickExtremeEntry(columnEntries, (rect) => rect.top, (candidate, current) => candidate < current)
+        const bottom = pickExtremeEntry(columnEntries, (rect) => rect.bottom, (candidate, current) => candidate > current)
+
+        markCorner(top, topClass)
+        markCorner(bottom, bottomClass)
       }
 
-      return { child, rect: child.getBoundingClientRect() }
-    })
+      markCorner(topLeft, 'group-corner-top-left')
+      markCorner(topRight, 'group-corner-top-right')
+      markCorner(bottomLeft, 'group-corner-bottom-left')
+      markCorner(bottomRight, 'group-corner-bottom-right')
 
-    const EPSILON = 1
+      if (!topLeft || !bottomLeft) {
+        ensureColumnCorners(leftColumn, 'group-corner-top-left', 'group-corner-bottom-left')
+      }
 
-    const topMost = Math.min(...entries.map(({ rect }) => rect.top))
-    const bottomMost = Math.max(...entries.map(({ rect }) => rect.bottom))
-    const leftMost = Math.min(...entries.map(({ rect }) => rect.left))
-    const rightMost = Math.max(...entries.map(({ rect }) => rect.right))
+      if (!topRight || !bottomRight) {
+        ensureColumnCorners(rightColumn, 'group-corner-top-right', 'group-corner-bottom-right')
+      }
+    },
+    handleStructuralChange(): void {
+      this.scheduleUpdate()
+    },
+    cleanupObservers(): void {
+      this.observer?.disconnect()
+      this.observer = null
 
-    const topRow = entries.filter(({ rect }) => rect.top - topMost <= EPSILON)
-    const bottomRow = entries.filter(({ rect }) => bottomMost - rect.bottom <= EPSILON)
-    const leftColumn = entries.filter(({ rect }) => rect.left - leftMost <= EPSILON)
-    const rightColumn = entries.filter(({ rect }) => rightMost - rect.right <= EPSILON)
+      this.resizeObserver?.disconnect()
+      this.resizeObserver = null
+    },
+  },
+  mounted() {
+    this.scheduleUpdate()
 
-    const topLeft = topRow.reduce((candidate, entry) => {
-      if (!candidate || entry.rect.left < candidate.rect.left) return entry
+    const root = this.$refs.root as HTMLElement | undefined
 
-      return candidate
-    }, undefined as (typeof entries)[number] | undefined)
+    if (!root || typeof window === 'undefined') return
 
-    const topRight = topRow.reduce((candidate, entry) => {
-      if (!candidate || entry.rect.right > candidate.rect.right) return entry
+    this.observer = new MutationObserver(() => this.handleStructuralChange())
+    this.observer.observe(root, { childList: true })
 
-      return candidate
-    }, undefined as (typeof entries)[number] | undefined)
-
-    const bottomLeft = bottomRow.reduce((candidate, entry) => {
-      if (!candidate || entry.rect.left < candidate.rect.left) return entry
-
-      return candidate
-    }, undefined as (typeof entries)[number] | undefined)
-
-    const bottomRight = bottomRow.reduce((candidate, entry) => {
-      if (!candidate || entry.rect.right > candidate.rect.right) return entry
-
-      return candidate
-    }, undefined as (typeof entries)[number] | undefined)
-
-    const assignCorner = (
-      entry: (typeof entries)[number] | undefined,
-      className: (typeof CORNER_CLASSES)[number],
-    ) => {
-      if (!entry) return
-
-      entry.child.classList.add(className)
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => this.handleStructuralChange())
+      this.resizeObserver.observe(root)
     }
 
-    const addLeftColumnCorners = () => {
-      const leftTop = leftColumn.reduce((candidate, entry) => {
-        if (!candidate || entry.rect.top < candidate.rect.top) return entry
+    window.addEventListener('resize', this.scheduleUpdate)
+  },
+  beforeUnmount() {
+    if (typeof window === 'undefined') return
 
-        return candidate
-      }, undefined as (typeof entries)[number] | undefined)
-
-      const leftBottom = leftColumn.reduce((candidate, entry) => {
-        if (!candidate || entry.rect.bottom > candidate.rect.bottom) return entry
-
-        return candidate
-      }, undefined as (typeof entries)[number] | undefined)
-
-      assignCorner(leftTop, 'group-corner-top-left')
-      assignCorner(leftBottom, 'group-corner-bottom-left')
-    }
-
-    const addRightColumnCorners = () => {
-      const rightTop = rightColumn.reduce((candidate, entry) => {
-        if (!candidate || entry.rect.top < candidate.rect.top) return entry
-
-        return candidate
-      }, undefined as (typeof entries)[number] | undefined)
-
-      const rightBottom = rightColumn.reduce((candidate, entry) => {
-        if (!candidate || entry.rect.bottom > candidate.rect.bottom) return entry
-
-        return candidate
-      }, undefined as (typeof entries)[number] | undefined)
-
-      assignCorner(rightTop, 'group-corner-top-right')
-      assignCorner(rightBottom, 'group-corner-bottom-right')
-    }
-
-    assignCorner(topLeft, 'group-corner-top-left')
-    assignCorner(topRight, 'group-corner-top-right')
-    assignCorner(bottomLeft, 'group-corner-bottom-left')
-    assignCorner(bottomRight, 'group-corner-bottom-right')
-
-    if (!topLeft && leftColumn.length) addLeftColumnCorners()
-    if (!bottomLeft && leftColumn.length) addLeftColumnCorners()
-    if (!topRight && rightColumn.length) addRightColumnCorners()
-    if (!bottomRight && rightColumn.length) addRightColumnCorners()
-  }
-
-  const schedule = () => {
-    window.cancelAnimationFrame(frame)
-    frame = window.requestAnimationFrame(updateCornerRadius)
-  }
-
-  return schedule
-})()
-
-let observer: MutationObserver | null = null
-let resizeObserver: ResizeObserver | null = null
-
-onMounted(() => {
-  scheduleUpdate()
-
-  const root = rootRef.value
-
-  if (!root || typeof window === 'undefined') return
-
-  observer = new MutationObserver(() => scheduleUpdate())
-
-  observer.observe(root, { childList: true })
-
-  if (typeof ResizeObserver !== 'undefined') {
-    resizeObserver = new ResizeObserver(() => scheduleUpdate())
-    resizeObserver.observe(root)
-  }
-
-  window.addEventListener('resize', scheduleUpdate)
-})
-
-onBeforeUnmount(() => {
-  if (typeof window === 'undefined') return
-
-  observer?.disconnect()
-  observer = null
-
-  resizeObserver?.disconnect()
-  resizeObserver = null
-
-  window.removeEventListener('resize', scheduleUpdate)
+    window.cancelAnimationFrame(this.frame)
+    this.cleanupObservers()
+    window.removeEventListener('resize', this.scheduleUpdate)
+  },
 })
 </script>
 
 <template>
-  <div ref="rootRef" class="group-root">
+  <div ref="root" class="group-root">
     <slot />
   </div>
 </template>
