@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
+import Card from 'primevue/card'
 import { componentCatalog } from '@/library/catalog'
 import type { SupportedLocale } from '@/i18n'
 
@@ -29,27 +30,29 @@ const localizedComponents = computed(() =>
       <p class="max-w-2xl text-base text-surface-600 dark:text-surface-300">{{ t('home.description') }}</p>
     </div>
     <div class="grid gap-6 md:grid-cols-2">
-      <article
+      <Card
         v-for="component in localizedComponents"
         :key="component.id"
-        class="card-surface flex flex-col justify-between gap-6 p-6"
       >
-        <div class="space-y-3">
-          <h2 class="text-2xl font-semibold text-surface-900 dark:text-surface-0">{{ component.localizedName }}</h2>
-          <p class="text-sm text-surface-600 dark:text-surface-300">{{ component.localizedDescription }}</p>
-        </div>
-        <RouterLink :to="`/components/${component.id}`" class="self-start">
-          <Button
-            :label="t('home.openPlayground')"
-            icon="pi pi-arrow-right"
-            icon-pos="right"
-            severity="primary"
-            rounded
-            size="small"
-            class="shadow-soft"
-          />
-        </RouterLink>
-      </article>
+        <template #title>
+          {{ component.localizedName }}
+        </template>
+        <template #subtitle>
+          {{ component.localizedDescription }}
+        </template>
+        <template #footer>
+          <RouterLink :to="`/components/${component.id}`">
+            <Button
+              :label="t('home.openPlayground')"
+              icon="pi pi-arrow-right"
+              icon-pos="right"
+              severity="primary"
+              rounded
+              size="small"
+            />
+          </RouterLink>
+        </template>
+      </Card>
     </div>
   </section>
 </template>
