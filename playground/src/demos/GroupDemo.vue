@@ -53,7 +53,7 @@ const calendarPT = {
   <div class="flex justify-center">
     <Group
       v-bind="props"
-      class="group-demo inline-flex w-full max-w-4xl divide-x text-sm shadow-soft"
+      class="group-demo inline-flex w-full max-w-4xl divide-x text-sm shadow-md"
       role="group"
       aria-label="항공권 검색 필터"
     >
