@@ -101,11 +101,11 @@ watch(
 
 <template>
   <div class="min-h-screen">
-    <header class="sticky top-0 z-40 px-6 py-4">
+    <header class="sticky top-0 z-40 max-w-6xl mx-auto py-4">
       <Toolbar
         :pt="{
           root: {
-            class: 'mx-auto px-1 max-w-6xl shadow-lg backdrop-blur',
+            class: 'shadow-lg backdrop-blur',
             style: {
               border: 'none',
               background: 'color-mix(in srgb, var(--p-toolbar-background) 25%, transparent)',
@@ -116,7 +116,7 @@ watch(
       >
         <template #start>
           <RouterLink to="/">
-            <ElText tag="b" size="large">{{ t('app.title') }}</ElText>
+            <ElText tag="b" size="large" class="pl-px">{{ t('app.title') }}</ElText>
           </RouterLink>
         </template>
         <template #end>
@@ -141,7 +141,7 @@ watch(
       </Toolbar>
     </header>
 
-    <main class="mx-auto w-full max-w-6xl px-6 py-4">
+    <main class="mx-auto w-full max-w-6xl py-4">
       <RouterView :key="route.fullPath" />
     </main>
   </div>
