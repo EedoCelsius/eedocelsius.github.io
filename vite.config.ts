@@ -20,10 +20,5 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
-    cssCodeSplit: false,
-    rollupOptions: {
-      // Keep vendor style bundles intact so framework CSS isn't tree-shaken away.
-      treeshake: false,
-    },
   },
 })
