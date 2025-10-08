@@ -43,8 +43,8 @@ export default defineComponent({
         backdropFilter: blur,
         WebkitBackdropFilter: blur,
         background: this.backgroundColor,
-        '--blur-overlay-justify-content': this.centerVertical ? 'center' : 'flex-start',
-        '--blur-overlay-align-items': this.centerHorizontal ? 'center' : 'flex-start',
+        "align-items": this.centerVertical ? 'center' : 'flex-start',
+        "justify-content":  this.centerHorizontal ? 'center' : 'flex-start',
       }
     },
   },
@@ -72,10 +72,5 @@ export default defineComponent({
 
 .rounded-inherit {
   border-radius: inherit;
-}
-
-.blur-overlay {
-  align-items: var(--blur-overlay-align-items);
-  justify-content: var(--blur-overlay-justify-content);
 }
 </style>
