@@ -5,7 +5,6 @@ import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import SelectButton from 'primevue/selectbutton'
 import Toolbar from 'primevue/toolbar'
-import { ElText } from 'element-plus'
 import { localeStorageKey } from '@/i18n'
 
 type ThemeVariant = 'light' | 'dark'
@@ -117,7 +116,13 @@ watch(
       >
         <template #start>
           <RouterLink to="/">
-            <ElText tag="b" size="large" class="pl-2">{{ t('app.title') }}</ElText>
+            <Button
+              :icon="pi pi-home"
+              @click="toggleTheme"
+              rounded
+              severity="secondary"
+              :aria-label="t('app.home')"
+            />
           </RouterLink>
         </template>
         <template #end>
