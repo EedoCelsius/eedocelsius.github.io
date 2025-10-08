@@ -3,7 +3,6 @@ import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElLink, ElText } from 'element-plus'
 import Card from 'primevue/card'
-import Divider from 'primevue/divider'
 import type { ComponentDemo } from '@/demos/types'
 import type { ControlDefinition, GroupDefinition, PlaygroundPropValue } from '@/library/types'
 import Field from './field.vue'
@@ -169,9 +168,6 @@ watch(
                   @toggle-optional="handleOptionalToggle(control, $event)"
                 />
               </Section>
-              <Divider
-                v-if="section.group && sectionIndex < controlSections.length - 1"
-              />
             </div>
           </template>
           <ElText v-else tag="p" size="small" type="info">
