@@ -91,7 +91,7 @@ const booleanModel = computed<boolean | undefined>({
         @update:model-value="handleOptionalCheckboxUpdate"
       />
     </div>
-    <ElText v-else class="self-start">{{ localize(control.label) }}</ElText>
+    <ElText v-else class="self-start font-semibold">{{ localize(control.label) }}</ElText>
     <template v-if="control.type === 'text'">
       <ElInput
         v-if="isActive"
