@@ -3,7 +3,6 @@ import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElLink, ElText } from 'element-plus'
 import Card from 'primevue/card'
-import Divider from 'primevue/divider'
 import type { ComponentDemo } from '@/demos/types'
 import type { ControlDefinition, GroupDefinition, PlaygroundPropValue } from '@/library/types'
 import Field from './field.vue'
@@ -154,25 +153,23 @@ watch(
             {{ t('playground.reset') }}
           </ElLink>
         </div>
-        <form class="flex flex-col gap-5">
+        <form class="flex flex-col">
           <template v-if="hasControls">
-            <div v-for="(section, sectionIndex) in controlSections" :key="section.id" class="flex flex-col gap-4">
-              <Section
-                :section="section"
-              >
-                <Field
-                  v-for="control in section.controls"
-                  :key="control.key"
-                  :control="control"
-                  v-model:value="demoProps[control.key]"
-                  :is-optional="isControlOptional(control)"
-                  @toggle-optional="handleOptionalToggle(control, $event)"
-                />
-              </Section>
-              <Divider
-                v-if="section.group && sectionIndex < controlSections.length - 1"
+            <Section
+              v-for="section in controlSections"
+              :key="section.id"
+              :section="section"
+              :class="['first:mt-0', section.group ? 'mt-0' : 'mt-5']"
+            >
+              <Field
+                v-for="control in section.controls"
+                :key="control.key"
+                :control="control"
+                v-model:value="demoProps[control.key]"
+                :is-optional="isControlOptional(control)"
+                @toggle-optional="handleOptionalToggle(control, $event)"
               />
-            </div>
+            </Section>
           </template>
           <ElText v-else tag="p" size="small" type="info">
             {{ t('playground.noProps') }}
