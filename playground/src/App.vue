@@ -100,7 +100,7 @@ watch(
 </script>
 
 <template>
-  <div class="min-h-screen px-6">
+  <div class="min-h-screen px-4">
     <header class="sticky top-0 z-40 max-w-6xl mx-auto py-4">
       <Toolbar
         :pt="{
@@ -116,7 +116,7 @@ watch(
       >
         <template #start>
           <RouterLink to="/">
-            <ElText tag="b" size="large" class="pl-4">{{ t('app.title') }}</ElText>
+            <ElText tag="b" size="large" class="pl-2">{{ t('app.title') }}</ElText>
           </RouterLink>
         </template>
         <template #end>
