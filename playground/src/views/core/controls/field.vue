@@ -176,6 +176,7 @@ const booleanModel = computed<boolean | undefined>({
       tag="p"
       size="small"
       type="info"
+      class="self-start"
     >
       {{ localize(control.helperText) }}
     </ElText>
