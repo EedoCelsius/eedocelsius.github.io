@@ -154,7 +154,7 @@ const booleanModel = computed<boolean | undefined>({
         :max="control.max ?? 100"
         :step="control.step ?? 1"
         :aria-label="isOptional ? localize(control.label) : undefined"
-        class="flex-1"
+        class="flex-1 py-2"
       />
     </template>
     <template v-else-if="control.type === 'boolean'">
