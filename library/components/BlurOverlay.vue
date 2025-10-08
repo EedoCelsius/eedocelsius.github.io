@@ -45,8 +45,8 @@ export default defineComponent({
         backdropFilter: blur,
         WebkitBackdropFilter: blur,
         background: this.backgroundColor,
-        '--blur-overlay-align-items': this.centerVertical ? 'center' : 'flex-start',
-        '--blur-overlay-justify-content': this.centerHorizontal ? 'center' : 'flex-start',
+        '--blur-overlay-justify-content': this.centerVertical ? 'center' : 'flex-start',
+        '--blur-overlay-align-items': this.centerHorizontal ? 'center' : 'flex-start',
       }
     },
   },
