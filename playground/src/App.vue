@@ -103,11 +103,11 @@ watch(
   <div class="min-h-screen">
     <header class="sticky top-0 z-40 px-4 pt-4">
       <Toolbar
-        class="mx-auto max-w-6xl rounded-full shadow-lg backdrop-blur"
         :pt="{
           root: {
-            class: 'border-none',
+            class: 'mx-auto max-w-6xl rounded-full shadow-lg backdrop-blur',
             style: {
+              border: 'none',
               background: 'color-mix(in srgb, var(--p-toolbar-background, #ffffff) 75%, transparent)'
             }
           }
