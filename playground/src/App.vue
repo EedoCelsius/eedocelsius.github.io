@@ -109,7 +109,7 @@ watch(
             style: {
               border: 'none',
               background: 'color-mix(in srgb, var(--p-toolbar-background) 25%, transparent)',
-              borderRadius: 'border-radius: calc(infinity * 1px)'
+              borderRadius: 'calc(infinity * 1px)'
             }
           }
         }"
