@@ -118,7 +118,6 @@ watch(
           <RouterLink to="/">
             <Button
               icon="pi pi-home"
-              @click="toggleTheme"
               rounded
               severity="secondary"
               :aria-label="t('app.home')"
