@@ -46,8 +46,8 @@ defineProps<BlurOverlayProps>()
       class="absolute inset-0 w-full h-full object-cover"
     />
     <BlurOverlay v-bind="$props">
-      <div class="mx-auto flex max-w-sm flex-col items-center gap-4 text-center text-surface-0">
-        <span class="text-xs font-semibold uppercase tracking-[0.4em] text-primary-200">
+      <div class="flex flex-col gap-4">
+        <span class="text-xs font-semibold uppercase tracking-[0.4em] text-primary-900">
           Focus Mode
         </span>
         <h2 class="text-2xl font-semibold">Shipping polished experiences</h2>
