@@ -43,8 +43,8 @@ export default defineComponent({
         backdropFilter: blur,
         WebkitBackdropFilter: blur,
         background: this.backgroundColor,
-        "align-items": this.centerVertical ? 'center' : 'flex-start',
-        "justify-content":  this.centerHorizontal ? 'center' : 'flex-start',
+        alignItems: this.centerVertical ? 'center' : 'flex-start',
+        justifyContent:  this.centerHorizontal ? 'center' : 'flex-start',
       }
     },
   },
