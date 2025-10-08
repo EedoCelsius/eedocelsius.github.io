@@ -50,9 +50,11 @@ export default defineComponent({
       class="flex h-full min-h-md w-full items-center justify-center sm:min-h-full sm:min-w-lg"
       v-bind="{ ...defaultProps.button, ...button }"
     >
-      <span class="flex h-full w-full items-center justify-center">
-        <slot name="button" />
-      </span>
+      <template v-if="$slots.button">
+        <span class="flex h-full w-full items-center justify-center">
+          <slot name="button" />
+        </span>
+      </template>
     </Button>
   </Group>
 </template>
