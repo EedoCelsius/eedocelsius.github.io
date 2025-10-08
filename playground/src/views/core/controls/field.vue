@@ -35,7 +35,6 @@ const localize = (copy: LocaleCopy) => copy[locale.value as SupportedLocale] ?? 
 const sanitizeControlKey = (key: string) => key.replace(/[^a-zA-Z0-9_-]+/g, '-')
 
 const controlKey = computed(() => sanitizeControlKey(props.control.key))
-const labelId = computed(() => `${controlKey.value}-label`)
 const inputId = computed(() => `${controlKey.value}-input`)
 const toggleId = computed(() => `${controlKey.value}-toggle`)
 
@@ -77,7 +76,7 @@ const booleanModel = computed<boolean | undefined>({
 
 <template>
   <div class="flex flex-col gap-2 text-sm">
-    <div v-if="isOptional" class="flex items-center gap-2">
+    <div v-if="isOptional" class="flex items-center">
       <ElCheckbox
         :id="toggleId"
         :model-value="isActive"
@@ -86,11 +85,9 @@ const booleanModel = computed<boolean | undefined>({
         :aria-expanded="isActive ? 'true' : 'false'"
         :aria-label="toggleLabel"
         :title="toggleLabel"
+        :label="localize(control.label)"
         @update:model-value="handleOptionalCheckboxUpdate"
       />
-      <label :id="labelId" :for="toggleId" class="cursor-pointer font-medium text-surface-700 dark:text-surface-200">
-        {{ localize(control.label) }}
-      </label>
     </div>
     <label v-else-if="control.type !== 'boolean'" :for="inputId" class="font-medium text-surface-700 dark:text-surface-200">
       {{ localize(control.label) }}
@@ -100,7 +97,7 @@ const booleanModel = computed<boolean | undefined>({
         v-if="isActive"
         :id="inputId"
         v-model="stringModel"
-        :aria-labelledby="isOptional ? labelId : undefined"
+        :aria-label="isOptional ? localize(control.label) : undefined"
         class="w-full"
       />
     </template>
@@ -111,7 +108,7 @@ const booleanModel = computed<boolean | undefined>({
         v-model="stringModel"
         type="textarea"
         :autosize="{ minRows: 4 }"
-        :aria-labelledby="isOptional ? labelId : undefined"
+        :aria-label="isOptional ? localize(control.label) : undefined"
         class="w-full"
       />
     </template>
@@ -120,7 +117,7 @@ const booleanModel = computed<boolean | undefined>({
         v-if="isActive"
         :id="inputId"
         v-model="valueModel"
-        :aria-labelledby="isOptional ? labelId : undefined"
+        :aria-label="isOptional ? localize(control.label) : undefined"
         class="w-full"
       >
         <ElOption
@@ -138,12 +135,12 @@ const booleanModel = computed<boolean | undefined>({
           show-alpha
           color-format="rgb"
           class="shrink-0"
-          :aria-labelledby="isOptional ? labelId : undefined"
+          :aria-label="isOptional ? localize(control.label) : undefined"
         />
         <ElInput
           :id="inputId"
           v-model="stringModel"
-          :aria-labelledby="isOptional ? labelId : undefined"
+          :aria-label="isOptional ? localize(control.label) : undefined"
           class="flex-1"
         />
       </div>
@@ -156,25 +153,14 @@ const booleanModel = computed<boolean | undefined>({
           :min="control.min ?? 0"
           :max="control.max ?? 100"
           :step="control.step ?? 1"
-          :aria-labelledby="isOptional ? labelId : undefined"
+          :aria-label="isOptional ? localize(control.label) : undefined"
           class="flex-1"
         />
-        <ElText
-          tag="span"
-          class="inline-block w-12 text-right font-semibold"
-          size="small"
-          type="primary"
-        >
-          {{ numberModel ?? '' }}
-        </ElText>
       </div>
     </template>
     <template v-else-if="control.type === 'boolean'">
       <div v-if="isActive" class="inline-flex items-center gap-3">
-        <ElCheckbox :id="inputId" v-model="booleanModel" />
-        <label :for="inputId" class="text-sm text-surface-600 dark:text-surface-300">
-          {{ localize(control.label) }}
-        </label>
+        <ElCheckbox :id="inputId" v-model="booleanModel" :label="localize(control.label)" />
       </div>
     </template>
     <ElText
