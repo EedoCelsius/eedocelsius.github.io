@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ElText } from 'element-plus'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Divider from 'primevue/divider'
@@ -143,9 +142,7 @@ watch(
     <template #content>
       <div class="flex flex-col gap-5">
         <div class="flex items-center justify-between">
-          <ElText tag="p" size="small" type="info">
-            {{ t('playground.helper') }}
-          </ElText>
+          <p class="text-sm text-surface-600 dark:text-surface-300">{{ t('playground.helper') }}</p>
           <Button
             type="button"
             :label="t('playground.reset')"
@@ -173,9 +170,9 @@ watch(
               />
             </div>
           </template>
-          <ElText v-else tag="p" size="small" type="info">
+          <p v-else class="text-sm text-surface-500 dark:text-surface-400">
             {{ t('playground.noProps') }}
-          </ElText>
+          </p>
         </form>
       </div>
     </template>
