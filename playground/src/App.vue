@@ -108,6 +108,7 @@ watch(
               border: 'none',
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
+              backgroundColor: 'transparent',
               borderRadius: 'calc(infinity * 1px)'
             }
           }
