@@ -10,7 +10,7 @@
   
   :root.dark {
     color-scheme: dark;
-    @apply font-sans bg-surface-950;
+    @apply font-sans bg-surface-800;
   }
 
   body {
