@@ -7,9 +7,6 @@ export default {
     './playground/src/**/*.{vue,js,ts,jsx,tsx}',
     './library/**/*.{vue,js,ts,jsx,tsx}',
   ],
-  // Tailwind JIT normally tree-shakes unused utilities. Keep everything available
-  // so the playground can experiment with any class without rebuilding.
-  safelist: [{ pattern: /.*/ }],
   darkMode: 'class',
   theme: {
     extend: {
