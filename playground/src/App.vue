@@ -101,11 +101,11 @@ watch(
 
 <template>
   <div class="min-h-screen">
-    <header class="sticky top-0 z-40 p-4">
+    <header class="sticky top-0 z-40 px-6 py-4">
       <Toolbar
         :pt="{
           root: {
-            class: 'mx-auto max-w-6xl shadow-lg backdrop-blur',
+            class: 'mx-auto px-1 max-w-6xl shadow-lg backdrop-blur',
             style: {
               border: 'none',
               background: 'color-mix(in srgb, var(--p-toolbar-background) 25%, transparent)',
