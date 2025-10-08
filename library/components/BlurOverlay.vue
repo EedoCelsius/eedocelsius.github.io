@@ -82,10 +82,6 @@ export default defineComponent({
 }
 
 :deep(.p-card) {
-  height: 100%;
-}
-
-:deep(.p-card-body) {
   display: flex;
   height: 100%;
   width: 100%;
