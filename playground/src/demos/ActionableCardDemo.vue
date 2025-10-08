@@ -25,13 +25,12 @@ export const demoConfig: ComponentDemoConfig = {
     },
   ],
 }
+const props = { icon: "pi pi-home"}
 </script>
 
 <script setup lang="ts">
 import { ElText } from 'element-plus'
-import { ActionableCard, type ActionableCardProps } from '@library/components'
-
-const props = defineProps<ActionableCardProps>()
+import { ActionableCard } from '@library/components'
 </script>
 
 <template>
@@ -53,13 +52,6 @@ const props = defineProps<ActionableCardProps>()
             </div>
           </div>
         </div>
-      </template>
-      <template #button>
-        <ElText tag="span" size="small" class="flex items-center gap-2 px-6 font-semibold">
-          <ElText tag="span" size="small" class="sm:hidden">이체 정보 복사</ElText>
-          <i class="pi pi-clipboard text-lg" aria-hidden="true"></i>
-          <ElText tag="span" size="small" class="sr-only sm:not-sr-only sm:hidden">이체 정보 복사</ElText>
-        </ElText>
       </template>
     </ActionableCard>
   </div>
