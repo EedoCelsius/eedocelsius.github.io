@@ -35,7 +35,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <Group class="grid w-full grid-cols-1 rounded-md shadow-md transition-colors sm:grid-cols-[minmax(0,1fr)_auto]">
+  <Group class="grid w-full grid-cols-1 rounded-2xl shadow-md transition-colors sm:grid-cols-[minmax(0,1fr)_auto]">
     <Card class="h-full">
       <template #content>
         <div class="flex h-full flex-col justify-center gap-4" :class="cardClass">
@@ -45,7 +45,7 @@ export default defineComponent({
     </Card>
     <Button
       type="button"
-      class="flex h-full min-h-[60px] w-full items-center justify-center sm:min-h-full sm:min-w-[112px]"
+      class="flex h-full min-h-md w-full items-center justify-center sm:min-h-full sm:min-w-lg"
       :class="actionClass"
     >
       <span class="flex h-full w-full items-center justify-center">
