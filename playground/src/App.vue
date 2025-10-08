@@ -108,7 +108,6 @@ watch(
               border: 'none',
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
-              background: 'color-mix(in srgb, var(--p-toolbar-background) 25%, transparent)',
               borderRadius: 'calc(infinity * 1px)'
             }
           }
@@ -117,7 +116,7 @@ watch(
         <template #start>
           <RouterLink to="/">
             <Button
-              :icon="pi pi-home"
+              icon="pi pi-home"
               @click="toggleTheme"
               rounded
               severity="secondary"
