@@ -26,9 +26,6 @@ export type props = {
   }
 }
 
-type OverlayConfig = NonNullable<props['overlay']>
-type SpinnerConfig = NonNullable<props['spinner']>
-
 export default defineComponent({
   name: 'LoadingOverlay',
   components: {
@@ -37,11 +34,11 @@ export default defineComponent({
   },
   props: {
     overlay: {
-      type: Object as PropType<OverlayConfig>,
+      type: Object as props['overlay'],
       default: () => defaultProps.overlay,
     },
     spinner: {
-      type: Object as PropType<SpinnerConfig>,
+      type: Object as props['spinner'],
       default: () => defaultProps.spinner,
     },
   },
