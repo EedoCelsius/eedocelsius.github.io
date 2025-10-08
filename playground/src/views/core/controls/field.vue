@@ -148,33 +148,28 @@ const booleanModel = computed<boolean | undefined>({
       </div>
     </template>
     <template v-else-if="control.type === 'slider'">
-      <div v-if="isActive" class="flex items-center gap-3">
-        <ElSlider
-          :id="inputId"
-          v-model="numberModel"
-          :min="control.min ?? 0"
-          :max="control.max ?? 100"
-          :step="control.step ?? 1"
-          :aria-label="isOptional ? localize(control.label) : undefined"
-          class="flex-1"
-        />
-      </div>
+      <ElSlider
+        v-if="isActive"
+        :id="inputId"
+        v-model="numberModel"
+        :min="control.min ?? 0"
+        :max="control.max ?? 100"
+        :step="control.step ?? 1"
+        :aria-label="isOptional ? localize(control.label) : undefined"
+        class="flex-1"
+      />
     </template>
     <template v-else-if="control.type === 'boolean'">
-      <div v-if="isActive" class="flex flex-col gap-2">
-        <span class="font-medium text-surface-700 dark:text-surface-200">
-          {{ localize(control.label) }}
-        </span>
-        <ElRadioGroup
-          :id="inputId"
-          v-model="booleanModel"
-          class="flex gap-4"
-          :aria-label="isOptional ? localize(control.label) : undefined"
-        >
-          <ElRadio :label="true">{{ t('playground.booleanTrue') }}</ElRadio>
-          <ElRadio :label="false">{{ t('playground.booleanFalse') }}</ElRadio>
-        </ElRadioGroup>
-      </div>
+      <ElRadioGroup
+        v-if="isActive"
+        :id="inputId"
+        v-model="booleanModel"
+        class="flex gap-4"
+        :aria-label="isOptional ? localize(control.label) : undefined"
+      >
+        <ElRadio :label="true">true</ElRadio>
+        <ElRadio :label="false">false</ElRadio>
+      </ElRadioGroup>
     </template>
     <ElText
       v-if="control.helperText && isActive"
