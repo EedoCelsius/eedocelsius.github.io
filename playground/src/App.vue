@@ -91,7 +91,7 @@ watch(
   () => route.name,
   (name) => {
     if (name !== 'component-playground') {
-      document.title = t('app.title')
+      document.title = 'Component Lab'
     }
   },
   { immediate: true }
