@@ -75,7 +75,7 @@ watch(
     <template #content>
       <div class="space-y-4">
         <div class="space-y-2">
-          <ElText tag="h1" class="text-2xl font-semibold">
+          <ElText type="primary" tag="h1" class="text-2xl font-semibold">
             {{ localizedName }}
           </ElText>
           <ElText tag="p" size="small" type="info">
