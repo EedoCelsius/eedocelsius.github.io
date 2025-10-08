@@ -105,9 +105,10 @@ watch(
       <Toolbar
         :pt="{
           root: {
-            class: 'shadow-lg backdrop-blur',
             style: {
               border: 'none',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
               background: 'color-mix(in srgb, var(--p-toolbar-background) 25%, transparent)',
               borderRadius: 'calc(infinity * 1px)'
             }
