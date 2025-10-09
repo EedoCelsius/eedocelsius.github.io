@@ -1,5 +1,6 @@
 <script lang="ts">
 import QRCode from 'qrcode'
+import { ElText } from 'element-plus'
 import { toHex } from '@shared/color'
 import { defineComponent } from 'vue'
 
@@ -75,12 +76,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="relative aspect-square items-center justify-center rounded-3xl border border-surface-200 bg-surface-0 p-4 shadow-sm">
-    <img v-if="!qrError" :src="qrSource" alt="QR code" class="w-full object-contain" style="image-rendering: crisp-edges; image-rendering: pixelated;" />
-    <div v-else class="flex h-full w-full items-center justify-center text-xs text-center">
-      <span>{{ qrError }}</span>
+  <section class="relative aspect-square bg-surface-0 p-4">
+    <div class="flex w-full h-full items-center justify-center">
+      <ElText v-if="qrError" type="warning" tag="span" size="small">{{ qrError }}</ElText>
+      <img v-else :src="qrSource" alt="QR code" class="w-full h-full object-contain"
+        style="image-rendering: crisp-edges; image-rendering: pixelated;"
+      />
     </div>
-    <div class="absolute left-1/2 top-1/2 h-1/4 w-1/4 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center" aria-hidden="true">
+    <div class="absolute left-1/2 top-1/2 h-1/4 w-1/4 -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
       <slot />
     </div>
   </section>
