@@ -61,6 +61,27 @@ const selectedLocale = computed({
 
 const themeIcon = computed(() => (theme.value === 'dark' ? 'pi pi-sun' : 'pi pi-moon'))
 
+const toolbarStyles = computed<Record<string, string>>(() => {
+  const isDark = theme.value === 'dark'
+
+  const background = isDark
+    ? 'linear-gradient(135deg, rgba(45, 45, 60, 0.55), rgba(20, 20, 35, 0.35))'
+    : 'linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.35))'
+
+  const borderColor = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.55)'
+  const shadowColor = isDark ? 'rgba(15, 18, 42, 0.55)' : 'rgba(31, 38, 135, 0.25)'
+
+  return {
+    border: `1px solid ${borderColor}`,
+    background,
+    boxShadow: `0 22px 45px -20px ${shadowColor}`,
+    backdropFilter: 'blur(18px)',
+    WebkitBackdropFilter: 'blur(18px)',
+    borderRadius: 'calc(infinity * 1px)',
+    transition: 'background 200ms ease, border-color 200ms ease, box-shadow 200ms ease',
+  }
+})
+
 onMounted(() => {
   applyTheme(theme.value)
   document.documentElement.lang = locale.value
@@ -101,19 +122,7 @@ watch(
 <template>
   <div class="min-h-screen px-4">
     <header class="sticky top-0 z-40 max-w-6xl mx-auto pt-4">
-      <Toolbar
-        :pt="{
-          root: {
-            style: {
-              border: 'none',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              backgroundColor: 'transparent',
-              borderRadius: 'calc(infinity * 1px)'
-            }
-          }
-        }"
-      >
+      <Toolbar :pt="{ root: { style: toolbarStyles } }">
         <template #start>
           <RouterLink to="/">
             <Button
