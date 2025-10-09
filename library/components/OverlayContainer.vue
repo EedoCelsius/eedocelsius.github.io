@@ -23,7 +23,7 @@ export default defineComponent({
 <template>
   <div class="relative">
     <slot />
-    <transition name="fade-blur">
+    <transition name="fade">
       <div v-if="overlay" class="absolute inset-0 size-full rounded-inherit">
         <slot name="overlay" />
       </div>
@@ -32,15 +32,14 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.fade-blur-enter-active,
-.fade-blur-leave-active {
-  transition: all 200ms ease;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 200ms ease;
 }
 
-.fade-blur-enter-from,
-.fade-blur-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  backdrop-filter: none;
 }
 
 .rounded-inherit {
