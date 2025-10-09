@@ -3,3 +3,4 @@ export { default as OverlayContainer, type props as OverlayContainerProps } from
 export { default as Group, type props as GroupProps } from './Group.vue'
 export { default as QrCode, type props as QrCodeProps } from './QrCode.vue'
 export { default as Spinner, type props as SpinnerProps } from './Spinner.vue'
+export { default as LiquidGlass, type props as LiquidGlassProps } from './LiquidGlass.vue'
