@@ -62,12 +62,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="relative size-full rounded-inherit">
-    <Group>
+  <div class="relative">
+    <Group class="size-full rounded-inherit">
       <slot />
     </Group>
     <transition name="fade-blur">
-      <div v-if="overlay" class="flex absolute inset-0 size-full rounded-inherit" :style="overlayStyle">
+      <div v-if="overlay" class="flex absolute size-full rounded-inherit" :style="overlayStyle">
         <slot name="overlay" />
       </div>
     </transition>
