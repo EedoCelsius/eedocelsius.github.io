@@ -3,10 +3,12 @@ import { defineComponent } from 'vue'
 
 export const defaultProps = {
   overlay: true,
+  backdropFilter: 'blur(7px)',
 } as const
 
 export type props = {
   overlay?: boolean
+  backdropFilter?: string
 }
 
 export default defineComponent({
@@ -16,6 +18,10 @@ export default defineComponent({
       type: Boolean,
       default: defaultProps.overlay,
     },
+    backdropFilter: {
+      type: String,
+      default: defaultProps.backdropFilter,
+    },
   },
 })
 </script>
@@ -24,7 +30,13 @@ export default defineComponent({
   <div class="relative">
     <slot />
     <transition name="fade">
-      <div v-if="overlay" class="absolute inset-0 size-full rounded-inherit backdrop-blur-[7px]">
+      <div
+        v-if="overlay"
+        class="absolute inset-0 size-full rounded-inherit"
+        :style="backdropFilter
+          ? { backdropFilter, WebkitBackdropFilter: backdropFilter }
+          : undefined"
+      >
         <slot name="overlay" />
       </div>
     </transition>
