@@ -7,10 +7,14 @@
     color-scheme: light;
     @apply font-sans bg-surface-50;
   }
-  
+
   :root.dark {
     color-scheme: dark;
     @apply font-sans bg-surface-950;
+  }
+
+  .dark {
+    color-scheme: dark;
   }
 
   body {

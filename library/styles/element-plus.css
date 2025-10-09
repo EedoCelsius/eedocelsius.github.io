@@ -17,7 +17,8 @@
   --el-font-family: var(--p-font-family, 'Noto Sans KR', Inter, ui-sans-serif, system-ui);
 }
 
-:root.dark {
+:root.dark,
+.dark {
   --el-color-primary: var(--p-primary-400);
   --el-color-primary-light-3: color-mix(in srgb, var(--p-primary-400) 65%, white 35%);
   --el-color-primary-light-5: color-mix(in srgb, var(--p-primary-400) 50%, white 50%);
