@@ -16,14 +16,14 @@ const { t } = useI18n()
           <i class="pi pi-compass"></i>
         </div>
         <ElText tag="h1" class="text-2xl font-semibold">
-          {{ t('playground.notFoundTitle') }}
+          {{ t('showcase.notFoundTitle') }}
         </ElText>
         <ElText tag="p" class="max-w-md" size="small" type="info">
-          {{ t('playground.notFoundDescription') }}
+          {{ t('showcase.notFoundDescription') }}
         </ElText>
         <RouterLink to="/">
           <Button
-            :label="t('playground.backHome')"
+            :label="t('showcase.backHome')"
             icon="pi pi-arrow-right"
             icon-pos="right"
             severity="primary"

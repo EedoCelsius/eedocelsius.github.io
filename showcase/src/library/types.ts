@@ -3,13 +3,13 @@ export type LocaleCopy = {
   ko: string
 }
 
-export type PlaygroundPropValue = string | number | boolean | null | undefined
+export type ShowcasePropValue = string | number | boolean | null | undefined
 
 export type ControlType = 'boolean' | 'slider' | 'color' | 'text' | 'textarea' | 'select'
 
 export interface ControlOption {
   label: LocaleCopy
-  value: PlaygroundPropValue
+  value: ShowcasePropValue
 }
 
 export interface ControlDefinition {

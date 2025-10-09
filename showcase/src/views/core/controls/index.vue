@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { ElLink, ElText } from 'element-plus'
 import Card from 'primevue/card'
 import type { ComponentDemo } from '@/demos/types'
-import type { ControlDefinition, GroupDefinition, PlaygroundPropValue } from '@/library/types'
+import type { ControlDefinition, GroupDefinition, ShowcasePropValue } from '@/library/types'
 import Field from './field.vue'
 import Section from './section.vue'
 
@@ -14,8 +14,8 @@ const props = defineProps<{
 
 const { t } = useI18n()
 
-const componentDefaults = ref<Record<string, PlaygroundPropValue>>({})
-const demoProps = defineModel<Record<string, PlaygroundPropValue>>('props', { default: () => ({}) })
+const componentDefaults = ref<Record<string, ShowcasePropValue>>({})
+const demoProps = defineModel<Record<string, ShowcasePropValue>>('props', { default: () => ({}) })
 
 type ControlSection = { id: string; group?: GroupDefinition; controls: ControlDefinition[] }
 
@@ -44,7 +44,7 @@ const hasControls = computed(() =>
 const hasOwn = (object: Record<string, unknown>, key: string) => Object.prototype.hasOwnProperty.call(object, key)
 
 const flattenDefaults = (defaults: Record<string, unknown> | undefined) => {
-  const flattened: Record<string, PlaygroundPropValue> = {}
+  const flattened: Record<string, ShowcasePropValue> = {}
 
   if (!defaults) {
     return flattened
@@ -68,7 +68,7 @@ const flattenDefaults = (defaults: Record<string, unknown> | undefined) => {
     }
 
     if (path.length > 0) {
-      flattened[path.join('.')] = value as PlaygroundPropValue
+      flattened[path.join('.')] = value as ShowcasePropValue
     }
   }
 
@@ -93,7 +93,7 @@ const handleOptionalToggle = (control: ControlDefinition, isActive: boolean | un
   }
 
   if (checked) {
-    let value: PlaygroundPropValue
+    let value: ShowcasePropValue
 
     if (hasOwn(componentDefaults.value, control.key)) {
       value = componentDefaults.value[control.key]
@@ -136,19 +136,19 @@ watch(
 <template>
   <Card>
     <template #title>
-      {{ t('playground.controls') }}
+      {{ t('showcase.controls') }}
     </template>
     <template #content>
       <div class="flex flex-col gap-5">
         <div class="flex flex-col gap-2">
-          <ElText tag="p" size="small" type="info" class="self-start">{{ t('playground.helper') }}</ElText>
+          <ElText tag="p" size="small" type="info" class="self-start">{{ t('showcase.helper') }}</ElText>
           <ElLink
             type="primary"
             :underline="false"
             class="self-end w-fit text-xs"
             @click="applyDefaults"
           >
-            {{ t('playground.reset') }}
+            {{ t('showcase.reset') }}
           </ElLink>
         </div>
         <form class="flex flex-col">
@@ -169,7 +169,7 @@ watch(
               />
             </Section>
           </template>
-          <ElText v-else tag="p" size="small" type="info">{{ t('playground.noProps') }}</ElText>
+          <ElText v-else tag="p" size="small" type="info">{{ t('showcase.noProps') }}</ElText>
         </form>
       </div>
     </template>

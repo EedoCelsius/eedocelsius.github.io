@@ -6,13 +6,13 @@ import Card from 'primevue/card'
 import Panel from 'primevue/panel'
 import type { ComponentDemo } from '@/demos/types'
 import type { LabComponentSummary } from '@/library/catalog'
-import type { LocaleCopy, PlaygroundPropValue } from '@/library/types'
+import type { LocaleCopy, ShowcasePropValue } from '@/library/types'
 import type { SupportedLocale } from '@/i18n'
 
 const props = defineProps<{
   summary: LabComponentSummary
   demo: ComponentDemo
-  demoProps: Record<string, PlaygroundPropValue>
+  demoProps: Record<string, ShowcasePropValue>
 }>()
 
 const { t, locale } = useI18n()
@@ -70,7 +70,7 @@ watch(
 <template>
   <Card>
     <template #title>
-      {{ t('playground.preview') }}
+      {{ t('showcase.preview') }}
     </template>
     <template #content>
       <div class="space-y-4">

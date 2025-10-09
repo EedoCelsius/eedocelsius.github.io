@@ -4,7 +4,7 @@ import type { ComponentDemo } from '@/demos/types'
 import { getComponentDemo } from '@/demos'
 import type { LabComponentSummary } from '@/library/catalog'
 import { getComponentSummary } from '@/library/catalog'
-import type { PlaygroundPropValue } from '@/library/types'
+import type { ShowcasePropValue } from '@/library/types'
 import Controls from './controls/index.vue'
 import NotFound from './notFound.vue'
 import Preview from './preview.vue'
@@ -16,7 +16,7 @@ const props = defineProps<{
 const summary = computed<LabComponentSummary | undefined>(() => getComponentSummary(props.componentId))
 const demo = computed<ComponentDemo | undefined>(() => getComponentDemo(props.componentId))
 
-const demoProps = ref<Record<string, PlaygroundPropValue>>({})
+const demoProps = ref<Record<string, ShowcasePropValue>>({})
 
 watch(
   () => props.componentId,

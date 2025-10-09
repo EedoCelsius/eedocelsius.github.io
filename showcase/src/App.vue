@@ -82,7 +82,7 @@ watch(locale, (value) => {
     document.documentElement.lang = value
   }
 
-  if (route.name !== 'component-playground') {
+  if (route.name !== 'component-showcase') {
     document.title = t('app.title')
   }
 })
@@ -90,7 +90,7 @@ watch(locale, (value) => {
 watch(
   () => route.name,
   (name) => {
-    if (name !== 'component-playground') {
+    if (name !== 'component-showcase') {
       document.title = 'Component Lab'
     }
   },

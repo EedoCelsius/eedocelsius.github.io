@@ -5,7 +5,7 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["playground/src/*"],
+      "@/*": ["showcase/src/*"],
       "@library/*": ["library/*"],
       "@shared/*": ["shared/*"]
     },
@@ -18,9 +18,9 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
-    "playground/src/**/*.ts",
-    "playground/src/**/*.tsx",
-    "playground/src/**/*.vue",
+    "showcase/src/**/*.ts",
+    "showcase/src/**/*.tsx",
+    "showcase/src/**/*.vue",
     "library/**/*.ts",
     "library/**/*.tsx",
     "library/**/*.vue",
