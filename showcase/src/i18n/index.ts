@@ -11,9 +11,9 @@ const messages = {
     home: {
       title: 'Component Library',
       description: 'Pick a component and adjust its props in real-time.',
-      openPlayground: 'Open playground',
+      openShowcase: 'Open showcase',
     },
-    playground: {
+    showcase: {
       preview: 'Preview',
       controls: 'Props',
       reset: 'Reset to defaults',
@@ -33,9 +33,9 @@ const messages = {
     home: {
       title: '컴포넌트 라이브러리',
       description: '컴포넌트를 선택하고 속성값을 실시간으로 조정해 보세요.',
-      openPlayground: '플레이그라운드 열기',
+      openShowcase: '쇼케이스 열기',
     },
-    playground: {
+    showcase: {
       preview: '미리보기',
       controls: '속성값',
       reset: '기본값으로 재설정',

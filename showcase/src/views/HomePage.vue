@@ -55,7 +55,7 @@ const localizedComponents = computed(() =>
         <template #footer>
           <RouterLink :to="`/components/${component.id}`">
             <Button
-              :label="t('home.openPlayground')"
+              :label="t('home.openShowcase')"
               icon="pi pi-arrow-right"
               icon-pos="right"
               severity="primary"

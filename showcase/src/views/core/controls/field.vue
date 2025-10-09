@@ -13,7 +13,7 @@ import {
   ElText,
 } from 'element-plus'
 import type { CheckboxValueType } from 'element-plus'
-import type { ControlDefinition, LocaleCopy, PlaygroundPropValue } from '@/library/types'
+import type { ControlDefinition, LocaleCopy, ShowcasePropValue } from '@/library/types'
 import type { SupportedLocale } from '@/i18n'
 import { toRgba } from '@shared/color'
 
@@ -22,7 +22,7 @@ const props = defineProps<{
   isOptional: boolean
 }>()
 
-const valueModel = defineModel<PlaygroundPropValue | undefined>('value')
+const valueModel = defineModel<ShowcasePropValue | undefined>('value')
 
 const isActive = computed(() => valueModel.value !== undefined)
 
@@ -41,7 +41,7 @@ const inputId = computed(() => `${controlKey.value}-input`)
 const toggleId = computed(() => `${controlKey.value}-toggle`)
 
 const toggleLabel = computed(() =>
-  t('playground.toggleControl', { name: localize(props.control.label) })
+  t('showcase.toggleControl', { name: localize(props.control.label) })
 )
 
 const handleOptionalCheckboxUpdate = (value: CheckboxValueType) => {
