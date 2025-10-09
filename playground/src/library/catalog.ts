@@ -52,25 +52,14 @@ export const componentCatalog: LabComponentSummary[] = [
     },
   },
   {
-    id: 'blur-overlay',
+    id: 'overlay-container',
     name: {
-      en: 'Blur Overlay',
-      ko: '블러 오버레이',
+      en: 'Overlay Container',
+      ko: '오버레이 컨테이너',
     },
     description: {
-      en: 'Applies a configurable blur glass effect on top of any content.',
-      ko: '어떤 콘텐츠든 부드러운 블러 글래스 효과로 가려줍니다.',
-    },
-  },
-  {
-    id: 'loading-overlay',
-    name: {
-      en: 'Loading Overlay',
-      ko: '로딩 오버레이',
-    },
-    description: {
-      en: 'Displays the loading spinner over blurred content.',
-      ko: '블러 처리된 콘텐츠 위에 로딩 스피너를 표시합니다.',
+      en: 'Stack interactive content with an optional blurred overlay surface.',
+      ko: '필요에 따라 블러 오버레이를 더해 콘텐츠를 겹쳐 배치합니다.',
     },
   },
 ]
