@@ -7,7 +7,7 @@
   --el-color-primary-light-9: color-mix(in srgb, var(--p-primary-500) 15%, white 85%);
   --el-color-primary-dark-2: color-mix(in srgb, var(--p-primary-500) 80%, black 20%);
   --el-text-color-primary: var(--p-surface-900);
-  --el-text-color-regular: var(--p-surface-700);
+  --el-text-color-regular: var(--p-surface-800);
   --el-text-color-secondary: var(--p-surface-600);
   --el-bg-color: var(--p-surface-0);
   --el-bg-color-overlay: color-mix(in srgb, var(--p-surface-0) 96%, transparent);
@@ -26,7 +26,7 @@
   --el-color-primary-light-9: color-mix(in srgb, var(--p-primary-400) 15%, white 85%);
   --el-color-primary-dark-2: color-mix(in srgb, var(--p-primary-400) 82%, black 18%);
   --el-text-color-primary: var(--p-surface-0);
-  --el-text-color-regular: var(--p-surface-200);
+  --el-text-color-regular: var(--p-surface-100);
   --el-text-color-secondary: var(--p-surface-400);
   --el-bg-color: var(--p-surface-950);
   --el-bg-color-overlay: color-mix(in srgb, var(--p-surface-900) 88%, transparent);
