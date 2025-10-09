@@ -46,7 +46,7 @@ export default defineComponent({
     </Card>
     <Button
       class="flex h-full min-h-12 min-w-16 items-center justify-center"
-      :style="{ width: '100%' }"
+      style="width: 100%;"
       v-bind="{ ...defaultProps.button, ...button }"
     >
       <template v-for="(_, name) in $slots" :key="name" v-slot:[name]="data">
