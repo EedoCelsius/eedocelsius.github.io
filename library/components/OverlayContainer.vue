@@ -3,18 +3,10 @@ import { defineComponent } from 'vue'
 
 export const defaultProps = {
   overlay: true,
-  blurStrength: 7,
-  backgroundColor: 'rgba(0, 0, 0, 0.25)',
-  centerVertical: true,
-  centerHorizontal: true,
 } as const
 
 export type props = {
   overlay?: boolean
-  blurStrength?: number
-  backgroundColor?: string
-  centerVertical?: boolean
-  centerHorizontal?: boolean
 }
 
 export default defineComponent({
@@ -24,35 +16,6 @@ export default defineComponent({
       type: Boolean,
       default: defaultProps.overlay,
     },
-    blurStrength: {
-      type: Number,
-      default: defaultProps.blurStrength,
-    },
-    backgroundColor: {
-      type: String,
-      default: defaultProps.backgroundColor,
-    },
-    centerVertical: {
-      type: Boolean,
-      default: defaultProps.centerVertical,
-    },
-    centerHorizontal: {
-      type: Boolean,
-      default: defaultProps.centerHorizontal,
-    },
-  },
-  computed: {
-    overlayStyle(): Record<string, string> {
-      const blur = `blur(${this.blurStrength}px)`
-
-      return {
-        backdropFilter: blur,
-        WebkitBackdropFilter: blur,
-        background: this.backgroundColor,
-        alignItems: this.centerVertical ? 'center' : 'flex-start',
-        justifyContent: this.centerHorizontal ? 'center' : 'flex-start',
-      }
-    },
   },
 })
 </script>
@@ -61,7 +24,7 @@ export default defineComponent({
   <div class="relative">
     <slot />
     <transition name="fade-blur">
-      <div v-if="overlay" class="flex absolute inset-0 size-full rounded-inherit" :style="overlayStyle">
+      <div v-if="overlay" class="absolute inset-0 size-full rounded-inherit">
         <slot name="overlay" />
       </div>
     </transition>
