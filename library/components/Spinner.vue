@@ -55,8 +55,8 @@ export default defineComponent({
     :style="dimensions"
     aria-hidden="true"
   >
-    <div class="h-full w-full animate-spin rounded-full border-solid border-current" :style="ringStyle" />
-    <div class="absolute h-full w-full inset-0 flex items-center justify-center">
+    <div class="size-full animate-spin rounded-full border-solid border-current" :style="ringStyle" />
+    <div class="absolute size-full inset-0 flex items-center justify-center">
       <slot />
     </div>
   </div>

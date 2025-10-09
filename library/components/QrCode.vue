@@ -77,9 +77,9 @@ export default defineComponent({
 
 <template>
   <section class="relative aspect-square bg-surface-0 p-4">
-    <div class="flex w-full h-full items-center justify-center">
+    <div class="flex size-full items-center justify-center">
       <ElText v-if="qrError" type="warning" tag="span" size="small">{{ qrError }}</ElText>
-      <img v-else :src="qrSource" alt="QR code" class="w-full h-full object-contain"
+      <img v-else :src="qrSource" alt="QR code" class="size-full object-contain"
         style="image-rendering: crisp-edges; image-rendering: pixelated;"
       />
     </div>
