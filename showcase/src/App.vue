@@ -128,8 +128,8 @@ watch(
           root: {
             style: {
               border: 'none',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
               backgroundColor: 'transparent',
               borderRadius: 'calc(infinity * 1px)'
             }
