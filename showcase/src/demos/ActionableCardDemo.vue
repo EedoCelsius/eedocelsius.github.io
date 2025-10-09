@@ -36,7 +36,7 @@ const props = defineProps<ActionableCardProps>()
 
 <template>
   <div class="flex justify-center">
-    <ActionableCard v-bind="props" class="max-w-2xl">
+    <ActionableCard v-bind="props" class="rounded-2xl">
       <template #content>
         <div class="flex items-start gap-4">
           <div class="flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-2xl font-semibold text-amber-500">
