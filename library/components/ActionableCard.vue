@@ -49,10 +49,8 @@ export default defineComponent({
       :style="{ width: '100%' }"
       v-bind="{ ...defaultProps.button, ...button }"
     >
-      <template v-if="$slots.button">
-        <span class="flex h-full w-full items-center justify-center">
-          <slot name="button" />
-        </span>
+      <template v-for="(_, name) in $slots" :key="name" v-slot:[name]="data">
+        <slot :name="name" v-bind="data" />
       </template>
     </Button>
   </Group>
