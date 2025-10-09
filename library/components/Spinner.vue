@@ -50,11 +50,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div
-    class="relative inline-flex items-center justify-center"
-    :style="dimensions"
-    aria-hidden="true"
-  >
+  <div class="relative" :style="dimensions" aria-hidden="true">
     <div class="size-full animate-spin rounded-full border-solid border-current" :style="ringStyle" />
     <div class="absolute size-full inset-0 flex items-center justify-center">
       <slot />
