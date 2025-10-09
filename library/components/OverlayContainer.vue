@@ -24,7 +24,7 @@ export default defineComponent({
   <div class="relative">
     <slot />
     <transition name="fade">
-      <div v-if="overlay" class="absolute inset-0 size-full rounded-inherit">
+      <div v-if="overlay" class="absolute inset-0 size-full rounded-inherit backdrop-blur-[7px]">
         <slot name="overlay" />
       </div>
     </transition>
