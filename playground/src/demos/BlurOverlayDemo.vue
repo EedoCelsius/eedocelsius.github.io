@@ -44,7 +44,7 @@ defineProps<BlurOverlayProps>()
     <img
       src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80"
       alt="Developer workspace"
-      class="absolute inset-0 w-full h-full object-cover"
+      class="absolute inset-0 size-full object-cover"
     />
     <BlurOverlay v-bind="$props">
       <div class="flex flex-col gap-4">
