@@ -5,19 +5,14 @@
 @layer base {
   :root {
     color-scheme: light;
-    @apply font-sans bg-surface-50;
-  }
-
-  :root.dark {
-    color-scheme: dark;
-    @apply font-sans bg-surface-950;
-  }
-
-  .dark {
-    color-scheme: dark;
+    @apply font-sans bg-surface-50 dark:bg-surface-950;
   }
 
   body {
     @apply antialiased bg-inherit transition-colors duration-300;
+  }
+
+  .dark {
+    color-scheme: dark;
   }
 }
