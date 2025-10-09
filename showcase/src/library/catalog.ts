@@ -62,17 +62,6 @@ export const componentCatalog: LabComponentSummary[] = [
       ko: '필요에 따라 블러 오버레이를 더해 콘텐츠를 겹쳐 배치합니다.',
     },
   },
-  {
-    id: 'liquid-glass',
-    name: {
-      en: 'Liquid Glass',
-      ko: '리퀴드 글래스',
-    },
-    description: {
-      en: 'Wrap surfaces with a glossy, glass-like effect for modern layouts.',
-      ko: '현대적인 레이아웃을 위해 표면에 유리 같은 광택 효과를 씌웁니다.',
-    },
-  },
 ]
 
 export const componentMap = new Map(componentCatalog.map((item) => [item.id, item]))
