@@ -1,6 +1,5 @@
 import ActionableCardDemo, { demoConfig as actionableCardConfig } from './ActionableCardDemo.vue'
 import OverlayContainerDemo, { demoConfig as overlayContainerConfig } from './OverlayContainerDemo.vue'
-import LiquidGlassDemo, { demoConfig as liquidGlassConfig } from './LiquidGlassDemo.vue'
 import GroupDemo, { demoConfig as groupConfig } from './GroupDemo.vue'
 import QrCodeDemo, { demoConfig as qrCodeConfig } from './QrCodeDemo.vue'
 import SpinnerDemo, { demoConfig as spinnerConfig } from './SpinnerDemo.vue'
@@ -18,10 +17,6 @@ const demoEntries: Record<string, ComponentDemo> = {
   'overlay-container': {
     component: OverlayContainerDemo,
     ...overlayContainerConfig,
-  },
-  'liquid-glass': {
-    component: LiquidGlassDemo,
-    ...liquidGlassConfig,
   },
   'qr-code': {
     component: QrCodeDemo,
