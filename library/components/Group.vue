@@ -168,22 +168,23 @@ export default defineComponent({
 
 <style scoped>
 .group-root ::v-slotted(.group-item) {
-  border-radius: 0 !important;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .group-root ::v-slotted(.group-corner-top-left) {
-  border-top-left-radius: inherit !important;
+  border-top-left-radius: inherit;
 }
 
 .group-root ::v-slotted(.group-corner-top-right) {
-  border-top-right-radius: inherit !important;
+  border-top-right-radius: inherit;
 }
 
 .group-root ::v-slotted(.group-corner-bottom-left) {
-  border-bottom-left-radius: inherit !important;
+  border-bottom-left-radius: inherit;
 }
 
 .group-root ::v-slotted(.group-corner-bottom-right) {
-  border-bottom-right-radius: inherit !important;
+  border-bottom-right-radius: inherit;
 }
 </style>
