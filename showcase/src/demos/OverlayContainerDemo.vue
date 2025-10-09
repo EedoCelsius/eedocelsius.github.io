@@ -10,6 +10,15 @@ export const demoConfig: ComponentDemoConfig = {
       type: 'boolean',
       label: { en: 'Enable Overlay', ko: '오버레이 사용' },
     },
+    {
+      key: 'backdropFilter',
+      type: 'text',
+      label: { en: 'Backdrop Filter', ko: '백드롭 필터' },
+      helperText: {
+        en: 'CSS backdrop-filter value applied to the overlay layer.',
+        ko: '오버레이 레이어에 적용되는 CSS backdrop-filter 값입니다.',
+      },
+    },
   ],
 }
 </script>
