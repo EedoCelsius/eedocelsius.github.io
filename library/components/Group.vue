@@ -169,6 +169,7 @@ export default defineComponent({
 <style scoped>
 .group-root ::v-slotted(.group-item) {
   border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 .group-root ::v-slotted(.group-corner-top-left) {
