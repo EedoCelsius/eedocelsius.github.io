@@ -67,7 +67,7 @@ export default defineComponent({
       <slot />
     </Group>
     <transition name="fade-blur">
-      <div v-if="overlay" class="flex absolute size-full rounded-inherit" :style="overlayStyle">
+      <div v-if="overlay" class="flex absolute inset-0 size-full rounded-inherit" :style="overlayStyle">
         <slot name="overlay" />
       </div>
     </transition>
