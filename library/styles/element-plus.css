@@ -1,93 +1,36 @@
 :root {
+  --el-color-primary: var(--p-primary-500);
+  --el-color-primary-light-3: color-mix(in srgb, var(--p-primary-500) 70%, white 30%);
+  --el-color-primary-light-5: color-mix(in srgb, var(--p-primary-500) 55%, white 45%);
+  --el-color-primary-light-7: color-mix(in srgb, var(--p-primary-500) 35%, white 65%);
+  --el-color-primary-light-8: color-mix(in srgb, var(--p-primary-500) 25%, white 75%);
+  --el-color-primary-light-9: color-mix(in srgb, var(--p-primary-500) 15%, white 85%);
+  --el-color-primary-dark-2: color-mix(in srgb, var(--p-primary-500) 80%, black 20%);
+  --el-text-color-primary: var(--p-surface-900);
+  --el-text-color-regular: var(--p-surface-700);
+  --el-text-color-secondary: var(--p-surface-600);
+  --el-bg-color: var(--p-surface-0);
+  --el-bg-color-overlay: color-mix(in srgb, var(--p-surface-0) 96%, transparent);
+  --el-fill-color-blank: var(--p-surface-0);
+  --el-border-color: color-mix(in srgb, var(--p-surface-200) 60%, transparent);
   --el-border-radius-base: 0.75rem;
-  --el-font-family: 'Noto Sans KR', Inter, ui-sans-serif, system-ui;
-  --p-primary-500: var(--el-color-primary);
-  --p-primary-400: color-mix(in srgb, var(--el-color-primary) 85%, white 15%);
-  --p-primary-300: color-mix(in srgb, var(--el-color-primary) 70%, white 30%);
-  --p-primary-200: color-mix(in srgb, var(--el-color-primary) 55%, white 45%);
-  --p-primary-100: color-mix(in srgb, var(--el-color-primary) 35%, white 65%);
-  --p-primary-50: color-mix(in srgb, var(--el-color-primary) 20%, white 80%);
-  --p-primary-600: color-mix(in srgb, var(--el-color-primary) 85%, black 15%);
-  --p-primary-700: color-mix(in srgb, var(--el-color-primary) 72%, black 28%);
-  --p-primary-800: color-mix(in srgb, var(--el-color-primary) 60%, black 40%);
-  --p-primary-900: color-mix(in srgb, var(--el-color-primary) 48%, black 52%);
-  --p-primary-950: color-mix(in srgb, var(--el-color-primary) 38%, black 62%);
-  --p-primary-color: var(--p-primary-500);
-  --p-primary-hover-color: var(--p-primary-600);
-  --p-primary-active-color: var(--p-primary-700);
-  --p-primary-contrast-color: #ffffff;
-
-  --p-surface-0: var(--el-bg-color);
-  --p-surface-50: color-mix(in srgb, var(--el-bg-color) 96%, var(--el-text-color-primary) 4%);
-  --p-surface-100: color-mix(in srgb, var(--el-bg-color) 92%, var(--el-text-color-primary) 8%);
-  --p-surface-200: color-mix(in srgb, var(--el-bg-color) 86%, var(--el-text-color-primary) 14%);
-  --p-surface-300: color-mix(in srgb, var(--el-bg-color) 78%, var(--el-text-color-primary) 22%);
-  --p-surface-400: color-mix(in srgb, var(--el-bg-color) 70%, var(--el-text-color-primary) 30%);
-  --p-surface-500: color-mix(in srgb, var(--el-bg-color) 60%, var(--el-text-color-primary) 40%);
-  --p-surface-600: color-mix(in srgb, var(--el-bg-color) 48%, var(--el-text-color-primary) 52%);
-  --p-surface-700: color-mix(in srgb, var(--el-bg-color) 35%, var(--el-text-color-primary) 65%);
-  --p-surface-800: color-mix(in srgb, var(--el-bg-color) 25%, var(--el-text-color-primary) 75%);
-  --p-surface-900: color-mix(in srgb, var(--el-bg-color) 18%, var(--el-text-color-primary) 82%);
-  --p-surface-950: color-mix(in srgb, var(--el-bg-color) 12%, var(--el-text-color-primary) 88%);
-
-  --p-text-color: var(--el-text-color-primary);
-  --p-text-hover-color: color-mix(in srgb, var(--el-text-color-primary) 92%, black 8%);
-  --p-text-muted-color: var(--el-text-color-secondary);
-  --p-text-hover-muted-color: color-mix(in srgb, var(--el-text-color-secondary) 85%, var(--el-text-color-primary) 15%);
-
-  --p-content-border-color: var(--el-border-color);
-  --p-content-border-radius: var(--el-border-radius-base);
-  --p-content-hover-background: color-mix(in srgb, var(--p-surface-0) 90%, var(--p-primary-500) 10%);
-  --p-content-hover-color: var(--p-text-hover-color);
-
-  --p-highlight-background: color-mix(in srgb, var(--p-primary-500) 14%, var(--p-surface-0) 86%);
-  --p-highlight-focus-background: color-mix(in srgb, var(--p-primary-500) 24%, var(--p-surface-0) 76%);
-  --p-highlight-color: var(--p-primary-700);
-  --p-highlight-focus-color: color-mix(in srgb, var(--p-primary-800) 80%, var(--p-text-color) 20%);
+  --el-font-family: var(--p-font-family, 'Noto Sans KR', Inter, ui-sans-serif, system-ui);
 }
 
 :root.dark {
-  --p-primary-500: color-mix(in srgb, var(--el-color-primary) 75%, white 25%);
-  --p-primary-400: color-mix(in srgb, var(--el-color-primary) 62%, white 38%);
-  --p-primary-300: color-mix(in srgb, var(--el-color-primary) 50%, white 50%);
-  --p-primary-200: color-mix(in srgb, var(--el-color-primary) 40%, white 60%);
-  --p-primary-100: color-mix(in srgb, var(--el-color-primary) 28%, white 72%);
-  --p-primary-50: color-mix(in srgb, var(--el-color-primary) 18%, white 82%);
-  --p-primary-600: color-mix(in srgb, var(--el-color-primary) 82%, white 18%);
-  --p-primary-700: color-mix(in srgb, var(--el-color-primary) 88%, white 12%);
-  --p-primary-800: color-mix(in srgb, var(--el-color-primary) 92%, white 8%);
-  --p-primary-900: color-mix(in srgb, var(--el-color-primary) 96%, white 4%);
-  --p-primary-950: color-mix(in srgb, var(--el-color-primary) 98%, white 2%);
-  --p-primary-color: var(--p-primary-400);
-  --p-primary-hover-color: var(--p-primary-300);
-  --p-primary-active-color: var(--p-primary-200);
-  --p-primary-contrast-color: color-mix(in srgb, var(--p-surface-950) 25%, white 75%);
-
-  --p-surface-0: var(--el-bg-color);
-  --p-surface-50: color-mix(in srgb, var(--el-bg-color) 90%, var(--el-text-color-primary) 10%);
-  --p-surface-100: color-mix(in srgb, var(--el-bg-color) 82%, var(--el-text-color-primary) 18%);
-  --p-surface-200: color-mix(in srgb, var(--el-bg-color) 74%, var(--el-text-color-primary) 26%);
-  --p-surface-300: color-mix(in srgb, var(--el-bg-color) 66%, var(--el-text-color-primary) 34%);
-  --p-surface-400: color-mix(in srgb, var(--el-bg-color) 58%, var(--el-text-color-primary) 42%);
-  --p-surface-500: color-mix(in srgb, var(--el-bg-color) 50%, var(--el-text-color-primary) 50%);
-  --p-surface-600: color-mix(in srgb, var(--el-bg-color) 42%, var(--el-text-color-primary) 58%);
-  --p-surface-700: color-mix(in srgb, var(--el-bg-color) 34%, var(--el-text-color-primary) 66%);
-  --p-surface-800: color-mix(in srgb, var(--el-bg-color) 26%, var(--el-text-color-primary) 74%);
-  --p-surface-900: color-mix(in srgb, var(--el-bg-color) 18%, var(--el-text-color-primary) 82%);
-  --p-surface-950: color-mix(in srgb, var(--el-bg-color) 12%, var(--el-text-color-primary) 88%);
-
-  --p-text-color: var(--el-text-color-primary);
-  --p-text-hover-color: color-mix(in srgb, var(--el-text-color-primary) 90%, white 10%);
-  --p-text-muted-color: var(--el-text-color-secondary);
-  --p-text-hover-muted-color: color-mix(in srgb, var(--el-text-color-secondary) 80%, var(--el-text-color-primary) 20%);
-
-  --p-content-border-color: var(--el-border-color);
-  --p-content-border-radius: var(--el-border-radius-base);
-  --p-content-hover-background: color-mix(in srgb, var(--p-surface-0) 78%, var(--p-primary-400) 22%);
-  --p-content-hover-color: var(--p-text-hover-color);
-
-  --p-highlight-background: color-mix(in srgb, var(--p-primary-300) 30%, var(--p-surface-0) 70%);
-  --p-highlight-focus-background: color-mix(in srgb, var(--p-primary-200) 38%, var(--p-surface-0) 62%);
-  --p-highlight-color: color-mix(in srgb, var(--p-primary-200) 70%, var(--p-text-color) 30%);
-  --p-highlight-focus-color: color-mix(in srgb, var(--p-primary-100) 75%, var(--p-text-color) 25%);
+  --el-color-primary: var(--p-primary-400);
+  --el-color-primary-light-3: color-mix(in srgb, var(--p-primary-400) 65%, white 35%);
+  --el-color-primary-light-5: color-mix(in srgb, var(--p-primary-400) 50%, white 50%);
+  --el-color-primary-light-7: color-mix(in srgb, var(--p-primary-400) 35%, white 65%);
+  --el-color-primary-light-8: color-mix(in srgb, var(--p-primary-400) 25%, white 75%);
+  --el-color-primary-light-9: color-mix(in srgb, var(--p-primary-400) 15%, white 85%);
+  --el-color-primary-dark-2: color-mix(in srgb, var(--p-primary-400) 82%, black 18%);
+  --el-text-color-primary: var(--p-surface-0);
+  --el-text-color-regular: var(--p-surface-200);
+  --el-text-color-secondary: var(--p-surface-400);
+  --el-bg-color: var(--p-surface-950);
+  --el-bg-color-overlay: color-mix(in srgb, var(--p-surface-900) 88%, transparent);
+  --el-fill-color-blank: color-mix(in srgb, var(--p-surface-900) 94%, transparent);
+  --el-border-color: color-mix(in srgb, var(--p-surface-700) 60%, transparent);
+  --el-font-family: var(--p-font-family, 'Noto Sans KR', Inter, ui-sans-serif, system-ui);
 }
