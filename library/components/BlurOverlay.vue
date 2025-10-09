@@ -53,7 +53,7 @@ export default defineComponent({
 
 <template>
   <transition name="fade-blur">
-    <div class="flex absolute inset-0 h-full w-full rounded-inherit" :style="overlayStyle">
+    <div class="flex absolute inset-0 w-full h-full rounded-inherit" :style="overlayStyle">
       <slot />
     </div>
   </transition>
