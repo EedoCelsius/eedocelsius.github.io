@@ -34,12 +34,13 @@ export default defineComponent({
 <style scoped>
 .fade-blur-enter-active,
 .fade-blur-leave-active {
-  transition: opacity 200ms ease;
+  transition: all 200ms ease;
 }
 
 .fade-blur-enter-from,
 .fade-blur-leave-to {
   opacity: 0;
+  backdrop-filter: none;
 }
 
 .rounded-inherit {
