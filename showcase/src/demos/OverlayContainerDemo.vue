@@ -34,7 +34,7 @@ defineProps<OverlayContainerProps>()
     </div>
     <template #overlay>
       <div
-        class="flex size-full items-center justify-center rounded-inherit bg-black/25 p-10 text-left text-white backdrop-blur-[7px]"
+        class="flex size-full items-center justify-center rounded-inherit bg-black/25 p-10 text-left text-white"
       >
         <div class="flex max-w-md flex-col gap-4">
           <ElText tag="span" class="font-semibold uppercase tracking-[0.4em]" size="small" type="primary">
