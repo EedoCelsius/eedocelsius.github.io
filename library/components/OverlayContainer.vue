@@ -1,7 +1,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import Group from './Group.vue'
 
 export const defaultProps = {
+  overlay: true,
   blurStrength: 7,
   backgroundColor: 'rgba(0, 0, 0, 0.25)',
   centerVertical: true,
@@ -9,6 +11,7 @@ export const defaultProps = {
 } as const
 
 export type props = {
+  overlay?: boolean
   blurStrength?: number
   backgroundColor?: string
   centerVertical?: boolean
@@ -16,8 +19,15 @@ export type props = {
 }
 
 export default defineComponent({
-  name: 'BlurOverlay',
+  name: 'OverlayContainer',
+  components: {
+    Group,
+  },
   props: {
+    overlay: {
+      type: Boolean,
+      default: defaultProps.overlay,
+    },
     blurStrength: {
       type: Number,
       default: defaultProps.blurStrength,
@@ -44,7 +54,7 @@ export default defineComponent({
         WebkitBackdropFilter: blur,
         background: this.backgroundColor,
         alignItems: this.centerVertical ? 'center' : 'flex-start',
-        justifyContent:  this.centerHorizontal ? 'center' : 'flex-start',
+        justifyContent: this.centerHorizontal ? 'center' : 'flex-start',
       }
     },
   },
@@ -52,11 +62,16 @@ export default defineComponent({
 </script>
 
 <template>
-  <transition name="fade-blur">
-    <div class="flex absolute inset-0 size-full rounded-inherit" :style="overlayStyle">
+  <div class="relative size-full rounded-inherit">
+    <Group>
       <slot />
-    </div>
-  </transition>
+    </Group>
+    <transition name="fade-blur">
+      <div v-if="overlay" class="flex absolute inset-0 size-full rounded-inherit" :style="overlayStyle">
+        <slot name="overlay" />
+      </div>
+    </transition>
+  </div>
 </template>
 
 <style scoped>

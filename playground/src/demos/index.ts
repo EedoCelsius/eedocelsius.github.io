@@ -1,7 +1,6 @@
 import ActionableCardDemo, { demoConfig as actionableCardConfig } from './ActionableCardDemo.vue'
-import BlurOverlayDemo, { demoConfig as blurOverlayConfig } from './BlurOverlayDemo.vue'
+import OverlayContainerDemo, { demoConfig as overlayContainerConfig } from './OverlayContainerDemo.vue'
 import GroupDemo, { demoConfig as groupConfig } from './GroupDemo.vue'
-import LoadingOverlayDemo, { demoConfig as loadingOverlayConfig } from './LoadingOverlayDemo.vue'
 import QrCodeDemo, { demoConfig as qrCodeConfig } from './QrCodeDemo.vue'
 import SpinnerDemo, { demoConfig as spinnerConfig } from './SpinnerDemo.vue'
 import type { ComponentDemo } from './types'
@@ -15,13 +14,9 @@ const demoEntries: Record<string, ComponentDemo> = {
     component: ActionableCardDemo,
     ...actionableCardConfig,
   },
-  'blur-overlay': {
-    component: BlurOverlayDemo,
-    ...blurOverlayConfig,
-  },
-  'loading-overlay': {
-    component: LoadingOverlayDemo,
-    ...loadingOverlayConfig,
+  'overlay-container': {
+    component: OverlayContainerDemo,
+    ...overlayContainerConfig,
   },
   'qr-code': {
     component: QrCodeDemo,
