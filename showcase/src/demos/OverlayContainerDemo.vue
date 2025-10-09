@@ -10,29 +10,6 @@ export const demoConfig: ComponentDemoConfig = {
       type: 'boolean',
       label: { en: 'Enable Overlay', ko: '오버레이 사용' },
     },
-    {
-      key: 'blurStrength',
-      type: 'slider',
-      label: { en: 'Blur Strength', ko: '블러 강도' },
-      min: 0,
-      max: 30,
-      step: 1,
-    },
-    {
-      key: 'backgroundColor',
-      type: 'color',
-      label: { en: 'Background Color', ko: '배경 색상' },
-    },
-    {
-      key: 'centerVertical',
-      type: 'boolean',
-      label: { en: 'Center Vertically', ko: '세로 중앙 정렬' },
-    },
-    {
-      key: 'centerHorizontal',
-      type: 'boolean',
-      label: { en: 'Center Horizontally', ko: '가로 중앙 정렬' },
-    },
   ],
 }
 </script>
@@ -56,16 +33,20 @@ defineProps<OverlayContainerProps>()
       />
     </div>
     <template #overlay>
-      <div class="flex flex-col gap-4">
-        <ElText tag="span" class="font-semibold uppercase tracking-[0.4em]" size="small" type="primary">
-          Focus Mode
-        </ElText>
-        <ElText tag="h2" size="large" class="font-semibold">
-          Shipping polished experiences
-        </ElText>
-        <ElText tag="p" size="small">
-          Blur surrounding distractions while presenting a focused call-to-action for your customers.
-        </ElText>
+      <div
+        class="flex size-full items-center justify-center rounded-inherit bg-black/25 p-10 text-left text-white backdrop-blur-[7px]"
+      >
+        <div class="flex max-w-md flex-col gap-4">
+          <ElText tag="span" class="font-semibold uppercase tracking-[0.4em]" size="small" type="primary">
+            Focus Mode
+          </ElText>
+          <ElText tag="h2" size="large" class="font-semibold">
+            Shipping polished experiences
+          </ElText>
+          <ElText tag="p" size="small">
+            Blur surrounding distractions while presenting a focused call-to-action for your customers.
+          </ElText>
+        </div>
       </div>
     </template>
   </OverlayContainer>
