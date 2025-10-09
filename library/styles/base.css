@@ -5,7 +5,10 @@
 @layer base {
   :root {
     color-scheme: light;
-    @apply font-sans bg-surface-50 dark:bg-surface-950;
+    @apply font-sans bg-surface-50;
+    .dark {
+      @apply bg-surface-950;
+    }
   }
 
   body {
