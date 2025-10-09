@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Group from './Group.vue'
 
 export const defaultProps = {
   overlay: true,
@@ -20,9 +19,6 @@ export type props = {
 
 export default defineComponent({
   name: 'OverlayContainer',
-  components: {
-    Group,
-  },
   props: {
     overlay: {
       type: Boolean,
@@ -63,9 +59,7 @@ export default defineComponent({
 
 <template>
   <div class="relative">
-    <Group class="size-full rounded-inherit">
-      <slot />
-    </Group>
+    <slot />
     <transition name="fade-blur">
       <div v-if="overlay" class="flex absolute inset-0 size-full rounded-inherit" :style="overlayStyle">
         <slot name="overlay" />
