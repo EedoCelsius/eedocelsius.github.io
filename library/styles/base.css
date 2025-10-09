@@ -6,11 +6,12 @@
   :root {
     color-scheme: light;
     @apply font-sans bg-surface-50;
-    .dark {
-      @apply bg-surface-950;
-    }
   }
-
+  
+  :root.dark {
+    @apply bg-surface-950;
+  }
+  
   body {
     @apply antialiased bg-inherit transition-colors duration-300;
   }
