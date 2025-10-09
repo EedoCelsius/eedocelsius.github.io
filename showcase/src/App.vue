@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
@@ -61,9 +61,30 @@ const selectedLocale = computed({
 
 const themeIcon = computed(() => (theme.value === 'dark' ? 'pi pi-sun' : 'pi pi-moon'))
 
+const isToolbarFloating = ref(false)
+
+const handleScroll = () => {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  isToolbarFloating.value = window.scrollY > 0
+}
+
 onMounted(() => {
   applyTheme(theme.value)
   document.documentElement.lang = locale.value
+  handleScroll()
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', handleScroll, { passive: true })
+  }
+})
+
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', handleScroll)
+  }
 })
 
 watch(theme, (value) => {
@@ -102,6 +123,7 @@ watch(
   <div class="min-h-screen px-4">
     <header class="sticky top-0 z-40 max-w-6xl mx-auto pt-4">
       <Toolbar
+        :class="['transition-shadow duration-300', { 'shadow-lg': isToolbarFloating }]"
         :pt="{
           root: {
             style: {
