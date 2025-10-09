@@ -52,6 +52,17 @@ export const componentCatalog: LabComponentSummary[] = [
     },
   },
   {
+    id: 'liquid-glass',
+    name: {
+      en: 'Liquid Glass',
+      ko: '리퀴드 글래스',
+    },
+    description: {
+      en: 'Apply a tactile frosted glass effect to highlight layered content.',
+      ko: '겹쳐진 콘텐츠를 돋보이게 하는 서리 낀 유리 효과를 제공합니다.',
+    },
+  },
+  {
     id: 'overlay-container',
     name: {
       en: 'Overlay Container',
